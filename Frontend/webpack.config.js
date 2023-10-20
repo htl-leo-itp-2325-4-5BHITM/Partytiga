@@ -1,4 +1,6 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
+const webpack = require('webpack')
 
 const baseHref = "/"
 module.exports = env => ({
@@ -21,11 +23,17 @@ module.exports = env => ({
     }
   },
   output: {
-    filename: 'bundle.js',
+    filename: 'bundle-[fullhash].js',
     path: path.resolve(__dirname, './target'),
     publicPath: "/"
   },
   plugins: [
+      new HtmlWebpackPlugin({
+        template: "index.html"
+      }),
+      new webpack.EnvironmentPlugin({
+        BASE_HREF: baseHref
+      })
     ],
     devServer: {
         static: {
