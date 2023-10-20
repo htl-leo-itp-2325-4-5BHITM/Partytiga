@@ -1,0 +1,15 @@
+html{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+}
+
+h1{
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+}
+
+input, button{
+    border-radius: 5px;
+    border: solid rgb(62, 62, 62) 1px;
+    padding: 0.3rem;
+}
