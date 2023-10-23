@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/style.css">
+    <script src="./script.ts" defer></script>
     <title>Partytiga</title>
 </head>
 
@@ -17,8 +18,8 @@
         <br>
         <br>
 
-        <label for="organizername">Name des Veranstalters:</label>
-        <input type="text" id="organizername" required>
+        <label for="organizerName">Name des Veranstalters:</label>
+        <input type="text" id="organizerName" required>
         
         <br>
         <br>
@@ -35,7 +36,7 @@
         <br>
         <br>
 
-        <button type="button" onclick="addEvent()">Hinzufügen</button>
+        <button type="button" id="addEvent">Hinzufügen</button>
     </form>
 
     <h2>Liste:</h2>
