@@ -8,21 +8,24 @@ const loadEventsButton = document.getElementById(
 ) as HTMLButtonElement;
 loadEventsButton.addEventListener("click", loadEvents);
 
+const successBox = document.getElementById("success")
+const errorBox = document.getElementById("error")
+
 const fs = require("fs");
 const csv = require("csv-parser");
 const csvFilePath = "/data/data.csv";
 
 function addEvent() {
-  const eventName: string = (
+  let eventName: string = (
     document.getElementById("eventName") as HTMLInputElement
   ).value;
-  const organizerName: string = (
+  let organizerName: string = (
     document.getElementById("organizerName") as HTMLInputElement
   ).value;
-  const eventDate: string = (
+  let eventDate: string = (
     document.getElementById("eventDate") as HTMLInputElement
   ).value;
-  const eventLocation: string = (
+  let eventLocation: string = (
     document.getElementById("eventLocation") as HTMLInputElement
   ).value;
 
@@ -52,6 +55,19 @@ function addEvent() {
       .then((response) => {
         if (response.ok) {
           console.log("Daten wurden in die CSV-Datei geschrieben.");
+          (
+            document.getElementById("eventName") as HTMLInputElement
+          ).value = "";
+          (
+            document.getElementById("organizerName") as HTMLInputElement
+          ).value = "";
+          (
+            document.getElementById("eventDate") as HTMLInputElement
+          ).value = "";
+          (
+            document.getElementById("eventLocation") as HTMLInputElement
+          ).value = "";
+          loadEvents()
         } else {
           console.error("Fehler beim Schreiben der Daten.");
         }
@@ -69,8 +85,8 @@ function addEvent() {
 function loadEvents() {
   console.log("loading");
   fetch("http://localhost:3000/read-csv")
-    .then((response) => {
-      console.log(response)
+    .then((res) => {
+      return res.json()
     })
     .then((data) => {
       console.log(data);

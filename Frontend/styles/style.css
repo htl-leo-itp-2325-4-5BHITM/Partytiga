@@ -36,3 +36,16 @@ form{
     border: solid 1px rgb(219, 219, 219);
     border-radius: 5px;
 }
+
+.info{
+    position: absolute;
+    margin-left: 37vw;
+}
+
+#success{
+    opacity: 0;
+} 
+
+#error{
+    opacity: 0;
+}
