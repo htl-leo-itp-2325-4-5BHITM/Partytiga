@@ -38,7 +38,7 @@ app.get("/read-csv", (req, res) => {
     const fileData = fs.readFileSync(csvFilePath, "utf8");
     const data = [];
 
-    csv({
+    parse({
       mapHeaders: ({ header, index }) => header.trim(),
     })
       .on("data", (row) => {
