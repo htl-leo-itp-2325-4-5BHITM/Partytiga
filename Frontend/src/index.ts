@@ -93,3 +93,26 @@ async function loadEvents() {
   document.getElementsByTagName('event-table')[0].appendChild(html)
   return events
 }
+
+
+
+// Veranstalter aus CSV-Datei in Dropdown laden
+document.addEventListener("DOMContentLoaded", () => {
+  const selectElement: HTMLSelectElement | null = document.getElementById("veranstalter") as HTMLSelectElement | null;
+
+  if (selectElement) {
+      fetch("veranstalter.csv")
+          .then((response: Response) => response.text())
+          .then((data: string) => {
+              const lines: string[] = data.split("\n");
+              lines.forEach((line: string) => {
+                  const option: HTMLOptionElement = document.createElement("option");
+                  option.text = line.trim();
+                  selectElement.appendChild(option);
+              });
+          })
+          .catch((error: any) => {
+              console.error("Fehler beim Laden der CSV-Datei:", error);
+          });
+  }
+});
