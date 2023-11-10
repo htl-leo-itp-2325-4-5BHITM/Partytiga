@@ -5,12 +5,14 @@
   "main": "webpack.config.js",
   "scripts": {
     "start": "webpack serve --port 4200",
-    "build": "webpack"
+    "build": "webpack",
+    "server": "json-server --watch ./dummy/events.json --port 8080"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "html-webpack-plugin": "^5.5.3",
+    "json-server": "^0.17.4",
     "ts-loader": "^9.5.0",
     "typescript": "^5.2.2",
     "webpack": "^5.89.0",

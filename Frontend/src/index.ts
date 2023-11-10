@@ -1,5 +1,6 @@
-import { Event, EventsResponse } from "../model/model";
+import { Event, EventsResponse } from "./model/model";
 import "./components/event-table-component"
+import { loadEvents } from "./service/event-service";
 
 const addEventButton = document.getElementById("addEvent") as HTMLButtonElement;
 addEventButton.addEventListener("click", addEvent);
@@ -80,13 +81,13 @@ function addEvent() {
     console.log("no");
   }
 }
-
+/*
 async function loadEvents() {
   console.log("loading");
   const response = await fetch("http://localhost:3000/read-csv")
   const evResp: EventsResponse = await response.json();
   const events = evResp.data
-  console.log("events:", events[0])
+  console.log("events:", events)
 
   const html = document.createElement("div")
   html.innerHTML = `<h2>${events[0].eventName}</h2>`
@@ -96,3 +97,4 @@ async function loadEvents() {
 
 
 
+*/
