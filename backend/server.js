@@ -15,7 +15,7 @@ app.post("/write-csv", (req, res) => {
   const dataToWrite = req.body;
   console.log(dataToWrite);
 
-  const csvData = `${dataToWrite.eventName},${dataToWrite.organizerName},${dataToWrite.eventDate},${dataToWrite.eventLocation}\n`;
+  const csvData = `\n${dataToWrite.eventName};${dataToWrite.organizerName};${dataToWrite.eventDate};${dataToWrite.eventLocation}`;
 
   console.log(csvData);
 
@@ -35,18 +35,13 @@ app.post("/write-csv", (req, res) => {
 // Daten aus der CSV-Datei auslesen
 app.get("/read-csv", (req, res) => {
   try {
-    const fileData = fs.readFileSync(csvFilePath, "utf8");
-    const data = [];
+    const fileData = fs.readFileSync(csvFilePath, "utf8").split("\n")
 
-    parse({
-      mapHeaders: ({ header, index }) => header.trim(),
-    })
-      .on("data", (row) => {
-        data.push(row);
-      })
-      .write(fileData);
-    console.log(data);
-    res.send({ data: data });
+    fileData.shift()
+
+    console.log(fileData)
+
+    res.send({ data: fileData });
   } catch (error) {
     console.error("Fehler beim Lesen der CSV-Datei:", error);
     return null;

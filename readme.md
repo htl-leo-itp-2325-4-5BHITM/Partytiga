@@ -1,6 +1,7 @@
 ```bash
 cd ./frontend
 npm install
+npm install rxjs
 npm start
 
 cd ./backend

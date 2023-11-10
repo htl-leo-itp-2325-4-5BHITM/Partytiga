@@ -12,6 +12,7 @@ loadEventsButton.addEventListener("click", loadEvents);
 const successBox = document.getElementById("success")
 const errorBox = document.getElementById("error")
 
+loadEvents()
 
 function addEvent() {
   let eventName: string = (
@@ -85,6 +86,10 @@ async function loadEvents() {
   const response = await fetch("http://localhost:3000/read-csv")
   const evResp: EventsResponse = await response.json();
   const events = evResp.data
-  console.log("events:", events)
+  console.log("events:", events[0])
+
+  const html = document.createElement("div")
+  html.innerHTML = `<h2>${events[0].eventName}</h2>`
+  document.getElementsByTagName('event-table')[0].appendChild(html)
   return events
 }
