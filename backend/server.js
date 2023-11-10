@@ -4,6 +4,8 @@ const app = express();
 const port = 3000;
 const csvFilePath = "./data/data.csv";
 
+const { parse } = require("csv-parse");
+
 const cors = require("cors");
 app.use(cors());
 
@@ -23,27 +25,32 @@ app.post("/write-csv", (req, res) => {
       res.status(500).send("Fehler beim Schreiben der CSV-Datei");
     } else {
       console.log("Daten wurden in die CSV-Datei geschrieben.");
-      res.send("Daten wurden erfolgreich in die CSV-Datei geschrieben.");
+      res
+        .status(200)
+        .send("Daten wurden erfolgreich in die CSV-Datei geschrieben.");
     }
   });
 });
 
 // Daten aus der CSV-Datei auslesen
 app.get("/read-csv", (req, res) => {
-  let isError = false;
-  const dataRead = fs.readFileSync(csvFilePath, (err, data) => {
-    if (err) {
-      console.error("Fehler beim Lesen der CSV-Datei:", err);
-      res.status(500).send("Fehler beim Lesen der CSV-Datei");
-      isError = true;
-    } else {
-      console.log("Daten wurden von der CSV-Datei gelesen.");
-      return data
-    }
-  });
+  try {
+    const fileData = fs.readFileSync(csvFilePath, "utf8");
+    const data = [];
 
-  console.log(dataRead);
-  if (!isError) res.send(JSON.stringify(dataRead));
+    parse({
+      mapHeaders: ({ header, index }) => header.trim(),
+    })
+      .on("data", (row) => {
+        data.push(row);
+      })
+      .write(fileData);
+    console.log(data);
+    res.send({ data: data });
+  } catch (error) {
+    console.error("Fehler beim Lesen der CSV-Datei:", error);
+    return null;
+  }
 });
 
 app.listen(port, () => {

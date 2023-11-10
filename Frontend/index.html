@@ -5,13 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/style.css">
-    <script>var exports = {};</script>
-    <script src="./script.js" defer></script>
     <title>Partytiga</title>
 </head>
 
 <body>
     <h1>Partytiga</h1>
+
+    <div id="success" class="info"><h2>Event erfolgreich gespeichert</h2></div>
+    <div id="error" class="info"><h2>Fehler beim Speichern des Events</h2></div>
+
     <form id="eventForm">
 
         
@@ -45,8 +47,7 @@
     </form>
 
     <h2>Liste:</h2>
-    <ul id="eventList">
-    </ul>
+        <event-table></event-table>
 </body>
 
 </html>
