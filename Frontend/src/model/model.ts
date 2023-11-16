@@ -1,14 +1,14 @@
 import {BehaviorSubject} from "rxjs"
 
 interface Event {
-    eventName:string,
-    organizerName:string,
-    eventDate:string,
-    eventLocation:string
+    readonly eventName:string,
+    readonly organizerName:string,
+    readonly eventDate:string,
+    readonly eventLocation:string
 }
 
 interface EventsResponse {
-    data: Event[]
+    readonly data: Event[]
 }
 
 export interface Model {
