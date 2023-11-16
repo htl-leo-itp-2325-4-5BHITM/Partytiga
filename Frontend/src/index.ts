@@ -38,10 +38,10 @@ function addEvent() {
     eventLocation != ""
   ) {
     const event: Event = {
-      eventName: eventName,
-      organizerName: organizerName,
-      eventDate: eventDate,
-      eventLocation: eventLocation,
+      name: eventName,
+      organization: organizerName,
+      date: eventDate,
+      location: eventLocation,
     };
     console.log(event);
 

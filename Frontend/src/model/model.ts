@@ -1,10 +1,10 @@
 import {BehaviorSubject} from "rxjs"
 
 interface Event {
-    readonly eventName:string,
-    readonly organizerName:string,
-    readonly eventDate:string,
-    readonly eventLocation:string
+    readonly name:string,
+    readonly organization:string,
+    readonly date:string,
+    readonly location:string
 }
 
 interface EventsResponse {

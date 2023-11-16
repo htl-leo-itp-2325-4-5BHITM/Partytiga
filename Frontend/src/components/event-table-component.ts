@@ -3,10 +3,10 @@ import {html, render} from "lit-html"
 
 const rowTemplate = (event: Event) => html`
 <tr>
-    <td>${event.eventName}</td>
-    <td>${event.organizerName}</td>
-    <td>${event.eventDate}</td>
-    <td>${event.eventLocation}</td>
+    <td>${event.name}</td>
+    <td>${event.organization}</td>
+    <td>${event.date}</td>
+    <td>${event.location}</td>
 </tr>
 `
 const template = (events: Event[]) => {
@@ -14,17 +14,18 @@ const template = (events: Event[]) => {
     return html`
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <table class="w3-table w3-striped w3-bordered">
-<caption>Events</caption>
-<thead>
-    <td>Name</td>
-    <td>Organizer</td>
-    <td>Date</td>
-    <td>Location</td>
-
-</thead>
-<tbody>
-    ${rows}
-</tbody>
+    <caption>Events</caption>
+    <thead>
+        <tr>
+        <td>Name</td>
+        <td>Organizer</td>
+        <td>Date</td>
+        <td>Location</td>
+        </tr>
+    </thead>
+    <tbody>
+        ${rows}
+    </tbody>
 </table>
 `
 }
@@ -36,11 +37,11 @@ class EventTableComponent extends HTMLElement {
     connectedCallback() {
         console.log("EventTable loaded")
         store.subscribe(model => {
-            console.log("data changed", model)
             this.render(model.events)
         })
     }
     render(events: Event[]) {
+        console.log("render", events)
         render(template(events), this.shadowRoot)
     }
 }
