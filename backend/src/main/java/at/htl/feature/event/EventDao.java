@@ -9,11 +9,16 @@ import jakarta.persistence.EntityManager;
 @ApplicationScoped
 public class EventDao {
     @Inject
-    EntityManager em;
+    EntityManager entityManager;
+
     public List<Event> all() {
-        return em
+        return entityManager
             .createQuery("select e from Event e", Event.class)
             .getResultList();
+    }
 
+    public void removeEvents(int id){
+        Event event = entityManager.find(Event.class, id);
+        entityManager.remove(event);
     }
 }
