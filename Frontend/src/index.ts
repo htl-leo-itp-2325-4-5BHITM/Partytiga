@@ -5,9 +5,7 @@ import { loadEvents } from "./service/event-service";
 const addEventButton = document.getElementById("addEvent") as HTMLButtonElement;
 addEventButton.addEventListener("click", addEvent);
 
-const loadEventsButton = document.getElementById(
-  "loadEvents"
-) as HTMLButtonElement;
+const loadEventsButton = document.getElementById("loadEvents") as HTMLButtonElement;
 loadEventsButton.addEventListener("click", loadEvents);
 
 const successBox = document.getElementById("success")
@@ -45,7 +43,7 @@ function addEvent() {
     };
     console.log(event);
 
-    fetch("http://localhost:3000/write-csv", {
+    fetch("/api/events/addEvent", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -94,7 +92,5 @@ async function loadEvents() {
   document.getElementsByTagName('event-table')[0].appendChild(html)
   return events
 }
-
-
-
 */
+

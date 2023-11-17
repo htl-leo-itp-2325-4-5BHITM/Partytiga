@@ -23,6 +23,6 @@ public class EventDao {
     }
 
     public void addEvent(Event event){
-        em.add(event);
+        entityManager.persist(event);
     }
 }
