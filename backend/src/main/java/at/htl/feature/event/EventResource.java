@@ -11,6 +11,8 @@ import jakarta.ws.rs.core.Response;
 public class EventResource {
     @Inject
     EventDao eventDao;
+    @Inject
+    EventDao eventDao;
     
     @GET
     public Response all() {
@@ -22,5 +24,13 @@ public class EventResource {
     @Path("/removeEvents/{id}")
     public void removeEvent (@PathParam("id") int id){
         eventDao.removeEvents(id);
+    }
+
+    @POST
+    @Path("/addEvent")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public void addEvent(Event event){
+        eventDao.addEvent(event);
     }
 }

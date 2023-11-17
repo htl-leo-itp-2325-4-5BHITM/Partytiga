@@ -21,4 +21,8 @@ public class EventDao {
         Event event = entityManager.find(Event.class, id);
         entityManager.remove(event);
     }
+
+    public void addEvent(Event event){
+        em.add(event);
+    }
 }
