@@ -5,6 +5,9 @@ import { loadEvents } from "./service/event-service";
 const addEventButton = document.getElementById("addEvent") as HTMLButtonElement;
 addEventButton.addEventListener("click", addEvent);
 
+const removeEventButton = document.getElementById("removeEvent") as HTMLButtonElement;
+removeEventButton.addEventListener("click", removeEvent);
+
 const loadEventsButton = document.getElementById(
   "loadEvents"
 ) as HTMLButtonElement;
@@ -81,6 +84,31 @@ function addEvent() {
     console.log("no");
   }
 }
+
+function removeEvent() {
+
+  fetch("http://localhost:3000/removeEvent", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Event wurde erfolgreich gelöscht.");
+        loadEvents()
+      } else {
+        console.error("Fehler beim Löschen des Events.");
+      }
+    })
+    .catch((error) => {
+      console.error("Fehler beim Löschen des Events.", error);
+    });
+}
+
+
+
+
 /*
 async function loadEvents() {
   console.log("loading");

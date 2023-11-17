@@ -21,6 +21,7 @@ const template = (events: Event[]) => {
         <td>Organizer</td>
         <td>Date</td>
         <td>Location</td>
+        <button>remove</button>
         </tr>
     </thead>
     <tbody>

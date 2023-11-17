@@ -1,16 +1,13 @@
 package at.htl.feature.event;
 
 import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/events")
 public class EventResource {
-    @Inject
-    EventDao eventDao;
     @Inject
     EventDao eventDao;
     
@@ -21,7 +18,8 @@ public class EventResource {
     }
 
     @POST
-    @Path("/removeEvents/{id}")
+    @Path("/removeEvent/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     public void removeEvent (@PathParam("id") int id){
         eventDao.removeEvents(id);
     }
@@ -29,7 +27,6 @@ public class EventResource {
     @POST
     @Path("/addEvent")
     @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
     public void addEvent(Event event){
         eventDao.addEvent(event);
     }
