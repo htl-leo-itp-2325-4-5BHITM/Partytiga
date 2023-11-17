@@ -16,4 +16,8 @@ public class EventDao {
             .getResultList();
 
     }
+
+    public void addEvent(Event event){
+        em.add(event);
+    }
 }
