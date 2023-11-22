@@ -30,4 +30,12 @@ public class EventResource {
     public void addEvent(Event event){
         eventDao.addEvent(event);
     }
+
+    @POST
+    @Path("/updateEvent")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Transactional
+    public void updateEvent(Event event){
+        eventDao.update(event);
+    }
 }
