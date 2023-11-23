@@ -19,7 +19,6 @@ public class EventResource {
 
     @POST
     @Path("/removeEvent/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     public void removeEvent (@PathParam("id") int id){
         eventDao.removeEvents(id);
     }
