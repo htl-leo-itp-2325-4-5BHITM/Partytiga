@@ -18,6 +18,7 @@ public class EventResource {
     }
 
     @POST
+    @Transactional
     @Path("/removeEvent/{id}")
     public void removeEvent (@PathParam("id") int id){
         eventDao.removeEvents(id);
@@ -25,6 +26,7 @@ public class EventResource {
 
     @POST
     @Path("/addEvent")
+    @Transactional
     @Produces(MediaType.APPLICATION_JSON)
     public void addEvent(Event event){
         eventDao.addEvent(event);

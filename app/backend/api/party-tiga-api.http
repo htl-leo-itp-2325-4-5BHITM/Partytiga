@@ -1,8 +1,8 @@
 GET http://localhost:4200/api/events
 
 ###
-GET http://localhost:8080/events
+GET http://localhost:8080/api/events
 
 ###
-POST http://localhost:8080/events/removeEvent/2
+POST http://localhost:8080/api/events/removeEvent/1
 
