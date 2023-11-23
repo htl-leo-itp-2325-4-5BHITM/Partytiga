@@ -6,3 +6,26 @@ GET http://localhost:8080/api/events
 ###
 POST http://localhost:8080/api/events/removeEvent/1
 
+###
+POST http://localhost:8080/api/events/addEvent
+Content-Type: application/json
+
+{
+    "name": "HAK-Ball",
+    "organization": "Bauer",
+    "date": "2024-05-10",
+    "location": "Brucknerhaus"
+ }
+
+###
+POST http://localhost:8080/api/events/updateEvent
+Content-Type: application/json
+
+{
+  "id": 3,
+  "name": "HAK-Ball",
+  "organization": "Müller",
+  "date": "2024-05-25",
+  "location": "Brucknerhaus"
+}
+
