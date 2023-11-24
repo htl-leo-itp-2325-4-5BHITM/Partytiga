@@ -3,7 +3,7 @@ import "./components/event-table-component"
 import { loadEvents } from "./service/event-service";
 
 const addEventButton = document.getElementById("addEvent") as HTMLButtonElement;
-addEventButton.addEventListener("click", addEvent);
+  addEventButton.addEventListener("click", addEvent);
 
 const removeEventButton = document.getElementById("removeEvent") as HTMLButtonElement;
 removeEventButton.addEventListener("click", removeEvent);
@@ -55,7 +55,7 @@ function addEvent() {
     })
       .then((response) => {
         if (response.ok) {
-          console.log("Daten wurden in die CSV-Datei geschrieben.");
+          console.log("Erfolgreiche Datenübertragung ins backend!");
           (
             document.getElementById("eventName") as HTMLInputElement
           ).value = "";
@@ -76,8 +76,6 @@ function addEvent() {
       .catch((error) => {
         console.error("Fehler beim Schreiben der Daten:", error);
       });
-
-    console.log("Daten erfolgreich in die CSV-Datei geschrieben.");
   } else {
     console.log("no");
   }
