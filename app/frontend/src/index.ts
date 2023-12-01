@@ -3,8 +3,7 @@ import "./components/event-table-component";
 import { loadEvents } from "./service/event-service";
 
 const addEventButton = document.getElementById("addEvent") as HTMLButtonElement;
-console.log(addEventButton)
-addEventButton.addEventListener("click", addEvent);
+  addEventButton.addEventListener("click", addEvent);
 
 const modal = document.getElementById("myModal");
 
@@ -77,14 +76,20 @@ function addEvent() {
     })
       .then((response) => {
         if (response.ok) {
-          console.log("Daten wurden in die CSV-Datei geschrieben.");
-          (document.getElementById("eventName") as HTMLInputElement).value = "";
-          (document.getElementById("organizerName") as HTMLInputElement).value =
-            "";
-          (document.getElementById("eventDate") as HTMLInputElement).value = "";
-          (document.getElementById("eventLocation") as HTMLInputElement).value =
-            "";
-          loadEvents();
+          console.log("Erfolgreiche Datenübertragung ins backend!");
+          (
+            document.getElementById("eventName") as HTMLInputElement
+          ).value = "";
+          (
+            document.getElementById("organizerName") as HTMLInputElement
+          ).value = "";
+          (
+            document.getElementById("eventDate") as HTMLInputElement
+          ).value = "";
+          (
+            document.getElementById("eventLocation") as HTMLInputElement
+          ).value = "";
+          loadEvents()
         } else {
           console.error("Fehler beim Speichern der Daten.");
         }
@@ -92,8 +97,6 @@ function addEvent() {
       .catch((error) => {
         console.error("Fehler beim Speichern der Daten:", error);
       });
-
-    console.log("Daten erfolgreich gespeichert.");
   } else {
     console.log("no");
   }
