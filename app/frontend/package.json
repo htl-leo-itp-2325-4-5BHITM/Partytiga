@@ -11,9 +11,15 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "css-loader": "^6.8.1",
     "html-webpack-plugin": "^5.5.3",
     "json-server": "^0.17.4",
     "lit-html": "^3.1.0",
+    "postcss-loader": "^7.3.3",
+    "sass": "^1.69.5",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
     "ts-loader": "^9.5.0",
     "typescript": "^5.2.2",
     "webpack": "^5.89.0",
@@ -21,6 +27,7 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
     "immer": "^10.0.3",
     "rxjs": "^7.8.1"
   }
