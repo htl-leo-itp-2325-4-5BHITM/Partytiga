@@ -7,6 +7,7 @@ const rowTemplate = (event: Event) => html`
     <td>${event.organization}</td>
     <td>${event.date}</td>
     <td>${event.location}</td>
+    <button id="removeEvent">remove</button>
 </tr>
 `
 const template = (events: Event[]) => {

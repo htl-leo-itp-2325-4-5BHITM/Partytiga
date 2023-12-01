@@ -2,7 +2,7 @@ import { Event, Model } from "Model/model"
 import {store} from "../model/model"
 import { produce } from "immer"
 
-const EVENTS_URL = "http://localhost:4200/api/events"
+const EVENTS_URL = "/api/events"
 
 async function loadEvents() {
     const response = await fetch(EVENTS_URL)
