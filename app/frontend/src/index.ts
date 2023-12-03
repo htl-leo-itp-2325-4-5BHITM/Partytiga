@@ -60,6 +60,7 @@ function addEvent() {
     eventLocation != ""
   ) {
     const event: Event = {
+      id: null,
       name: eventName,
       organization: organizerName,
       date: eventDate,
@@ -103,12 +104,14 @@ function addEvent() {
   closeModal()
 }
 
-function removeEvent() {
-  fetch("http://localhost:3000/removeEvent", {
+export function removeEvent(id: Number) {
+  console.log(JSON.stringify({id}));
+  fetch("/api/events/removeEvent/${id}", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
+    body: JSON.stringify(id),
   })
     .then((response) => {
       if (response.ok) {

@@ -1,14 +1,18 @@
 import {Event, store} from "../model/model"
 import {html, render} from "lit-html"
+import { removeEvent } from "../index"
+
 
 const rowTemplate = (event: Event) => html`
+<div>
 <tr>
     <td>${event.name}</td>
     <td>${event.organization}</td>
     <td>${event.date}</td>
     <td>${event.location}</td>
-    <button id="removeEvent">remove</button>
 </tr>
+    <button @click=${() => removeEvent(event.id)}>remove</button>
+</div>
 `
 const template = (events: Event[]) => {
     const rows = events.map(rowTemplate)

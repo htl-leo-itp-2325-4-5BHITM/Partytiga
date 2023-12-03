@@ -1,6 +1,7 @@
 import {BehaviorSubject} from "rxjs"
 
 interface Event {
+    readonly id:Number,
     readonly name:string,
     readonly organization:string,
     readonly date:string,
