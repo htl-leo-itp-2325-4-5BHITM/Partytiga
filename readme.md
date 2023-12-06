@@ -7,7 +7,6 @@ npm start
 
 Datenbank starten (postgres... -> bei jedem eigener ordner)
 minikube start
-cd ./backend/k8s
 kubectl get pods
 
 minikube dashboard

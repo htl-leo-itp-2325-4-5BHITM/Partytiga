@@ -106,12 +106,8 @@ function addEvent() {
 
 export function removeEvent(id: Number) {
   console.log(JSON.stringify({id}));
-  fetch("/api/events/removeEvent/${id}", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(id),
+  fetch(`/api/events/removeEvent/${id}`, {
+    method: "POST"
   })
     .then((response) => {
       if (response.ok) {
