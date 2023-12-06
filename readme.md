@@ -12,4 +12,9 @@ kubectl get pods
 
 minikube dashboard
 
+
+ngrok url
+installation: https://www.youtube.com/watch?v=aFwrNSfthxU
+ngrok starten: ngrok http 4200 --host-header="localhost:4200"
+
 ```
