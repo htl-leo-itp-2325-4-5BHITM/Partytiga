@@ -39,6 +39,6 @@ public class EventResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     public void updateEvent(Event event){
-        eventDao.update(event);
+        eventDao.updateEvent(event);
     }
 }

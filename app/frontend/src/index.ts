@@ -3,7 +3,7 @@ import "./components/event-table-component";
 import { loadEvents } from "./service/event-service";
 
 const addEventButton = document.getElementById("addEvent") as HTMLButtonElement;
-  addEventButton.addEventListener("click", addEvent);
+addEventButton.addEventListener("click", addEvent);
 
 const modal = document.getElementById("myModal");
 
@@ -18,7 +18,7 @@ const errorBox = document.getElementById("error");
 
 loadEvents();
 
-function openModal () {
+function openModal() {
   modal.classList.add("open")
 }
 
@@ -29,7 +29,7 @@ function closeModal() {
 }
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
+window.onclick = function (event) {
   if (event.target == modal) {
     //modal.style.display = "none";
     modal.classList.remove("open")
@@ -104,8 +104,76 @@ function addEvent() {
   closeModal()
 }
 
+export function updateEvent(event: Event) {
+
+  
+
+  let eventName: string = (
+    document.getElementById("eventName") as HTMLInputElement
+  ).value;
+  let organizerName: string = (
+    document.getElementById("organizerName") as HTMLInputElement
+  ).value;
+  let eventDate: string = (
+    document.getElementById("eventDate") as HTMLInputElement
+  ).value;
+  let eventLocation: string = (
+    document.getElementById("eventLocation") as HTMLInputElement
+  ).value;
+
+  if (
+    eventName != "" &&
+    organizerName != "" &&
+    eventDate != "" &&
+    eventLocation != ""
+  ) {
+    const updatedEvent: Event = {
+      id: null,
+      name: eventName,
+      organization: organizerName,
+      date: eventDate,
+      location: eventLocation,
+    };
+    console.log(updatedEvent);
+
+    fetch("/api/events/updateEvent", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(event),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Erfolgreiche Datenübertragung ins backend!");
+          (
+            document.getElementById("eventName") as HTMLInputElement
+          ).value = "";
+          (
+            document.getElementById("organizerName") as HTMLInputElement
+          ).value = "";
+          (
+            document.getElementById("eventDate") as HTMLInputElement
+          ).value = "";
+          (
+            document.getElementById("eventLocation") as HTMLInputElement
+          ).value = "";
+          loadEvents()
+        } else {
+          console.error("Fehler beim Updaten der Daten.");
+        }
+      })
+      .catch((error) => {
+        console.error("Fehler beim Updaten der Daten:", error);
+      });
+  } else {
+    console.log("no");
+  }
+  openModal()
+}
+
 export function removeEvent(id: Number) {
-  console.log(JSON.stringify({id}));
+  console.log(JSON.stringify({ id }));
   fetch("/api/events/removeEvent/${id}", {
     method: "POST",
     headers: {

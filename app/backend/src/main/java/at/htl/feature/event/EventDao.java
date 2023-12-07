@@ -26,7 +26,7 @@ public class EventDao {
         entityManager.persist(event);
     }
 
-    public void update(Event event){
+    public void updateEvent(Event event){
         Event findEvent = entityManager.find(Event.class, event.getId());
         if(findEvent != null){
             entityManager.merge(event);

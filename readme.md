@@ -5,7 +5,7 @@ npm install rxjs
 npm start
 
 
-Datenbank starten starten (postgres... -> bei jedem eigener ordner)
+Datenbank starten (postgres... -> bei jedem eigener ordner)
 minikube start
 cd ./backend/k8s
 kubectl get pods
