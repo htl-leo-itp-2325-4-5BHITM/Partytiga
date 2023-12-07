@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Maven: io.vertx:vertx-uri-template:4.4.6" type="java-imported" external-system-id="Maven">
+    <properties groupId="io.vertx" artifactId="vertx-uri-template" version="4.4.6" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/vertx/vertx-uri-template/4.4.6/vertx-uri-template-4.4.6.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/io/vertx/vertx-uri-template/4.4.6/vertx-uri-template-4.4.6-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/vertx/vertx-uri-template/4.4.6/vertx-uri-template-4.4.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
