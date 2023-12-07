@@ -19,7 +19,6 @@ public class EventResource {
 
     @POST
     @Transactional
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("/removeEvent/{id}")
     public void removeEvent (@PathParam("id") String id){
         int eventId = Integer.parseInt(id);
