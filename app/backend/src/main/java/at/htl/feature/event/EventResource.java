@@ -6,7 +6,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/events")
+@Path("/api/events")
 public class EventResource {
     @Inject
     EventDao eventDao;
