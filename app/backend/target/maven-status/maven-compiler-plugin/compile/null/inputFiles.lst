@@ -1,13 +1,5 @@
-<<<<<<< HEAD
-C:\DATA\SCHULE\HTL_Leonding\4Klasse\ITP\Eventplaner_Projekt\Partytiga\Partytiga\app\backend\src\main\java\at\htl\feature\event\Event.java
-C:\DATA\SCHULE\HTL_Leonding\4Klasse\ITP\Eventplaner_Projekt\Partytiga\Partytiga\app\backend\src\main\java\at\htl\feature\event\EventResource.java
-C:\DATA\SCHULE\HTL_Leonding\4Klasse\ITP\Eventplaner_Projekt\Partytiga\Partytiga\app\backend\src\main\java\at\htl\feature\event\EventDao.java
-C:\DATA\SCHULE\HTL_Leonding\4Klasse\ITP\Eventplaner_Projekt\Partytiga\Partytiga\app\backend\src\main\java\at\htl\feature\event\EventDto.java
-C:\DATA\SCHULE\HTL_Leonding\4Klasse\ITP\Eventplaner_Projekt\Partytiga\Partytiga\app\backend\src\main\java\at\htl\feature\event\EventMapper.java
-=======
 C:\Users\seker\OneDrive\Dokumente\GitHub\Partytiga\app\backend\src\main\java\at\htl\feature\event\EventDao.java
 C:\Users\seker\OneDrive\Dokumente\GitHub\Partytiga\app\backend\src\main\java\at\htl\feature\event\EventResource.java
 C:\Users\seker\OneDrive\Dokumente\GitHub\Partytiga\app\backend\src\main\java\at\htl\feature\event\EventMapper.java
 C:\Users\seker\OneDrive\Dokumente\GitHub\Partytiga\app\backend\src\main\java\at\htl\feature\event\Event.java
 C:\Users\seker\OneDrive\Dokumente\GitHub\Partytiga\app\backend\src\main\java\at\htl\feature\event\EventDto.java
->>>>>>> 0755aac05f5f6e69ad7e0171a8132a13a3c35041

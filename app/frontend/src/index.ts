@@ -104,10 +104,9 @@ function addEvent() {
   closeModal()
 }
 
-export function updateEvent(event: Event) {
+export function updateEvent(eventId: Number, event: Event) {
 
-  
-
+  console.log(eventId)
   let eventName: string = (
     document.getElementById("eventName") as HTMLInputElement
   ).value;

@@ -6,6 +6,8 @@ const EVENTS_URL = "/api/events"
 
 async function loadEvents() {
     const response = await fetch(EVENTS_URL)
+
+    console.log("API response:", response);
     const events: Event[] = await response.json()
     const model: Model = {
         events
