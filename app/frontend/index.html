@@ -50,6 +50,40 @@
     </div>
   </div>
 
+  <div id="myModalUpdate" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <i class="fa-regular fa-rectangle-xmark" id="closeUpdate"></i>
+      <form id="eventForm">
+        <label for="eventName">Name des Events:</label>
+        <input type="text" id="eventNameUpdate" required />
+
+        <br />
+        <br />
+
+        <label for="organizerName">Name des Veranstalters:</label>
+        <input type="text" id="organizerNameUpdate" required />
+
+        <br />
+        <br />
+
+        <label for="eventDate">Datum:</label>
+        <input type="date" id="eventDateUpdate" required />
+
+        <br />
+        <br />
+
+        <label for="eventLocation">Adresse:</label>
+        <input type="text" id="eventLocationUpdate" required />
+
+        <br />
+        <br />
+
+        <button type="button" id="updateEvent">Update</button>
+      </form>
+    </div>
+  </div>
+
   <h2>Liste:</h2>
 
   <event-table></event-table>

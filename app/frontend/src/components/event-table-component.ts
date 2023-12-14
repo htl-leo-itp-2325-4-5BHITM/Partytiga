@@ -1,7 +1,7 @@
 import {Event, store} from "../model/model"
 import {html, render} from "lit-html"
 import { updateEvent, removeEvent } from "../index"
-
+//addEvent
 
 const rowTemplate = (event: Event) => html`
 <div>
@@ -12,7 +12,7 @@ const rowTemplate = (event: Event) => html`
     <td>${event.location}</td>
 </tr>
     <button @click=${() => removeEvent(event.id)}>remove</button>
-    <button id="openModalButton" @click=${() => updateEvent(event.id,event)}>edit</button>
+    <button id="openUpdateModalButton" @click=${() => updateEvent(event.id,event)}>edit</button>
 </div>
 `
 const template = (events: Event[]) => {
