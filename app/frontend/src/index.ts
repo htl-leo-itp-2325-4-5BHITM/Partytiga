@@ -6,9 +6,11 @@ import { animationFrameScheduler } from "rxjs";
 const addEventButton = document.getElementById("addEvent") as HTMLButtonElement;
 addEventButton.addEventListener("click", addEvent);
 
+const updateEventButton = document.getElementById('updateEvent') as HTMLButtonElement
 
-const removeEventButton = document.getElementById("removeEvent") as HTMLButtonElement;
-addEventButton.addEventListener("click", () => removeEvent);
+const removeEventButton = document.getElementById(
+  "removeEvent"
+) as HTMLButtonElement;
 
 const modal = document.getElementById("myModal");
 
@@ -16,10 +18,20 @@ const modal = document.getElementById("myModal");
 const closeButton = document.getElementById("close");
 closeButton.addEventListener("click", closeModal);
 
-const openModalButton = document.getElementById("openModalButton");
-openModalButton.addEventListener("click", openModal);
+const openModalButton = document.getElementById("addNewEvent");
+openModalButton.addEventListener("click", openNewEvent);
 
 loadEvents();
+
+function openNewEvent() {
+  if(updateEventButton.classList.contains("show")) {
+    updateEventButton.classList.remove("show")
+  }
+  if(!addEventButton.classList.contains("show")) {
+    addEventButton.classList.add("show")
+  }
+  openModal()
+}
 
 function openModal() {
   modal.classList.add("open");
@@ -30,6 +42,9 @@ function openModal() {
 function closeModal() {
   resetForm();
   modal.classList.remove("open");
+  if (!removeEventButton.classList.contains("newEventDeleteButton")) {
+    removeEventButton.classList.add("newEventDeleteButton");
+  }
 }
 
 // When the user clicks anywhere outside of the modal, close it
@@ -37,6 +52,9 @@ window.onclick = function (event) {
   if (event.target == modal) {
     resetForm();
     modal.classList.remove("open");
+    if (!removeEventButton.classList.contains("newEventDeleteButton")) {
+      removeEventButton.classList.add("newEventDeleteButton");
+    }
   }
 };
 
@@ -106,13 +124,16 @@ export function addEvent() {
 
 export function alterEvent(event: Event) {
   openModal();
-  changeSaveButton(event);
+  if(addEventButton.classList.contains("show")) {
+    addEventButton.classList.remove("show")
+  }
+  if(!updateEventButton.classList.contains("show")) {
+    updateEventButton.classList.add("show")
+  }
   displayEventData(event);
-}
-
-function changeSaveButton(event: Event) {
-  addEventButton.removeEventListener("click", addEvent);
-  addEventButton.addEventListener("click", () => updateEvent(event));
+  updateEventButton.addEventListener("click", () => updateEvent(event))
+  removeEventButton.addEventListener("click", () => removeEvent(event));
+  removeEventButton.classList.remove("newEventDeleteButton");
 }
 
 export function updateEvent(event: Event) {
@@ -186,9 +207,9 @@ function displayEventData(event: Event) {
     event.location;
 }
 
-export function removeEvent(id: Number) {
-  console.log(id);
-  fetch(`/api/events/removeEvent/${id}`, {
+export function removeEvent(event: Event) {
+  console.log(event.id);
+  fetch(`/api/events/removeEvent/${event.id}`, {
     method: "POST",
   })
     .then((response) => {
@@ -202,4 +223,5 @@ export function removeEvent(id: Number) {
     .catch((error) => {
       console.error("Fehler beim Löschen des Events.", error);
     });
+  closeModal();
 }

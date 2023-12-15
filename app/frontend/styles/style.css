@@ -92,7 +92,7 @@ form{
     cursor: pointer;
   }
 
-  #openModalButton{
+  #addNewEvent{
     cursor: pointer;
     position: absolute;
     display: grid;
@@ -105,12 +105,12 @@ form{
     align-items: center;
 }
 
-#openModalButton:hover {
+#addNewEvent:hover {
     border: #7c7c7c solid 2px;
     border-radius: 5px;
 }
 
-#openModalButton > h2 {
+#addNewEvent > h2 {
     margin: 0;
     font-size: medium;
 }
@@ -119,4 +119,21 @@ form{
     margin-left: 96%;
     font-size: x-large;
     cursor: pointer;
+  }
+
+  .newEventDeleteButton{
+    display: none;
+  }
+
+  .saveButton {
+    display: none;
+    margin-right: 0.5vw;
+  }
+
+  .saveButton.show {
+    display: block;
+  }
+
+  #buttonBox{
+    display: flex;
   }
