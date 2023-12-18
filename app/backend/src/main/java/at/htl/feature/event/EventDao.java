@@ -28,8 +28,12 @@ public class EventDao {
 
     public void updateEvent(Event event){
         Event findEvent = entityManager.find(Event.class, event.getId());
+        System.out.println(findEvent);
         if(findEvent != null){
-            entityManager.merge(event);
+            findEvent.setName(event.name);
+            findEvent.setDate(event.date);
+            findEvent.setOrganization(event.organization);
+            findEvent.setLocation(event.location);
         }
     }
 }
