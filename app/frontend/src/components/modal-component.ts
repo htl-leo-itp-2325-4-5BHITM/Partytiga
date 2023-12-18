@@ -1,9 +1,8 @@
 import { html, render } from "lit-html";
 
 const template = (events: Event[]) => {
-  
   return html`
-  <div id="myModal" class="modal">
+    <div id="myModal" class="modal">
       <!-- Modal content -->
       <div class="modal-content">
         <i class="fa-regular fa-rectangle-xmark" id="close"></i>
@@ -37,20 +36,20 @@ const template = (events: Event[]) => {
         </form>
       </div>
     </div>
-  `
+  `;
 };
 
 class ModalComponent extends HTMLElement {
-    constructor() {
-      super();
-      this.attachShadow({ mode: "open" });
-    }
-    connectedCallback() {
-      console.log("Modal Dialog loaded");
-    }
-    render(events: Event[]) {
-      console.log("render", events);
-      render(template(events), this.shadowRoot);
-    }
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
   }
-  customElements.define("modal-dialog", ModalComponent);
+  connectedCallback() {
+    console.log("Modal Dialog loaded");
+  }
+  render(events: Event[]) {
+    console.log("render", events);
+    render(template(events), this.shadowRoot);
+  }
+}
+customElements.define("modal-dialog", ModalComponent);

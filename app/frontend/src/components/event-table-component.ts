@@ -25,11 +25,9 @@ const template = (events: Event[]) => {
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
 
     <style>
-    
-      .tableRow{
-        cursor:pointer;
+      .tableRow {
+        cursor: pointer;
       }
-    
     </style>
 
     <table class="w3-table w3-striped w3-bordered w3-hoverable">

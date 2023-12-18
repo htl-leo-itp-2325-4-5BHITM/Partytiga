@@ -3,10 +3,21 @@ import "./components/event-table-component";
 import { loadEvents } from "./service/event-service";
 import { animationFrameScheduler } from "rxjs";
 
+const eventNameField = document.getElementById("eventName") as HTMLInputElement;
+const eventOrganizerField = document.getElementById(
+  "organizerName"
+) as HTMLInputElement;
+const eventDateField = document.getElementById("eventDate") as HTMLInputElement;
+const eventLocationField = document.getElementById(
+  "eventLocation"
+) as HTMLInputElement;
+
 const addEventButton = document.getElementById("addEvent") as HTMLButtonElement;
 addEventButton.addEventListener("click", addEvent);
 
-const updateEventButton = document.getElementById('updateEvent') as HTMLButtonElement
+const updateEventButton = document.getElementById(
+  "updateEvent"
+) as HTMLButtonElement;
 
 const removeEventButton = document.getElementById(
   "removeEvent"
@@ -24,13 +35,13 @@ openModalButton.addEventListener("click", openNewEvent);
 loadEvents();
 
 function openNewEvent() {
-  if(updateEventButton.classList.contains("show")) {
-    updateEventButton.classList.remove("show")
+  if (updateEventButton.classList.contains("show")) {
+    updateEventButton.classList.remove("show");
   }
-  if(!addEventButton.classList.contains("show")) {
-    addEventButton.classList.add("show")
+  if (!addEventButton.classList.contains("show")) {
+    addEventButton.classList.add("show");
   }
-  openModal()
+  openModal();
 }
 
 function openModal() {
@@ -61,18 +72,10 @@ window.onclick = function (event) {
 export function addEvent() {
   console.log("addEvent start");
 
-  let eventName: string = (
-    document.getElementById("eventName") as HTMLInputElement
-  ).value;
-  let organizerName: string = (
-    document.getElementById("organizerName") as HTMLInputElement
-  ).value;
-  let eventDate: string = (
-    document.getElementById("eventDate") as HTMLInputElement
-  ).value;
-  let eventLocation: string = (
-    document.getElementById("eventLocation") as HTMLInputElement
-  ).value;
+  let eventName: string = eventNameField.value;
+  let organizerName: string = eventOrganizerField.value;
+  let eventDate: string = eventDateField.value;
+  let eventLocation: string = eventLocationField.value;
 
   console.log("yes");
 
@@ -102,12 +105,7 @@ export function addEvent() {
         console.log(response);
         if (response.ok) {
           console.log("Erfolgreiche Datenübertragung ins backend!");
-          (document.getElementById("eventName") as HTMLInputElement).value = "";
-          (document.getElementById("organizerName") as HTMLInputElement).value =
-            "";
-          (document.getElementById("eventDate") as HTMLInputElement).value = "";
-          (document.getElementById("eventLocation") as HTMLInputElement).value =
-            "";
+          resetForm();
           loadEvents();
         } else {
           console.error("Fehler beim Speichern der Daten.");
@@ -124,31 +122,23 @@ export function addEvent() {
 
 export function alterEvent(event: Event) {
   openModal();
-  if(addEventButton.classList.contains("show")) {
-    addEventButton.classList.remove("show")
+  if (addEventButton.classList.contains("show")) {
+    addEventButton.classList.remove("show");
   }
-  if(!updateEventButton.classList.contains("show")) {
-    updateEventButton.classList.add("show")
+  if (!updateEventButton.classList.contains("show")) {
+    updateEventButton.classList.add("show");
   }
   displayEventData(event);
-  updateEventButton.addEventListener("click", () => updateEvent(event))
+  updateEventButton.addEventListener("click", () => updateEvent(event));
   removeEventButton.addEventListener("click", () => removeEvent(event));
   removeEventButton.classList.remove("newEventDeleteButton");
 }
 
 export function updateEvent(event: Event) {
-  let eventName: string = (
-    document.getElementById("eventName") as HTMLInputElement
-  ).value;
-  let organizerName: string = (
-    document.getElementById("organizerName") as HTMLInputElement
-  ).value;
-  let eventDate: string = (
-    document.getElementById("eventDate") as HTMLInputElement
-  ).value;
-  let eventLocation: string = (
-    document.getElementById("eventLocation") as HTMLInputElement
-  ).value;
+  let eventName: string = eventNameField.value;
+  let organizerName: string = eventOrganizerField.value;
+  let eventDate: string = eventDateField.value;
+  let eventLocation: string = eventLocationField.value;
 
   console.log("clicked update button");
   if (
@@ -191,20 +181,18 @@ export function updateEvent(event: Event) {
 
 function resetForm() {
   // Zurücksetzen der Formularfelder
-  (document.getElementById("eventName") as HTMLInputElement).value = "";
-  (document.getElementById("organizerName") as HTMLInputElement).value = "";
-  (document.getElementById("eventDate") as HTMLInputElement).value = "";
-  (document.getElementById("eventLocation") as HTMLInputElement).value = "";
+  eventNameField.value = "";
+  eventOrganizerField.value = "";
+  eventDateField.value = "";
+  eventLocationField.value = "";
 }
 
 function displayEventData(event: Event) {
   console.log("display data");
-  (document.getElementById("eventName") as HTMLInputElement).value = event.name;
-  (document.getElementById("organizerName") as HTMLInputElement).value =
-    event.organization;
-  (document.getElementById("eventDate") as HTMLInputElement).value = event.date;
-  (document.getElementById("eventLocation") as HTMLInputElement).value =
-    event.location;
+  eventNameField.value = event.name;
+  eventOrganizerField.value = event.organization;
+  eventDateField.value = event.date;
+  eventLocationField.value = event.location;
 }
 
 export function removeEvent(event: Event) {
