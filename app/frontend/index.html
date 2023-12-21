@@ -1,67 +1,66 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./styles/style.css" />
-    <script
-      src="https://kit.fontawesome.com/c77a38666b.js"
-      crossorigin="anonymous"
-    ></script>
-    <title>Partytiga</title>
-  </head>
 
-  <body>
-    <div id="addNewEvent">
-      <i class="fa-solid fa-plus"></i>
-      <h2>Add Event</h2>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./styles/style.css" />
+  <script src="https://kit.fontawesome.com/c77a38666b.js" crossorigin="anonymous"></script>
+  <title>Partytiga</title>
+</head>
+
+<body>
+  <div id="addNewEvent">
+    <i class="fa-solid fa-plus"></i>
+    <h2>Add Event</h2>
+  </div>
+  <h1>Partytiga</h1>
+
+  <div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <i class="fa-regular fa-rectangle-xmark" id="close"></i>
+      <form id="eventForm">
+        <label for="eventName">Name des Events</label>
+        <input type="text" id="eventName" required />
+
+        <br />
+        <br />
+
+        <label for="organizerName">Name des Veranstalters</label>
+        <input type="text" id="organizerName" required />
+
+        <br />
+        <br />
+
+        <label for="eventDate">Datum</label>
+        <input type="date" id="eventDate" required />
+
+        <br />
+        <br />
+
+        <label for="eventLocation">Adresse</label>
+        <input type="text" id="eventLocation" required />
+
+        <br />
+        <br />
+
+        <div id="buttonBox"></div>
+        <button type="button" id="addEvent" class="saveButton">
+          Speichern
+        </button>
+        <button type="button" id="updateEvent" class="saveButton">
+          Update
+        </button>
+        <button type="button" id="removeEvent" class="deleteButton">
+          Löschen
+        </button>
     </div>
-    <h1>Partytiga</h1>
+    </form>
+  </div>
+  </div>
 
-    <div id="myModal" class="modal">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <i class="fa-regular fa-rectangle-xmark" id="close"></i>
-        <form id="eventForm">
-          <label for="eventName">Name des Events:</label>
-          <input type="text" id="eventName" required />
+  <event-table></event-table>
+</body>
 
-          <br />
-          <br />
-
-          <label for="organizerName">Name des Veranstalters:</label>
-          <input type="text" id="organizerName" required />
-
-          <br />
-          <br />
-
-          <label for="eventDate">Datum:</label>
-          <input type="date" id="eventDate" required />
-
-          <br />
-          <br />
-
-          <label for="eventLocation">Adresse:</label>
-          <input type="text" id="eventLocation" required />
-
-          <br />
-          <br />
-
-          <div id="buttonBox">
-            <button type="button" id="addEvent" class="saveButton">
-              Speichern
-            </button>
-            <button type="button" id="updateEvent" class="saveButton">
-              Update
-            </button>
-            <button type="button" id="removeEvent" class="newEventDeleteButton">
-              Löschen
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <event-table></event-table>
-  </body>
 </html>

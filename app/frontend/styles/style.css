@@ -1,12 +1,14 @@
 html{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    text-align: center;
-    color: rgb(80, 0, 154);
+    
 }
 
 h1{
-    margin-top: 10vh;
-    margin-bottom: 6vh;
+    text-transform: uppercase;
+    letter-spacing: 1vw;
+    font-size: 10vh;
+    color: rgb(80, 0, 154);
+    text-align: center;
 }
 
 h2{
@@ -28,12 +30,6 @@ button{
     cursor: pointer;
 }
 
-form{
-    width: 90vw;
-    margin: auto;
-    text-align: left;
-    padding: 3rem;
-}
 
 .info{
     position: absolute;
@@ -71,43 +67,123 @@ form{
   .modal-content {
     background-color: #fefefe;
     margin: auto;
-    padding: 20px;
+    padding: 5vh 3vw;
     border: 1px solid #888;
-    width: 80%;
+    width: 30vw;
     border-radius: 10px;
   }
-  
-  /* The Close Button */
-  .close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+
+  /* modal form*/ 
+  form{
+    width: 100%;
+    margin: auto;
+    text-align: left;
+}
+
+/* modal labels*/
+form label {
+  display: block;
+  font-size: 1.7vh;
+  text-transform: uppercase;
+  margin-bottom: 1vh;
+}
+
+/* modal inputs*/
+
+form #eventName, #organizerName, #eventLocation{
+  width: 80%;
+  background-color: rgb(242, 242, 242);
+  border-color: rgb(242, 242, 242);
+  padding: 1vh 0.5vw;
+  margin-bottom: 1vh;
+}
+
+form #eventDate {
+  background-color: rgb(242, 242, 242);
+  border-color: rgb(242, 242, 242);
+  margin-bottom: 1vh;
+}
+
+  /* button box */
+  #buttonBox{
+    display: flex;
   }
   
-  .close:hover,
-  .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
+  /* close button */
+ #close {
+  color: rgb(80, 0, 154);
+  margin-left: 96%;
+  font-size: x-large;
+  cursor: pointer;
+ }
+  
+ #close:hover {
+  color:rgba(80, 0, 154, 0.781);
+ }
+
+  /* save and update button*/
+  .saveButton {
+    width: 7vw;
+    background: rgb(80, 0, 154);
+    border-radius: 1vh;
+    color: white;
+    padding: 0.6vw 1.4vh;
+    margin-top: 1vh;
+    box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
+    transition: background-color .6s ease;
+    overflow: hidden;
+    border-color:none;
+    display: none;
   }
 
+  .saveButton:hover{
+    background: rgba(80, 0, 154, 0.781);
+  }
+
+  .saveButton.show {
+    display: block;
+  }
+
+  /* delete button*/
+  .deleteButton {
+    width: 7vw;
+    background: rgb(80, 0, 154);
+    border-radius: 1vh;
+    color: white;
+    padding: 0.6vw 1.4vh;
+    margin-top: 1vh;
+    box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
+    transition: background-color .6s ease;
+    overflow: hidden;
+    border-color:none;
+  }
+
+  .deleteButton:hover{
+    background: rgb(80, 0, 154);
+  }
+
+  /* add button*/
   #addNewEvent{
     cursor: pointer;
     position: absolute;
     display: grid;
-    grid-template-columns: 30% 70%;
-    margin-left: 80%;
-    margin-top: -0.5%;
-    width: 7%;
-    height: 3vh;
-    padding: 1%;
-    align-items: center;
+    text-align: center;
+    grid-template-columns: 20% 80%;
+    width: 8vw;
+    background: rgb(80, 0, 154);
+    border-radius: 1vh;
+    color: white;
+    padding: 1vw 2vh;
+    margin-left: 85%;
+    margin-top: 1%;
+    box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
+    transition: background-color .6s ease;
+    overflow: hidden;
+    border-color:none;
 }
 
 #addNewEvent:hover {
-    border: #7c7c7c solid 2px;
-    border-radius: 5px;
+  background: rgba(80, 0, 154, 0.781);
 }
 
 #addNewEvent > h2 {
@@ -115,25 +191,16 @@ form{
     font-size: medium;
 }
 
-  #close {
-    margin-left: 96%;
-    font-size: x-large;
-    cursor: pointer;
-  }
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
 
-  .newEventDeleteButton{
-    display: none;
-  }
-
-  .saveButton {
-    display: none;
-    margin-right: 0.5vw;
-  }
-
-  .saveButton.show {
-    display: block;
-  }
-
-  #buttonBox{
-    display: flex;
-  }
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
