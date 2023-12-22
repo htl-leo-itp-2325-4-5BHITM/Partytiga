@@ -162,6 +162,10 @@ form #eventDate {
     background: rgb(80, 0, 154);
   }
 
+  .newEventDeleteButton{
+    display: none;
+  }
+
   /* add button*/
   #addNewEvent{
     cursor: pointer;

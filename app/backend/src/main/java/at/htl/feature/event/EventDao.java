@@ -13,7 +13,7 @@ public class EventDao {
 
     public List<Event> all() {
         return entityManager
-            .createQuery("select e from Event e", Event.class)
+            .createQuery("select e from Event e order by date asc", Event.class)
             .getResultList();
     }
 

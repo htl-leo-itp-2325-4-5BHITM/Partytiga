@@ -4,24 +4,16 @@ import { loadEvents } from "./service/event-service";
 import { animationFrameScheduler } from "rxjs";
 
 const eventNameField = document.getElementById("eventName") as HTMLInputElement;
-const eventOrganizerField = document.getElementById(
-  "organizerName"
-) as HTMLInputElement;
+const eventOrganizerField = document.getElementById("organizerName") as HTMLInputElement;
 const eventDateField = document.getElementById("eventDate") as HTMLInputElement;
-const eventLocationField = document.getElementById(
-  "eventLocation"
-) as HTMLInputElement;
+const eventLocationField = document.getElementById("eventLocation") as HTMLInputElement;
 
 const addEventButton = document.getElementById("addEvent") as HTMLButtonElement;
 addEventButton.addEventListener("click", addEvent);
 
-const updateEventButton = document.getElementById(
-  "updateEvent"
-) as HTMLButtonElement;
+const updateEventButton = document.getElementById("updateEvent") as HTMLButtonElement;
 
-const removeEventButton = document.getElementById(
-  "removeEvent"
-) as HTMLButtonElement;
+const removeEventButton = document.getElementById("removeEvent") as HTMLButtonElement;
 
 const modal = document.getElementById("myModal");
 
@@ -40,6 +32,9 @@ function openNewEvent() {
   }
   if (!addEventButton.classList.contains("show")) {
     addEventButton.classList.add("show");
+  }
+  if(!removeEventButton.classList.contains("newEventDeleteButton")) {
+    removeEventButton.classList.add("newEventDeleteButton")
   }
   openModal();
 }

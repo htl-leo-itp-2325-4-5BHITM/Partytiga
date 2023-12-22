@@ -69,6 +69,7 @@ const template = (events: Event[]) => {
         padding: 2vh 2vw;
         margin: 5vh 2.5vw;
         border-radius: 1vh;
+        cursor: pointer;
       }
       .rowName, .rowOrganizer, .rowDate, .rowLocation{
         display: flex;
