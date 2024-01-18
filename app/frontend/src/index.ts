@@ -24,6 +24,9 @@ closeButton.addEventListener("click", closeModal);
 const openModalButton = document.getElementById("addNewEvent");
 openModalButton.addEventListener("click", openNewEvent);
 
+const searchBar = document.getElementById("searchbar");
+searchBar.addEventListener("keyup", searchEvent);
+
 loadEvents();
 
 function openNewEvent() {
@@ -207,4 +210,9 @@ export function removeEvent(event: Event) {
       console.error("Fehler beim Löschen des Events.", error);
     });
   closeModal();
+}
+
+/* search Event */
+function searchEvent() {
+  
 }

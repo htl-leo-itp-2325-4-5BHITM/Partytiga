@@ -11,19 +11,19 @@ const nameTemplate = (event: Event) => html`
 
 const organizerTemplate = (event: Event) => html`
   <div class="rowOrganizer" @click=${() => alterEvent(event)}>
-    <p class="label">Organizer:</p><p class="output">${event.organization}</p>
+    <p class="label">Veranstalter:</p><p class="output">${event.organization}</p>
   </div>
 `;
 
 const dateTemplate = (event: Event) => html`
   <div class="rowDate" @click=${() => alterEvent(event)}>
-    <p class="label">Date:</p><p class="output">${event.date}</p>
+    <p class="label">Datum:</p><p class="output">${event.date}</p>
   </div>
 `;
 
 const locationTemplate = (event: Event) => html`
   <div class="rowLocation" @click=${() => alterEvent(event)}>
-    <p class="label">Location:</p><p class="output">${event.location}</p>
+    <p class="label">Adresse:</p><p class="output">${event.location}</p>
   </div>
 `;
 
@@ -35,7 +35,7 @@ const template = (events: Event[]) => {
     const rowLocation = locationTemplate(event);
 
     return html`
-      <div id="eventBox">
+      <div id="eventBox" @click=${() => alterEvent(event)}>
           <p>${rowName}</p>
           <p>${rowOrganizer}</p>
           <p>${rowDate}</p>
@@ -53,7 +53,7 @@ const template = (events: Event[]) => {
       h3 {
         font-size: 4vh;
         text-align:center;
-        margin-top: 10vh;
+        margin-top: 5vh;
         margin-bottom: 0;
       }
       #events {
@@ -77,7 +77,7 @@ const template = (events: Event[]) => {
       }
       .label{
         text-transform: uppercase;
-        width: 7vw;
+        width: 9vw;
         margin-top: 0;
       }
       .output{
@@ -86,72 +86,6 @@ const template = (events: Event[]) => {
     </style>
   `;
 };
-
-
-/*
-const rowTemplate = (event: Event) => html`
-  <tr class="tableRow" @click=${() => alterEvent(event)}>
-    <td>${event.name}</td>
-    <td>${event.organization}</td>
-    <td>${event.date}</td>
-    <td>${event.location}</td>
-  </tr>
-`;
-*/
-
-/*
-const divTemplate = (event: Event) => html`
-<div class="tableRow" @click=${() => alterEvent(event)}>
-      <h4>${event.name}</h4>
-      <h4>${event.organization}</h4>
-      <h4>${event.date}</h4>
-      <h4>${event.location}</h4>
-    </div>
-`;
-*/
-
-/**
- * <button @click=${() => removeEvent(event.id)}>remove</button>
-  <button
-    id="openUpdateModalButton"
-    @click=${() => updateEvent(event.id, event)}>edit</button> 
- */
-
-    /*
-const template = (events: Event[]) => {
-  const rows = events.map(rowTemplate);
-  return html`
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-
-    <style>
-      .tableRow {
-        cursor: pointer;
-      }
-    </style>
-
-    <table class="w3-table w3-striped w3-bordered w3-hoverable">
-      <caption>
-        <h3>Events</h3>
-      </caption>
-      <thead class="w3-light-grey">
-        <tr>
-          <td><h4>Name</h4></td>
-          <td><h4>Organizer</h4></td>
-          <td><h4>Date</h4></td>
-          <td><h4>Location</h4></td>
-        </tr>
-      </thead>
-      <tbody>
-        ${rows}
-      </tbody>
-    </table>
-  `;
-};
-*/
-
-
-
-
 
 class EventTableComponent extends HTMLElement {
   constructor() {
