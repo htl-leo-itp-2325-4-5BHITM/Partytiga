@@ -1,0 +1,22 @@
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+        cache: 'maven'
+        cache-dependency-path: 'backend/pom.xml' # optional
+    - run: |
+          mvn -B package
+      working-directory: backend
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: backend/traget/app/backend/target/code-with-quarkus-dev.jar
+    - run: echo "🍏 This job's status is ${{ job.status }}."
