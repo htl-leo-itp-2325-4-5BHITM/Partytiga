@@ -8,8 +8,8 @@ npm start
 Datenbank starten (postgres... -> bei jedem eigener ordner)
 minikube start
 kubectl get pods
- kubectl port-forward postgres-6c844d4dd5-tcvqm 5432:5432
- minikube dashboard
+kubectl port-forward postgres-6c844d4dd5-tcvqm 5432:5432
+minikube dashboard
 
 
 ngrok url

@@ -16,5 +16,7 @@ async function loadEvents() {
     model.events = events;
   });
   store.next(next);
+
+  
 }
 export { loadEvents };
