@@ -64,6 +64,20 @@ window.onclick = function (event) {
   }
 };
 
+//When user pressed esc button, close it
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+      closeModal();
+  }
+});
+
+//When user pressed enter button, save it 
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+      addEvent();  
+  }
+});
+
 export function addEvent() {
   console.log("addEvent start");
 
