@@ -13,7 +13,7 @@ interface EventsResponse {
 }
 
 export interface Model {
-  events: Event[];
+  events: Event[],
 }
 const initialState: Model = {
   events: [],

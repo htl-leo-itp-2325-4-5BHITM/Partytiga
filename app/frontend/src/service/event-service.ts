@@ -10,13 +10,14 @@ async function loadEvents() {
   console.log("API response:", response);
   const events: Event[] = await response.json();
   const model: Model = {
-    events,
+    events
   };
   const next = produce(store.getValue(), (model) => {
     model.events = events;
   });
   store.next(next);
 
+  return events;
   
 }
 export { loadEvents };

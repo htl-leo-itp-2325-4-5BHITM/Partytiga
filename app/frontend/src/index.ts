@@ -1,31 +1,44 @@
 import { Event, EventsResponse } from "./model/model";
 import "./components/event-table-component";
 import { loadEvents } from "./service/event-service";
-import { animationFrameScheduler } from "rxjs";
+import { searchEvent } from "./components/event-table-component";
+/*import { useState } from 'react';
+
+require('react')*/
 
 const eventNameField = document.getElementById("eventName") as HTMLInputElement;
-const eventOrganizerField = document.getElementById("organizerName") as HTMLInputElement;
+const eventOrganizerField = document.getElementById(
+  "organizerName"
+) as HTMLInputElement;
 const eventDateField = document.getElementById("eventDate") as HTMLInputElement;
-const eventLocationField = document.getElementById("eventLocation") as HTMLInputElement;
+const eventLocationField = document.getElementById(
+  "eventLocation"
+) as HTMLInputElement;
 
 const addEventButton = document.getElementById("addEvent") as HTMLButtonElement;
 addEventButton.addEventListener("click", addEvent);
 
-const updateEventButton = document.getElementById("updateEvent") as HTMLButtonElement;
+const updateEventButton = document.getElementById(
+  "updateEvent"
+) as HTMLButtonElement;
 
-const removeEventButton = document.getElementById("removeEvent") as HTMLButtonElement;
+const removeEventButton = document.getElementById(
+  "removeEvent"
+) as HTMLButtonElement;
 
 const modal = document.getElementById("myModal");
 
 //add modal
 const closeButton = document.getElementById("close");
-closeButton.addEventListener("click", closeModal);
+closeButton.addEventListener("click", () => closeModal());
 
 const openModalButton = document.getElementById("addNewEvent");
 openModalButton.addEventListener("click", openNewEvent);
 
-const searchBar = document.getElementById("searchbar");
-searchBar.addEventListener("keyup", searchEvent);
+const searchBar = document.getElementById("searchbar") as HTMLInputElement;
+searchBar.addEventListener("keyup", () => searchEvent(searchBar.value));
+
+//const [currentEvent, setCurrentEvent] = useState(0);
 
 loadEvents();
 
@@ -36,8 +49,8 @@ function openNewEvent() {
   if (!addEventButton.classList.contains("show")) {
     addEventButton.classList.add("show");
   }
-  if(!removeEventButton.classList.contains("newEventDeleteButton")) {
-    removeEventButton.classList.add("newEventDeleteButton")
+  if (!removeEventButton.classList.contains("newEventDeleteButton")) {
+    removeEventButton.classList.add("newEventDeleteButton");
   }
   openModal();
 }
@@ -54,16 +67,14 @@ function closeModal() {
   if (!removeEventButton.classList.contains("newEventDeleteButton")) {
     removeEventButton.classList.add("newEventDeleteButton");
   }
+  //setCurrentEvent(0)
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == modal) {
     resetForm();
-    modal.classList.remove("open");
-    if (!removeEventButton.classList.contains("newEventDeleteButton")) {
-      removeEventButton.classList.add("newEventDeleteButton");
-    }
+    closeModal();
   }
 };
 
@@ -141,6 +152,7 @@ export function alterEvent(event: Event) {
     updateEventButton.classList.add("show");
   }
   displayEventData(event);
+  //setCurrentEvent(event)
   updateEventButton.addEventListener("click", () => updateEvent(event));
   removeEventButton.addEventListener("click", () => removeEvent(event));
   removeEventButton.classList.remove("newEventDeleteButton");
@@ -224,9 +236,4 @@ export function removeEvent(event: Event) {
       console.error("Fehler beim Löschen des Events.", error);
     });
   closeModal();
-}
-
-/* search Event */
-function searchEvent() {
-  
 }
