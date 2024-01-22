@@ -20,4 +20,17 @@ async function loadEvents() {
   return events;
   
 }
-export { loadEvents };
+
+async function loadEventsByList(events : Event[]) {
+  const model: Model = {
+    events
+  };
+  const next = produce(store.getValue(), (model) => {
+    model.events = events;
+  });
+  store.next(next);
+  return events;
+  
+}
+
+export { loadEvents , loadEventsByList };

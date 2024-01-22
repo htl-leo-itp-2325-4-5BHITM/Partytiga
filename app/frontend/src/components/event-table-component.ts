@@ -1,10 +1,11 @@
 import { Event, store } from "../model/model";
 import { html, render } from "lit-html";
 import { updateEvent, removeEvent, alterEvent } from "../index";
+import { loadEvents, loadEventsByList } from "../service/event-service";
 
 require('react-dom')
 
-let loadedEvents: Event[];
+const loadedEvents: Event[] = await loadEvents();
 
 const nameTemplate = (event: Event) => html`
   <div class="rowName" @click=${() => alterEvent(event)}>
@@ -109,7 +110,6 @@ class EventTableComponent extends HTMLElement {
   render(events: Event[]) {
     console.log("render", events);
     render(template(events), this.shadowRoot);
-    loadedEvents = events;
   }
 }
 customElements.define("event-table", EventTableComponent);
@@ -119,9 +119,10 @@ function searchEvent(searchString: string) {
   if (searchString !== "") {
     let events: Event[] = [];
     searchString = searchString.toLowerCase()
+    console.log(loadedEvents);
+    
     loadedEvents.forEach((searchedEvent) => {
       searchedEvent = searchedEvent as Event;
-      //console.log(searchedEvent);
       if (
         searchedEvent.name.toLowerCase().includes(searchString) ||
         searchedEvent.organization.toLowerCase().includes(searchString) ||
@@ -131,7 +132,10 @@ function searchEvent(searchString: string) {
         events.push(searchedEvent);
       }
     });
+    loadEventsByList(events)
     console.log(events)
+  } else {
+    loadEvents()
   }
 }
 
