@@ -108,6 +108,10 @@ form #eventDate {
   #buttonBox{
     display: flex;
   }
+
+  #searchbar{
+    margin-left: 12%;
+  }
   
   /* close button */
  #close {

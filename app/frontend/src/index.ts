@@ -52,11 +52,13 @@ function openNewEvent() {
   if (!removeEventButton.classList.contains("newEventDeleteButton")) {
     removeEventButton.classList.add("newEventDeleteButton");
   }
+  addEventButton.disabled = true
   openModal();
 }
 
 function openModal() {
   modal.classList.add("open");
+  document.getElementById('eventName').focus()
   console.log("add modal open");
 }
 
