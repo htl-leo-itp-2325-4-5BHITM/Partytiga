@@ -10,61 +10,14 @@
 </head>
 
 <body>
-  <div id="addNewEvent">
-    <i class="fa-solid fa-plus"></i>
-    <h2>Event hinzufügen</h2>
-  </div>
-  <h1>Partytiga</h1>
+
+  <app-head></app-head>
 
   <!--<img id="lupe" src="./img/lupe.png">-->
-  <input type="text" id="searchbar" placeholder="Suchen..">
-
-</div>
-  <div id="myModal" class="modal">
-    <!-- Modal content -->
-    <div class="modal-content">
-      <i class="fa-regular fa-rectangle-xmark" id="close"></i>
-      <form id="eventForm">
-        <label for="eventName">Name des Events</label>
-        <input type="text" id="eventName" required />
-
-        <br />
-        <br />
-
-        <label for="organizerName">Name des Veranstalters</label>
-        <input type="text" id="organizerName" required />
-
-        <br />
-        <br />
-
-        <label for="eventDate">Datum</label>
-        <input type="date" id="eventDate" required />
-
-        <br />
-        <br />
-
-        <label for="eventLocation">Adresse</label>
-        <input type="text" id="eventLocation" required />
-
-        <br />
-        <br />
-
-        <div id="buttonBox"></div>
-        <button type="button" id="addEvent" class="saveButton">
-          Speichern
-        </button>
-        <button type="button" id="updateEvent" class="saveButton">
-          Update
-        </button>
-        <button type="button" id="removeEvent" class="deleteButton">
-          Löschen
-        </button>
-    </div>
-    </form>
-  </div>
-  </div>
+  
 
   <event-table></event-table>
+
 </body>
 
 </html>

@@ -12,12 +12,15 @@ interface EventsResponse {
   readonly data: Event[];
 }
 
-export interface Model {
-  events: Event[],
+interface Model {
+  events: Event[];
+  currentEvent?: Event
+  currentEventId?: number;
 }
 const initialState: Model = {
   events: [],
 };
+
 const store = new BehaviorSubject<Model>(initialState);
 
-export { Event, EventsResponse, store };
+export { Event, EventsResponse, Model, store };

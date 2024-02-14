@@ -1,6 +1,7 @@
 import { Event, Model } from "Model/model";
 import { store } from "../model/model";
 import { produce } from "immer";
+import { useImmer } from "use-immer";
 
 const EVENTS_URL = "/api/events";
 
@@ -9,28 +10,19 @@ async function loadEvents() {
 
   console.log("API response:", response);
   const events: Event[] = await response.json();
-  const model: Model = {
-    events
-  };
-  const next = produce(store.getValue(), (model) => {
+  const nextState = produce(store.getValue(), (model) => {
     model.events = events;
   });
-  store.next(next);
-
-  return events;
-  
+  store.next(nextState);
 }
 
-async function loadEventsByList(events : Event[]) {
-  const model: Model = {
-    events
-  };
+async function loadEventsByList(searchString: string, events) {
+  const response = await fetch(`${EVENTS_URL}/searchEvents/${searchString}`);
+  const filteredEvents: Event[] = await response.json();
   const next = produce(store.getValue(), (model) => {
-    model.events = events;
+    model.events = filteredEvents;
   });
   store.next(next);
-  return events;
-  
 }
 
-export { loadEvents , loadEventsByList };
+export { loadEvents, loadEventsByList };

@@ -6,6 +6,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.util.List;
+
 @Path("/events")
 public class EventResource {
     @Inject
@@ -39,5 +41,11 @@ public class EventResource {
     @Transactional
     public void updateEvent(Event event){
         eventDao.updateEvent(event);
+    }
+
+    @GET
+    @Path("/searchEvents/{searchString}")
+    public List<Event> searchEvents(@PathParam("searchString") String searchString){
+        return eventDao.getSearchedEvents(searchString);
     }
 }
