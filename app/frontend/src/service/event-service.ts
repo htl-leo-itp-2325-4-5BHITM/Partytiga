@@ -1,7 +1,7 @@
 import { Event, Model } from "Model/model";
 import { store } from "../model/model";
 import { produce } from "immer";
-import { useImmer } from "use-immer";
+//import { useImmer } from "use-immer";
 
 const EVENTS_URL = "/api/events";
 
