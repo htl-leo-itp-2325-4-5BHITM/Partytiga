@@ -1,0 +1,4 @@
+@BASE=https://partytiga.hopto.org:8000/
+###
+GET {{BASE}}/realms/party/.well-known/openid-configuration
+###
