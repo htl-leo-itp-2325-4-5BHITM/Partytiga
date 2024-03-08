@@ -324,6 +324,7 @@ export class EventTableComponent extends HTMLElement {
               id="eventName"
               required
               value="${currentEvent?.name}"
+              @input=${() => this.updateSaveButtonState()}
             />
 
             <br />
@@ -335,6 +336,7 @@ export class EventTableComponent extends HTMLElement {
               id="organizerName"
               required
               value="${currentEvent?.organization}"
+              @input=${() => this.updateSaveButtonState()}
             />
 
             <br />
@@ -346,6 +348,7 @@ export class EventTableComponent extends HTMLElement {
               id="eventDate"
               required
               value="${currentEvent?.date}"
+              @input=${() => this.updateSaveButtonState()}
             />
 
             <br />
@@ -357,6 +360,7 @@ export class EventTableComponent extends HTMLElement {
               id="eventLocation"
               required
               value="${currentEvent?.location}"
+              @input=${() => this.updateSaveButtonState()}
             />
 
             <br />
@@ -366,9 +370,11 @@ export class EventTableComponent extends HTMLElement {
               type="button"
               id="addEvent"
               @click=${() => this.saveEvent(currentEvent?.id)}
+              ?disabled=${!(currentEvent?.name)}
             >
               Speichern
             </button>
+
             <button
               type="button"
               @click=${() => this.removeEvent(currentEvent?.id)}
@@ -383,6 +389,21 @@ export class EventTableComponent extends HTMLElement {
   closeDialog() {
     console.log("close dialog");
     this.shadowRoot.getElementById("myModal").classList.remove("open");
+  }
+
+  updateSaveButtonState() {
+    const saveButton = this.shadowRoot.getElementById("addEvent") as HTMLButtonElement | null;
+
+    if (saveButton) {
+      const eventName = (this.shadowRoot.getElementById("eventName") as HTMLInputElement).value;
+      const organizerName = (this.shadowRoot.getElementById("organizerName") as HTMLInputElement).value;
+      const eventDate = (this.shadowRoot.getElementById("eventDate") as HTMLInputElement).value;
+      const eventLocation = (this.shadowRoot.getElementById("eventLocation") as HTMLInputElement).value;
+
+      saveButton.disabled = !(eventName && organizerName && eventDate && eventLocation);
+    }  else {
+      console.log("Button nicht gefunden.");
+    }
   }
 
   openDialog() {
@@ -532,3 +553,4 @@ export class EventTableComponent extends HTMLElement {
 }
 
 customElements.define("event-table", EventTableComponent);
+
