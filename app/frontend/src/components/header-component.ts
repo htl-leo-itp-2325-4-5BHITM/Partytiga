@@ -18,16 +18,16 @@ export class AppHeaderComponent extends HTMLElement {
   }
   displayHeader() {
     return html` <style>
-        h1 {
+        /*h1 {
           text-transform: uppercase;
           letter-spacing: 1vw;
           font-size: 10vh;
           color: rgb(80, 0, 154);
           text-align: center;
-        }
+        }*/
       </style>
 
-      <h1>Partytiga</h1>`;
+      <h1 >Partytiga</h1>`;
   }
 }
 
