@@ -15,10 +15,17 @@ interface EventsResponse {
 interface Model {
   events: Event[];
   currentEvent?: Event
-  currentEventId?: number;
+  editingState: EditingState
 }
+
+interface EditingState {
+  currentEventId?: number;
+  isEditing: boolean
+}
+
 const initialState: Model = {
   events: [],
+  editingState: undefined
 };
 
 const store = new BehaviorSubject<Model>(initialState);

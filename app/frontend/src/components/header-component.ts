@@ -27,7 +27,7 @@ export class AppHeaderComponent extends HTMLElement {
         }
       </style>
 
-      <h1>Partytiga</h1>`;
+      <h1 >Partytiga</h1>`;
   }
 }
 
