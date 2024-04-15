@@ -38,7 +38,7 @@ async function load() {
     }
 }
 
-load()
+document.getElementById('profile').addEventListener("click", load)
 
 loadEvents()
 
