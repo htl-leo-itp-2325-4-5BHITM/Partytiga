@@ -1,0 +1,12 @@
+[Unit]
+Description=Keycloak Service
+After=network.target
+
+[Service]
+User=keycloak
+Group=keycloak
+ExecStart=/opt/keycloak/bin/kc.sh start-dev --http-port=8000 --proxy=edge
+WorkingDirectory=/opt/keycloak
+
+[Install]
+WantedBy=multi-user.target

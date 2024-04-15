@@ -1,20 +1,38 @@
 package at.htl.feature.event;
 
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.SecurityContext;
+import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.jboss.logging.Logger;
 
 import java.util.List;
 
+
 @Path("/events")
 public class EventResource {
+
+    @Inject
+    Logger log;
+    
+    @Inject
+    JsonWebToken jwt;
+
     @Inject
     EventDao eventDao;
-    
+
+    //@PermitAll
     @GET
-    public Response all() {
+    @RolesAllowed("partytiga")
+    public Response all(@Context SecurityContext ctx) {
+        var user = ctx.getUserPrincipal();
+        log.infof("user is : %s", user);
         var events = eventDao.all();
         return Response.ok(events).build();
     }
