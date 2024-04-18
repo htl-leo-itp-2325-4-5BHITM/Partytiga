@@ -1,0 +1,26 @@
+#searchbar{
+    width: 80%;
+    height: 30px;
+    font-size: 1em;
+    padding-left: 1%;
+}
+
+#searchbar[type="text"] {
+    /* Vorherige Stile hier */
+    box-shadow: 0 0 5px rgba(0,0,0,0.1); /* Schatten */
+  }
+  
+  #searchbar[type="text"]:hover {
+    border-color: #aaa; /* Randfarbe beim Überfahren */
+  }
+
+  #searchBox{
+    display: flex;
+    flex-direction: row;
+    margin-top: 5%;
+  }
+  
+  #lupe{
+    height: 2em;
+    margin-right: 2%;
+  }

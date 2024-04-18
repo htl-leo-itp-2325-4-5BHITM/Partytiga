@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 
 @ApplicationScoped
 public class EventDao {
+
     @Inject
     EntityManager entityManager;
 

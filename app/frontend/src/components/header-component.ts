@@ -17,7 +17,13 @@ export class AppHeaderComponent extends HTMLElement {
     
   }
   displayHeader() {
-    return html` <style>
+    return html`
+      <h1>Partytiga</h1>`;
+  }
+}
+
+customElements.define("app-head", AppHeaderComponent)
+/*<style>
         h1 {
           text-transform: uppercase;
           letter-spacing: 1vw;
@@ -31,4 +37,4 @@ export class AppHeaderComponent extends HTMLElement {
   }
 }
 
-customElements.define("app-head", AppHeaderComponent)
+customElements.define("app-head", AppHeaderComponent);*/

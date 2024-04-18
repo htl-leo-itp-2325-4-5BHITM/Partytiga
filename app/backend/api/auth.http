@@ -1,12 +1,13 @@
 @BASE=https://partytiga.hopto.org/
-@TOKEN_ENDPOINT={{wellknwon.response.body.token_endpoint}}
+@TOKEN_ENDPOINT={{wellknown.response.body.token_endpoint}}
 @ACCES_TOKEN={{login.response.body.access_token}}
+
 ###
-# @name wellknwon
+# @name wellknown
 GET {{BASE}}/realms/party/.well-known/openid-configuration
 ###
 # @name login
-POST {{TOKEN_ENDPOINT}}
+POST {{  TOKEN_ENDPOINT  }}
 Content-Type: application/x-www-form-urlencoded
 
 client_id=frontend&username=jkrenn&password=test1234&grant_type=password&client_secret=zVaYNWdxEZzLupw18hvosknkytDuEF0r

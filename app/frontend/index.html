@@ -7,17 +7,68 @@
   <link rel="stylesheet" href="./styles/style.css" />
   <link href='https://unpkg.com/css.gg@2.0.0/icons/css/profile.css' rel='stylesheet'>  <script src="https://kit.fontawesome.com/c77a38666b.js" crossorigin="anonymous"></script>
   <title>Partytiga</title>
+  <style>
+    html,body{
+      margin: 0;
+      padding: 0;
+      top: 0;
+      left: 0;
+    }
+    #main{
+      	display: flex;
+        flex-direction: row;
+    }
+    #navDiv{
+      width: 30%;
+    }
+    #content{
+      width: 70%;
+    }
+  </style>
 </head>
 
 <body>
 
-  <app-head></app-head>
+  <div id="main">
+    <div id="navDiv">
+      <app-nav></app-nav>
+  </div>
+    <div id="content">
+      <!--<event-table></event-table>-->
+      <div id="dynamic-content"></div>
+    </div>
+  </div>
 
   <i class="gg-profile" id="profile"></i>
   
+  <script>
+    // Laden der Komponente basierend auf dem Pfad
+    function loadComponent(path) {
+      const dynamicContent = document.getElementById('dynamic-content');
+      dynamicContent.innerHTML = ''; // Leert den Inhalt
 
-  <event-table></event-table>
+      const lowercasePath = path.toLowerCase();
 
+      if (lowercasePath === '/startseite') {
+        dynamicContent.innerHTML = '<event-table></event-table>';
+      } else if (lowercasePath === '/entdecken') {
+        dynamicContent.innerHTML = '<event-entdecken></event-entdecken>';
+      } else if (lowercasePath === '/favoriten') {
+        dynamicContent.innerHTML = '<event-favoriten></event-favoriten>';
+      } else if (lowercasePath === '/settings') {
+        dynamicContent.innerHTML = '<settings></settings>';
+      } else {
+        // Standardfall: Startseite oder Fehlerseite
+        dynamicContent.innerHTML = '<event-table></event-table>';
+      }
+    }
+
+    // Überprüfe beim Laden der Seite den Pfad und lade die entsprechende Komponente
+    window.addEventListener('DOMContentLoaded', () => {
+      const currentPath = window.location.pathname;
+      loadComponent(currentPath);
+    });
+    </script>
 </body>
 
 </html>

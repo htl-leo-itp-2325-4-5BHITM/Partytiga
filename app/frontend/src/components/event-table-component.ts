@@ -14,6 +14,7 @@ export class EventTableComponent extends HTMLElement {
     store.subscribe((model) => {
       this.render(model.events, model.currentEvent);
     });
+    this.addStyles();
   }
 
   render(events: Event[], currentEvent?: Event) {
@@ -74,269 +75,53 @@ export class EventTableComponent extends HTMLElement {
       `;
     });
     return html`
-      <style>
-        /* add button*/
-        #addNewEvent {
-          cursor: pointer;
-          position: absolute;
-          display: grid;
-          text-align: center;
-          grid-template-columns: 20% 80%;
-          width: 10vw;
-          background: rgb(80, 0, 154);
-          border-radius: 1vh;
-          color: white;
-          padding: 1vw 2vh;
-          margin-left: 85%;
-          margin-top: -10%;
-          box-shadow: 0px 0px 12px -2px rgba(0, 0, 0, 0.5);
-          transition: background-color 0.6s ease;
-          overflow: hidden;
-          border-color: none;
-        }
+    <!--<div id="addNewEvent" @click=${() => this.eventClick(null)}>
+      <i class="fa-solid fa-plus"></i>
+      <h2>Event hinzufügen</h2>
+    </div>-->
 
-        #addNewEvent:hover {
-          background: rgba(80, 0, 154, 0.781);
-        }
+    <!--<input
+      type="text"
+      id="searchbar"
+      placeholder="Suchen.."
+      @keyup=${() => this.searchEvent(events)}
+    />-->
 
-        #addNewEvent > h2 {
-          margin: 0;
-          font-size: medium;
-        }
-
-        h3 {
-          font-size: 4vh;
-          text-align: center;
-          margin-top: 5vh;
-          margin-bottom: 0;
-        }
-        #events {
-          width: 80vw;
-          display: flex;
-          flex-wrap: wrap;
-          margin: auto;
-          margin-top: 0;
-        }
-        #eventBox {
-          width: 30vw;
-          border: 1px black solid;
-          padding: 2vh 2vw;
-          margin: 5vh 2.5vw;
-          border-radius: 1vh;
-          cursor: pointer;
-        }
-        .rowName,
-        .rowOrganizer,
-        .rowDate,
-        .rowLocation {
-          display: flex;
-          height: 3vh;
-        }
-        .label {
-          text-transform: uppercase;
-          width: 9vw;
-          margin-top: 0;
-        }
-        .output {
-          margin-top: 0;
-        }
-      </style>
-      <div id="addNewEvent" @click=${() => this.eventClick(null)}>
-        <i class="fa-solid fa-plus"></i>
-        <h2>Event hinzufügen</h2>
-      </div>
-
-      <input
-        type="text"
-        id="searchbar"
-        placeholder="Suchen.."
-        @keyup=${() => this.searchEvent(events)}
-      />
-
-      <style>
-        input,
-        button {
-          border-radius: 5px;
-          border: solid rgb(62, 62, 62) 1px;
-          padding: 0.3rem;
-          color: rgb(80, 0, 154);
-        }
-
-        input {
-          color: #000;
-        }
-
-        button {
-          cursor: pointer;
-        }
-        .modal {
-          display: none; /* Hidden by default */
-          position: fixed; /* Stay in place */
-          z-index: 1; /* Sit on top */
-          padding-top: 100px; /* Location of the box */
-          left: 0;
-          top: 0;
-          width: 100%; /* Full width */
-          height: 100%; /* Full height */
-          overflow: auto; /* Enable scroll if needed */
-          background-color: rgb(0, 0, 0); /* Fallback color */
-          background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-        }
-        .modal.open {
-          display: block;
-        }
-
-        /* Modal Content */
-        .modal-content {
-          background-color: #fefefe;
-          margin: auto;
-          padding: 5vh 3vw;
-          border: 1px solid #888;
-          width: 30vw;
-          border-radius: 10px;
-        }
-
-        /* modal form*/
-        form {
-          width: 100%;
-          margin: auto;
-          text-align: left;
-        }
-
-        /* modal labels*/
-        form label {
-          display: block;
-          font-size: 1.7vh;
-          text-transform: uppercase;
-          margin-bottom: 1vh;
-        }
-
-        /* modal inputs*/
-
-        form #eventName,
-        #organizerName,
-        #eventLocation {
-          width: 80%;
-          background-color: rgb(242, 242, 242);
-          border-color: rgb(242, 242, 242);
-          padding: 1vh 0.5vw;
-          margin-bottom: 1vh;
-        }
-
-        form #eventDate {
-          background-color: rgb(242, 242, 242);
-          border-color: rgb(242, 242, 242);
-          margin-bottom: 1vh;
-        }
-
-        /* button box */
-        #buttonBox {
-          display: flex;
-        }
-
-        #searchbar {
-          margin-left: 12%;
-        }
-
-        /* close button */
-        #close {
-          color: rgb(80, 0, 154);
-          margin-left: 96%;
-          font-size: x-large;
-          cursor: pointer;
-        }
-
-        #close:hover {
-          color: rgba(80, 0, 154, 0.781);
-        }
-
-        /* save and update button*/
-        .saveButton {
-          width: 7vw;
-          background: rgb(80, 0, 154);
-          border-radius: 1vh;
-          color: white;
-          padding: 0.6vw 1.4vh;
-          margin-top: 1vh;
-          box-shadow: 0px 0px 12px -2px rgba(0, 0, 0, 0.5);
-          transition: background-color 0.6s ease;
-          overflow: hidden;
-          border-color: none;
-          display: none;
-        }
-
-        .saveButton:hover {
-          background: rgba(80, 0, 154, 0.781);
-        }
-
-        .saveButton.show {
-          display: block;
-        }
-
-        /* delete button*/
-        .deleteButton {
-          width: 7vw;
-          background: rgb(80, 0, 154);
-          border-radius: 1vh;
-          color: white;
-          padding: 0.6vw 1.4vh;
-          margin-top: 1vh;
-          box-shadow: 0px 0px 12px -2px rgba(0, 0, 0, 0.5);
-          transition: background-color 0.6s ease;
-          overflow: hidden;
-          border-color: none;
-        }
-
-        .deleteButton:hover {
-          background: rgb(80, 0, 154);
-        }
-
-        .close {
-          color: #aaaaaa;
-          float: right;
-          font-size: 28px;
-          font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-          color: #000;
-          text-decoration: none;
-          cursor: pointer;
-        }
-      </style>
-
-      <h3>Events</h3>
       <div id="events">${eventBoxes}</div>
 
       <div id="myModal" class="modal">
         <div class="modal-content">
-          <i
-            class="fa-regular fa-rectangle-xmark"
-            id="close"
-            @click=${() => this.closeDialog()}
-            >x</i
-          >
+        <div id="closeBox">
+            <i
+              class="fa-regular fa-rectangle-xmark"
+              id="close"
+              @click=${() => this.closeDialog()}
+              ><img id="pfeil" src="../../img/pfeil.png"></i
+            >
+            <p>Details</p>
+          </div>
           <form id="eventForm">
-            <label for="eventName">Name des Events:</label>
+            <label for="eventName">Event:</label>
             <input
               type="text"
               id="eventName"
               required
               value="${currentEvent?.name}"
               @input=${() => this.updateSaveButtonState()}
+              disabled
             />
 
             <br />
             <br />
 
-            <label for="organizerName">Name des Veranstalters:</label>
+            <label for="organizerName">Veranstalter:</label>
             <input
               type="text"
               id="organizerName"
               required
               value="${currentEvent?.organization}"
               @input=${() => this.updateSaveButtonState()}
+              disabled
             />
 
             <br />
@@ -349,6 +134,7 @@ export class EventTableComponent extends HTMLElement {
               required
               value="${currentEvent?.date}"
               @input=${() => this.updateSaveButtonState()}
+              disabled
             />
 
             <br />
@@ -361,12 +147,13 @@ export class EventTableComponent extends HTMLElement {
               required
               value="${currentEvent?.location}"
               @input=${() => this.updateSaveButtonState()}
+              disabled
             />
 
             <br />
             <br />
 
-            <button
+            <!--<button
               type="button"
               id="addEvent"
               @click=${() => this.saveEvent(currentEvent?.id)}
@@ -380,7 +167,7 @@ export class EventTableComponent extends HTMLElement {
               @click=${() => this.removeEvent(currentEvent?.id)}
             >
               Löschen
-            </button>
+            </button>-->
           </form>
         </div>
       </div>
@@ -550,7 +337,15 @@ export class EventTableComponent extends HTMLElement {
       loadEvents();
     }
   }
+
+
+  addStyles() {
+    const linkElem = document.createElement("link");
+    linkElem.setAttribute("rel", "stylesheet");
+    linkElem.setAttribute("href", "../../styles/event-table-style.css");
+    this.shadowRoot.appendChild(linkElem);
+  }
+
 }
 
 customElements.define("event-table", EventTableComponent);
-
