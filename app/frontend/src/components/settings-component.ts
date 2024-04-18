@@ -13,7 +13,7 @@ export class settingsComponent extends HTMLElement {
 
   render() {
     render(this.displayContent(), this.shadowRoot)
-    console.log("settings component loaded");
+    console.log("setting component loaded");
   }
   displayContent() {
     return html`

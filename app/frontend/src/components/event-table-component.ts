@@ -75,10 +75,10 @@ export class EventTableComponent extends HTMLElement {
       `;
     });
     return html`
-    <!--<div id="addNewEvent" @click=${() => this.eventClick(null)}>
+    <div id="addNewEvent" @click=${() => this.eventClick(null)}>
       <i class="fa-solid fa-plus"></i>
       <h2>Event hinzufügen</h2>
-    </div>-->
+    </div>
 
     <!--<input
       type="text"
@@ -108,7 +108,6 @@ export class EventTableComponent extends HTMLElement {
               required
               value="${currentEvent?.name}"
               @input=${() => this.updateSaveButtonState()}
-              disabled
             />
 
             <br />
@@ -121,7 +120,6 @@ export class EventTableComponent extends HTMLElement {
               required
               value="${currentEvent?.organization}"
               @input=${() => this.updateSaveButtonState()}
-              disabled
             />
 
             <br />
@@ -134,7 +132,6 @@ export class EventTableComponent extends HTMLElement {
               required
               value="${currentEvent?.date}"
               @input=${() => this.updateSaveButtonState()}
-              disabled
             />
 
             <br />
@@ -147,13 +144,12 @@ export class EventTableComponent extends HTMLElement {
               required
               value="${currentEvent?.location}"
               @input=${() => this.updateSaveButtonState()}
-              disabled
             />
 
             <br />
             <br />
 
-            <!--<button
+            <button
               type="button"
               id="addEvent"
               @click=${() => this.saveEvent(currentEvent?.id)}
@@ -167,7 +163,7 @@ export class EventTableComponent extends HTMLElement {
               @click=${() => this.removeEvent(currentEvent?.id)}
             >
               Löschen
-            </button>-->
+            </button>
           </form>
         </div>
       </div>

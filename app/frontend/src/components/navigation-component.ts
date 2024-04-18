@@ -80,7 +80,7 @@ export class AppNavigationComponent extends HTMLElement {
           <a href="#" id="entdecken">Entdecken</a>
           <a href="#" id="favoriten">Favoriten</a>
         </div>
-        <a href="#" id="settings" class="settings-link">Einstellungen</a>
+        <a href="#" id="settings" class="settings-link">Einloggen</a>
       </div>
     `;
   }
@@ -128,7 +128,7 @@ export class AppNavigationComponent extends HTMLElement {
     }else if(pageId === 'settings') {
       const settingsComponent = document.createElement('event-settings');
       mainContent.appendChild(settingsComponent);
-      window.history.pushState({ page: 'settings' }, 'Einstellungen', '/settings');
+      window.history.pushState({ page: 'settings' }, 'Einloggen', '/settings');
     }
   }
   highlightCurrentPage() {

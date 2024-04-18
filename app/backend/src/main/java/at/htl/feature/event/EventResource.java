@@ -29,7 +29,7 @@ public class EventResource {
 
     //@PermitAll
     @GET
-    @RolesAllowed("partytiga")
+//    @RolesAllowed("partytiga")
     public Response all(@Context SecurityContext ctx) {
         var user = ctx.getUserPrincipal();
         log.infof("user is : %s", user);
