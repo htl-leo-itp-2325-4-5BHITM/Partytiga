@@ -5,7 +5,12 @@ import { produce } from "immer";
 const EVENTS_URL = "/api/events";
 
 async function loadEvents() {
-  const response = await fetch(EVENTS_URL);
+  const token = localStorage.token;
+  const init = {headers: {
+    "Content-Type": "application/json", 
+    Authorization: "Bearer " + token
+  },}
+  const response = await fetch(EVENTS_URL, init);
 
   console.log("API response:", response);
   const events: Event[] = await response.json();

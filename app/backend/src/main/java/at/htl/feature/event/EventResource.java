@@ -9,8 +9,10 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
+import org.eclipse.microprofile.jwt.Claims;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.logging.Logger;
+import org.keycloak.authorization.client.AuthzClient;
 
 import java.util.List;
 
@@ -24,17 +26,19 @@ public class EventResource {
     @Inject
     JsonWebToken jwt;
 
+
     @Inject
     EventDao eventDao;
 
-    //@PermitAll
+    @PermitAll
     @GET
-//    @RolesAllowed("partytiga")
+ //   @RolesAllowed("partytiga")
     public Response all(@Context SecurityContext ctx) {
         var user = ctx.getUserPrincipal();
         log.infof("user is : %s", user);
         var events = eventDao.all();
         return Response.ok(events).build();
+        //jwt.claim(Claims.groups);
     }
 
     @POST

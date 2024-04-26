@@ -1,6 +1,6 @@
 @BASE=https://partytiga.hopto.org/
 @TOKEN_ENDPOINT={{wellknown.response.body.token_endpoint}}
-@ACCES_TOKEN={{login.response.body.access_token}}
+@ACCESS_TOKEN={{login.response.body.access_token}}
 
 ###
 # @name wellknown
@@ -13,5 +13,5 @@ Content-Type: application/x-www-form-urlencoded
 client_id=frontend&username=jkrenn&password=test1234&grant_type=password&client_secret=zVaYNWdxEZzLupw18hvosknkytDuEF0r
 ###
 GET http://localhost:4200/api/events
-Authorization: Bearer {{ACCES_TOKEN}}
+Authorization: Bearer {{ACCESS_TOKEN}}
 ###

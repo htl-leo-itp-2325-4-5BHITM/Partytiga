@@ -24,7 +24,7 @@ export class FavoritenComponent extends HTMLElement {
   displayContent() {
     return html`
       <h1>Favoriten</h1>
-      <event-table></event-table>`;
+      <!--<event-table></event-table>-->`;
   }
 
 }
