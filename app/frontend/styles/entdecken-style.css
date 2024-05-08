@@ -8,16 +8,22 @@
 #searchbar[type="text"] {
     /* Vorherige Stile hier */
     box-shadow: 0 0 5px rgba(0,0,0,0.1); /* Schatten */
+    position: sticky;
+    top: 0;
   }
   
   #searchbar[type="text"]:hover {
     border-color: #aaa; /* Randfarbe beim Überfahren */
+  
+
   }
 
   #searchBox{
     display: flex;
     flex-direction: row;
     margin-top: 5%;
+    position: sticky;
+    top: 0;
   }
   
   #lupe{

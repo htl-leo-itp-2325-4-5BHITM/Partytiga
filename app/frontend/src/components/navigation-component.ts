@@ -62,6 +62,8 @@ export class AppNavigationComponent extends HTMLElement {
     this.addStyles();
     this.setupNavigation();
     this.highlightCurrentPage();
+
+    
   }
 
   render() {
@@ -79,8 +81,9 @@ export class AppNavigationComponent extends HTMLElement {
           <a href="#" id="startseite">Startseite</a>
           <a href="#" id="entdecken">Entdecken</a>
           <a href="#" id="favoriten">Favoriten</a>
+          <a href="#" id="profil">Profil</a>
         </div>
-        <a href="#" id="settings" class="settings-link">Einloggen</a>
+        <a href="#" id="settings" class="settings-link">Einstellungen</a>
       </div>
     `;
   }

@@ -4,3 +4,7 @@ INSERT INTO public.tb_event ("date", "location", "name", organization) VALUES('2
 INSERT INTO public.tb_event ("date", "location", "name", organization) VALUES('2024-03-03', 'Tourismusschule BALE', 'Tourismusball', 'BALEonTour');
 INSERT INTO public.tb_event ("date", "location", "name", organization) VALUES('2024-05-01', 'Lichtenberg', 'Maifest', 'LJ');
 INSERT INTO public.tb_event ("date", "location", "name", organization) VALUES('2024-08-24', 'Palais', 'Hornball 2', 'Tanzschule Horn');
+INSERT INTO public.tb_event ("date", "location", "name", organization) VALUES('2024-05-05', 'Palais', 'Hornball 5', 'Tanzschule Horn');
+INSERT INTO public.tb_event ("date", "location", "name", organization) VALUES('2024-09-03', 'Tourismusschule ', 'Tourismusball', 'HBLA');
+INSERT INTO public.tb_event ("date", "location", "name", organization) VALUES('2024-11-01', 'Lichtenberg', 'Maifest', 'LJ');
+INSERT INTO public.tb_event ("date", "location", "name", organization) VALUES('2024-08-24', 'Palais', 'Hornball 4', 'Tanzschule Horn');

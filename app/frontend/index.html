@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./styles/style.css" />
   <link href='https://unpkg.com/css.gg@2.0.0/icons/css/profile.css' rel='stylesheet'>  <script src="https://kit.fontawesome.com/c77a38666b.js" crossorigin="anonymous"></script>
   <title>Partytiga</title>
   <style>
@@ -37,11 +36,12 @@
   </div>
     <div id="content">
       <!--<event-table></event-table>-->
+      <!--<addevent></addevent>-->
       <div id="dynamic-content"></div>
     </div>
   </div>
 
-  <i class="gg-profile" id="profile"></i>
+  <i id="profile"></i>
   
   <script>
     // Laden der Komponente basierend auf dem Pfad
@@ -62,6 +62,7 @@
       } else {
         // Standardfall: Startseite oder Fehlerseite
         dynamicContent.innerHTML = '<event-table></event-table>';
+        
       }
     }
 

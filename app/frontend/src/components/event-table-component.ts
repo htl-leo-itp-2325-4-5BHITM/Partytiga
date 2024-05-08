@@ -64,7 +64,7 @@ export class EventTableComponent extends HTMLElement {
           id="eventBox"
           @click=${() => {
             this.eventClick(event);
-            // alterEvent(event);
+            //alterEvent(event);
           }}
         >
           <p>${rowName}</p>
@@ -76,7 +76,7 @@ export class EventTableComponent extends HTMLElement {
     });
     return html`
     <div id="addNewEvent" @click=${() => this.eventClick(null)}>
-      <i class="fa-solid fa-plus"></i>
+      <i class="fa-solid"></i>
       <h2>Event hinzufügen</h2>
     </div>
 
