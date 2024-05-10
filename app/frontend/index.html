@@ -4,53 +4,77 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href='https://unpkg.com/css.gg@2.0.0/icons/css/profile.css' rel='stylesheet'>  <script src="https://kit.fontawesome.com/c77a38666b.js" crossorigin="anonymous"></script>
+  <link href='https://unpkg.com/css.gg@2.0.0/icons/css/profile.css' rel='stylesheet'>
+  <script src="https://kit.fontawesome.com/c77a38666b.js" crossorigin="anonymous"></script>
   <title>Partytiga</title>
   <style>
-    html,body{
+    html, body {
       margin: 0;
       padding: 0;
-      top: 0;
-      left: 0;
-      font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    }
-    #main{
-      	display: flex;
-        flex-direction: row;
-    }
-    #navDiv{
-      width: 30%;
-    }
-    #content{
-      width: 70%;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     }
 
+    #main {
+      display: flex;
+      flex-direction: row;
+    }
+
+    #navDiv {
+      width: 30%;
+      position: fixed;  /* Fixierung der Navigationsleiste */
+      height: 100%;
+      overflow: auto;  /* Ermöglicht das Scrollen innerhalb der Navigationsleiste */
+    }
+
+    #content {
+      width: 70%;
+      margin-left: 30%;  /* Platz für die Navigationsleiste */
+    }
+
+    @media (max-width: 680px) {
+      body{
+        padding: 1%;
+      }
+      #navDiv {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        position: relative;
+        /*z-index: 1000;   Stellt sicher, dass die Navigation über anderen Elementen bleibt */
+      }
+
+      #content {
+        width: 100%;
+        margin-left: 0;  /* Kein Seitenabstand bei kleinen Bildschirmen */
+      }
+
+      #main {
+        flex-direction: column;
+      }
+    }
   </style>
 </head>
 
 <body>
-
   <div id="main">
     <div id="navDiv">
       <app-nav></app-nav>
-  </div>
+    </div>
     <div id="content">
-      <!--<event-table></event-table>-->
-      <!--<addevent></addevent>-->
       <div id="dynamic-content"></div>
     </div>
   </div>
 
   <i id="profile"></i>
-  
+
   <script>
-    // Laden der Komponente basierend auf dem Pfad
     function loadComponent(path) {
       const dynamicContent = document.getElementById('dynamic-content');
-      dynamicContent.innerHTML = ''; // Leert den Inhalt
+      dynamicContent.innerHTML = '';
 
       const lowercasePath = path.toLowerCase();
-
       if (lowercasePath === '/startseite') {
         dynamicContent.innerHTML = '<event-table></event-table>';
       } else if (lowercasePath === '/entdecken') {
@@ -60,19 +84,14 @@
       } else if (lowercasePath === '/settings') {
         dynamicContent.innerHTML = '<settings></settings>';
       } else {
-        // Standardfall: Startseite oder Fehlerseite
         dynamicContent.innerHTML = '<event-table></event-table>';
-        
       }
     }
 
-    // Überprüfe beim Laden der Seite den Pfad und lade die entsprechende Komponente
     window.addEventListener('DOMContentLoaded', () => {
       const currentPath = window.location.pathname;
       loadComponent(currentPath);
     });
-    </script>
-    
+  </script>
 </body>
-
 </html>

@@ -1,9 +1,25 @@
-/*@tailwind base;
-@tailwind components;
-@tailwind utilities;*/
+/* Grundlegendes Styling, konsistent mit dem Gesamtdesign */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 
-/* navigation */
-.nav-box{
+#main {
+    display: flex;
+    flex-direction: row;
+}
+
+#navDiv {
+    width: 30%;
+}
+
+#content {
+    width: 70%;
+}
+
+/* Navigation Styles */
+.nav-box {
     position: fixed;
     top: 0;
     left: 0;
@@ -18,44 +34,116 @@
     padding-top: 1%;
 }
 
-.logo-box{
+.logo-box {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
-#logo{
+#logo {
     width: auto;
     height: 60px;
 }
 
-#name{
+#name {
     text-transform: uppercase;
     font-size: 1.5em;
     font-weight: normal;
     padding-left: 5%;
 }
 
-a{
+a {
     text-decoration: none;
     color: black;
 }
 
-.nav-unterseiten{
+.nav-unterseiten {
     display: flex;
     flex-direction: column;
     margin-top: 20%;
 }
 
-.nav-unterseiten a{
+.nav-unterseiten a {
     margin-bottom: 8%;
     font-size: 1.1em;
 }
 
 .settings-link {
-    margin-top: auto; /* Verschiebt den Link nach unten */
+    /* Behält die Ausgangsposition bei großen Bildschirmen bei */
+    margin-top: auto;
     margin-bottom: 3em;
 }
 
-.current-page{
+.current-page {
     font-weight: bold;
+}
+
+/* Media Queries für responsive Anpassungen */
+@media (max-width: 1024px) {
+    .nav-box {
+        width: 25%; /* Etwas breiter auf mittelgroßen Geräten */
+    }
+
+    #navDiv {
+        width: 25%;
+    }
+
+    #content {
+        width: 75%;
+    }
+}
+
+@media (max-width: 680px) {
+    .nav-box {
+        width: 100%; /* Volle Breite, wird zu einem horizontalen Layout */
+        height: auto;
+        border-right: none;
+        padding-top: 0;
+        position: inherit;
+    }
+
+    .logo-box, .nav-unterseiten, .settings-link {
+        flex-direction: row;
+        flex-wrap: wrap; /* Ermöglicht das Umfließen von Elementen */
+    }
+
+    #navDiv {
+        width: 100%;
+    }
+
+    #content {
+        width: 100%;
+    }
+
+    .nav-unterseiten, .settings-link {
+        margin-top: 0;
+    }
+
+    .settings-link a {
+        margin-right: auto; /* Schiebt den Link nach links */
+    }
+
+    .settings-link{
+        margin-left: 5%;
+        margin-bottom: 0;
+    }
+
+    .nav-unterseiten{
+        display: block;
+    }
+
+    .nav-unterseiten a{
+        margin-left: 5%;
+        margin-top: 1%;
+    }
+}
+
+@media (max-width: 800px) {
+    #logo {
+        height: 50px; /* Kleineres Logo auf kleinen Bildschirmen */
+    }
+
+    #name {
+        font-size: 1.2em; /* Kleinere Schriftgröße */
+    }
 }

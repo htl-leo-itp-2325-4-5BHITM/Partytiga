@@ -1,230 +1,246 @@
+/* Grundlegende Stildefinitionen */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif; /* Konsistente Schriftart */
+}
 
-
-/* add button*/
+/* Navigation und Button-Styling */
 #addNewEvent {
-    cursor: pointer;
-    position: fixed;
-    /*display: grid;*/
-    text-align: center;
-    grid-template-columns: 20% 80%;
-    width: 10vw;
-    /*background: black;*/
-    /*border-radius: 1vh;*/
-    color: black;
-    /*padding: 1vw 2vh;*/
-    /*box-shadow: 0px 0px 12px -2px rgba(0, 0, 0, 0.5);*/
-    /*transition: background-color 0.6s ease;*/
-    overflow: hidden;
-    /*border-color: none;*/
-    margin-left: -29.5%;
-    margin-top: 20%;
+  cursor: pointer;
+  position: fixed;
+  text-align: center;
+  width: 10vw;
+  color: black;
+  overflow: hidden;
+  margin-left: -29.5%;
+  margin-top: 20%;
+  transition: transform 0.5s ease;
+}
 
+#addNewEvent > h2 {
+  margin: 0;
+  font-size: 1.1em;
+}
+
+h3 {
+  font-size: 4vh;
+  text-align: center;
+  margin-top: 5vh;
+  margin-bottom: 0;
+}
+
+#events {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 0;
+}
+
+#eventBox {
+  width: 30%;
+  padding: 2%;
+  margin: 2%;
+  border: solid 1px #000;
+  cursor: pointer;
+  box-shadow: 5px 3px 10px grey;
+}
+
+.rowName,
+.rowOrganizer,
+.rowDate,
+.rowLocation {
+  display: flex;
+  height: 3vh;
+}
+
+.label {
+  width: 9vw;
+  margin-top: 0;
+}
+
+.output {
+  margin-top: 0;
+}
+
+input, button {
+  border-radius: 5px;
+  border: solid rgb(62, 62, 62) 1px;
+  padding: 0.3rem;
+  color: rgb(80, 0, 154);
+}
+
+input {
+  color: #000;
+}
+
+button {
+  cursor: pointer;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: hidden; /* Enable scroll if needed */
+  }
+.modal.open {
+  display: block;
+}
+#pfeil{
+  width: 30px;
+}
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin-left: 23%;
+  padding: 5vh 3vw;
+  width: 70vw;
+  height: 45vw;
+  width: 65vw;
+  height: 50vw;
+  overflow: hidden;
+}
+
+/* modal form*/
+form {
+  width: 100%;
+  margin: auto;
+  text-align: left;
+}
+/* modal labels*/
+form label {
+  display: block;
+  font-size: 1.7vh;
+  text-transform: uppercase;
+  margin-bottom: 1vh;
+}
+/* modal inputs*/
+form #eventName,
+#organizerName,
+#eventLocation {
+  width: 80%;
+  background-color: rgb(242, 242, 242);
+  border-color: rgb(242, 242, 242);
+  padding: 1vh 0.5vw;
+  margin-bottom: 1vh;
+}
+form #eventDate {
+  background-color: rgb(242, 242, 242);
+  border-color: rgb(242, 242, 242);
+  margin-bottom: 1vh;
+}
+/* button box */
+#buttonBox {
+  display: flex;
+}
+/* close button */
+#close {
+  color: rgb(80, 0, 154);
+  cursor: pointer;
+}
+#close:hover {
+  color: rgba(80, 0, 154, 0.781);
+}
+#closeBox{
+  display: flex;
+  flex-direction: row;
+}
+#closeBox p{
+  margin-left: 5%;
+}
+
+/* save and update button*/
+.saveButton {
+  width: 7vw;
+  background: rgb(80, 0, 154);
+  border-radius: 1vh;
+  color: white;
+  padding: 0.6vw 1.4vh;
+  margin-top: 1vh;
+  box-shadow: 0px 0px 12px -2px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.6s ease;
+  overflow: hidden;
+  border-color: none;
+  display: none;
+}
+.saveButton:hover {
+  background: rgba(80, 0, 154, 0.781);
+}
+.saveButton.show {
+  display: block;
+}
+/* delete button*/
+.deleteButton {
+  width: 7vw;
+  background: rgb(80, 0, 154);
+  border-radius: 1vh;
+  color: white;
+  padding: 0.6vw 1.4vh;
+  margin-top: 1vh;
+  box-shadow: 0px 0px 12px -2px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.6s ease;
+  overflow: hidden;
+  border-color: none;
+}
+.deleteButton:hover {
+  background: rgb(80, 0, 154);
+}
+
+
+.close {
+  color: #aaaaaa;
+  float:right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover, .close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+/* Media Queries für responsive Anpassungen */
+@media (max-width: 1000px) {
+  #addNewEvent {
+      width: 50vw;
+      margin-left: 25%;
+      margin-top: 10vh;
+      transform: scale(0.8);
   }
 
-  /*#addNewEvent:hover {
-    background: gray;
-  }*/
+  #eventBox {
+      width: 90%; /* Anpassung der Breite auf kleineren Bildschirmen */
+  }
 
-  #addNewEvent > h2 {
-    margin: 0;
-    font-size: 1.1em;
+  .modal-content {
+      width: 100%; 
   }
 
   h3 {
-    font-size: 4vh;
-    text-align: center;
-    margin-top: 5vh;
-    margin-bottom: 0;
-  }
-  #events {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 0;
-  }
-  #eventBox {
-    width: 30%;
-   /* height: 18vw;*/
-    padding: 2%;
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-top: 5%;
-    /*background-color: #D9D9D9;*/
-    border: #000 ;;
-    cursor: pointer;
-    box-shadow: 5px 3px 10px grey;
-  }
-  .rowName,
-  .rowOrganizer,
-  .rowDate,
-  .rowLocation {
-    display: flex;
-    height: 3vh;
-  }
-  .label {
-    /*text-transform: uppercase;*/
-    width: 9vw;
-    margin-top: 0;
-  }
-  .output {
-    margin-top: 0;
+      font-size: 6vh; /* Anpassung der Schriftgröße */
   }
 
+  .label, .output {
+      width: auto; /* Flexiblere Breite für Labels */
+  }
+}
 
+@media (max-width: 480px) {
+  #addNewEvent {
+      width: 80vw;
+      margin-left: 10%; /* Zentrieren des Buttons */
+      margin-top: 5vh;
+      transform: scale(0.6);
+  }
 
-  input,
-      button {
-        border-radius: 5px;
-        border: solid rgb(62, 62, 62) 1px;
-        padding: 0.3rem;
-        color: rgb(80, 0, 154);
-      }
-
-      input {
-        color: #000;
-      }
-
-      button {
-        cursor: pointer;
-      }
-      .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        top: 0;
-        left: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        }
-      .modal.open {
-        display: block;
-      }
-
-      #pfeil{
-        width: 30px;
-      }
-
-      /* Modal Content */
-      .modal-content {
-        background-color: #fefefe;
-        margin-left: 23%;
-        padding: 5vh 3vw;
-        width: 65vw;
-        height: 50vw;
-        overflow: hidden;
-      }
-
-      /* modal form*/
-      form {
-        width: 100%;
-        margin: auto;
-        text-align: left;
-      }
-
-      /* modal labels*/
-      form label {
-        display: block;
-        font-size: 1.7vh;
-        text-transform: uppercase;
-        margin-bottom: 1vh;
-      }
-
-      /* modal inputs*/
-
-      form #eventName,
-      #organizerName,
-      #eventLocation {
-        width: 80%;
-        background-color: rgb(242, 242, 242);
-        border-color: rgb(242, 242, 242);
-        padding: 1vh 0.5vw;
-        margin-bottom: 1vh;
-      }
-
-      form #eventDate {
-        background-color: rgb(242, 242, 242);
-        border-color: rgb(242, 242, 242);
-        margin-bottom: 1vh;
-      }
-
-      /* button box */
-      #buttonBox {
-        display: flex;
-      }
-
-      /* close button */
-      #close {
-        color: rgb(80, 0, 154);
-        cursor: pointer;
-      }
-
-      #close:hover {
-        color: rgba(80, 0, 154, 0.781);
-      }
-
-      #closeBox{
-        display: flex;
-        flex-direction: row;
-      }
-
-      #closeBox p{
-        margin-left: 5%;
-      }
-    
-
-      /* save and update button*/
-      .saveButton {
-        width: 7vw;
-        background: rgb(80, 0, 154);
-        border-radius: 1vh;
-        color: white;
-        padding: 0.6vw 1.4vh;
-        margin-top: 1vh;
-        box-shadow: 0px 0px 12px -2px rgba(0, 0, 0, 0.5);
-        transition: background-color 0.6s ease;
-        overflow: hidden;
-        border-color: none;
-        display: none;
-      }
-
-      .saveButton:hover {
-        background: rgba(80, 0, 154, 0.781);
-      }
-
-      .saveButton.show {
-        display: block;
-      }
-
-      /* delete button*/
-      .deleteButton {
-        width: 7vw;
-        background: rgb(80, 0, 154);
-        border-radius: 1vh;
-        color: white;
-        padding: 0.6vw 1.4vh;
-        margin-top: 1vh;
-        box-shadow: 0px 0px 12px -2px rgba(0, 0, 0, 0.5);
-        transition: background-color 0.6s ease;
-        overflow: hidden;
-        border-color: none;
-      }
-
-      .deleteButton:hover {
-        background: rgb(80, 0, 154);
-      }
-
-      .close {
-        color: #aaaaaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-      }
-
-      .close:hover,
-      .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-      }
-
-    
+  form label {
+      font-size: 2.5vh; /* Größere Schriftgröße für besser Lesbarkeit */
+  }
+}

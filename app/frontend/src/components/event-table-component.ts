@@ -75,10 +75,10 @@ export class EventTableComponent extends HTMLElement {
       `;
     });
     return html`
-    <div id="addNewEvent" @click=${() => this.eventClick(null)}>
+    <!--<div id="addNewEvent" @click=${() => this.eventClick(null)}>
       <i class="fa-solid"></i>
       <h2>Event hinzufügen</h2>
-    </div>
+    </div>-->
 
     <!--<input
       type="text"
