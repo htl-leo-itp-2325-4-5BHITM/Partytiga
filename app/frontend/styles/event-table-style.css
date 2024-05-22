@@ -11,16 +11,22 @@ body {
   position: fixed;
   text-align: center;
   width: 10vw;
+  border-radius: 10px;
+  padding: 10px;
   color: black;
   overflow: hidden;
-  margin-left: -29.5%;
-  margin-top: 20%;
-  transition: transform 0.5s ease;
+  background-color: orange;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
 }
 
 #addNewEvent > h2 {
   margin: 0;
-  font-size: 1.1em;
+  font-size: 1em;
+}
+
+#addNewEvent:hover {
+  transform: scale(1.05);
 }
 
 h3 {
@@ -204,15 +210,26 @@ form #eventDate {
   cursor: pointer;
 }
 
+@media (max-width: 1300px) {
+  #addNewEvent {
+    font-size: 0.8em; 
+    width: 15%;
+  }
+}
 
+@media (max-width: 680px) {
+  #addNewEvent {
+    font-size: 0.8em;
+    width: 15%;
+    right: 10px;
+  }
+}
 
 /* Media Queries für responsive Anpassungen */
 @media (max-width: 1000px) {
   #addNewEvent {
-      width: 50vw;
-      margin-left: 25%;
-      margin-top: 10vh;
-      transform: scale(0.8);
+    font-size: 0.8em;
+    width: 20%;   
   }
 
   #eventBox {
@@ -232,13 +249,20 @@ form #eventDate {
   }
 }
 
+
+@media (max-width: 550px) {
+  #addNewEvent {
+      width: 23%;
+      font-size: 0.7em;
+    }
+  }
+
+
 @media (max-width: 480px) {
   #addNewEvent {
-      width: 80vw;
-      margin-left: 10%; /* Zentrieren des Buttons */
-      margin-top: 5vh;
-      transform: scale(0.6);
-  }
+      width: 20%;
+      font-size: 0.6em;
+    }
 
   form label {
       font-size: 2.5vh; /* Größere Schriftgröße für besser Lesbarkeit */

@@ -100,6 +100,7 @@ a {
         border-right: none;
         padding-top: 0;
         position: inherit;
+        padding-bottom: 5%;
     }
 
     .logo-box, .nav-unterseiten, .settings-link {
