@@ -34,7 +34,12 @@ public class EventDao {
             findEvent.setName(event.name);
             findEvent.setDate(event.date);
             findEvent.setOrganization(event.organization);
+            findEvent.setAddress(event.address);
             findEvent.setLocation(event.location);
+            findEvent.setAge(event.age);
+            findEvent.setTickets(event.tickets);
+            findEvent.setContact(event.contact);
+            findEvent.setImg(event.img);
         }
     }
 
@@ -43,7 +48,12 @@ public class EventDao {
                 "LOWER( name ) like '%" + searchString + "%' or " +
                 "LOWER( organization ) like '%" + searchString + "%' or " +
                 "LOWER( location ) like '%" + searchString + "%' or " +
-                "LOWER( date ) like '%" + searchString + "%' " +
+                "LOWER( date ) like '%" + searchString + "%' or " +
+                "LOWER( address ) like '%" + searchString + "%' or " +
+                "LOWER( age ) like '%" + searchString + "%' or " +
+                "LOWER( tickets ) like '%" + searchString + "%' or " +
+                "LOWER( contact ) like '%" + searchString + "%' or " +
+                "LOWER( img ) like '%" + searchString + "%' or " +
                 "order by date asc"
                 ;
         return entityManager
