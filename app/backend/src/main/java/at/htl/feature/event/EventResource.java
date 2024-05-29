@@ -26,7 +26,6 @@ public class EventResource {
     @Inject
     JsonWebToken jwt;
 
-
     @Inject
     EventDao eventDao;
 
