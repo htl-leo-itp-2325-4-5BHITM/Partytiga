@@ -46,7 +46,7 @@ h3 {
   width: 30%;
   padding: 2%;
   margin: 2%;
-  border: solid 1px #000;
+  /*border: solid 1px #000;*/
   cursor: pointer;
   box-shadow: 5px 3px 10px grey;
 }
