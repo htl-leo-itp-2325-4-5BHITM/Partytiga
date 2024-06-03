@@ -11,3 +11,4 @@ public record EventDto(
         String contact,
         String img) {
 }
+

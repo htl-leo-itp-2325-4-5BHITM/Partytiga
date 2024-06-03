@@ -49,6 +49,11 @@ export class EventTableComponent extends HTMLElement {
       <p class="output">${event.location}</p>-->
     </div>
   `;
+  imgTemplate = (event: Event) => html`
+    <div class="rowImg">
+      <img src="${event.image}">
+    </div>
+  `;
 
   template(events: Event[], currentEvent: Event) {
     const eventBoxes = events.map((event) => {
@@ -56,6 +61,7 @@ export class EventTableComponent extends HTMLElement {
       const rowOrganizer = this.organizerTemplate(event);
       const rowDate = this.dateTemplate(event);
       const rowLocation = this.locationTemplate(event);
+      const rowImg = this.imgTemplate(event);
 
       console.log("template entered", events, currentEvent);
 
@@ -68,6 +74,7 @@ export class EventTableComponent extends HTMLElement {
           }}
         >
         <img src="https://www.gardasee.at/images/Feiernde-Leute.jpg" alt="festl">
+        <!--<p>${rowImg}</p>-->
           <p>${rowName}</p>
           <p>${rowOrganizer}</p>
           <!--<p>${rowDate}</p>

@@ -91,7 +91,7 @@ button {
   left: 0;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
-  overflow: hidden; /* Enable scroll if needed */
+  overflow: auto; /* Enable scroll if needed */
   }
 .modal.open {
   display: block;
@@ -108,7 +108,7 @@ button {
   height: 45vw;
   width: 65vw;
   height: 50vw;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 /* modal form*/
@@ -127,7 +127,9 @@ form label {
 /* modal inputs*/
 form #eventName,
 #organizerName,
-#eventLocation {
+#eventLocation, #eventAddress, 
+#eventOrt, #eventEinlassalter, #eventEintrittskarten,
+#eventKontaktdaten {
   width: 80%;
   background-color: rgb(242, 242, 242);
   border-color: rgb(242, 242, 242);
