@@ -4,6 +4,7 @@ import "./components/navigation-component"
 import "./components/entdecken-component"
 import "./components/favoriten-component"
 import "./components/settings-component"
+import "./components/hinzufuegen-component"
 import { loadEvents, loadEventsByList } from "./service/event-service";
 
 import Keycloak from 'keycloak-js';

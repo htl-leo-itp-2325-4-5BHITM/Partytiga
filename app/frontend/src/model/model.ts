@@ -5,7 +5,12 @@ interface Event {
   readonly name: string;
   readonly organization: string;
   readonly date: string;
+  readonly address: string;
   readonly location: string;
+  readonly einlassalter: string;
+  readonly eintrittskarten: string;
+  readonly kontaktdaten: string;
+  readonly image: string;
 }
 
 interface EventsResponse {

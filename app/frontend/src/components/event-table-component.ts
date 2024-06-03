@@ -137,10 +137,10 @@ export class EventTableComponent extends HTMLElement {
             <br />
             <br />
 
-            <label for="eventLocation">Adresse:</label>
+            <label for="eventAddress">Adresse:</label>
             <input
               type="text"
-              id="eventLocation"
+              id="eventAddress"
               required
               value="${currentEvent?.location}"
               @input=${() => this.updateSaveButtonState()}
@@ -148,6 +148,63 @@ export class EventTableComponent extends HTMLElement {
 
             <br />
             <br />
+
+            <label for="eventOrt">Ort:</label>
+            <input
+              type="text"
+              id="eventOrt"
+              required
+              value="${currentEvent?.address}"
+              @input=${() => this.updateSaveButtonState()}
+            />
+
+            <br />
+            <br />
+
+            <label for="eventEinlassalter">Einlassalter:</label>
+            <input
+              type="text"
+              id="eventEinlassalter"
+              required
+              value="${currentEvent?.einlassalter}"
+              @input=${() => this.updateSaveButtonState()}
+            />
+
+              <br />
+              <br />
+
+              <label for="eventEintrittskarten">Eintrittskarten:</label>
+              <input
+                type="text"
+                id="eventEintrittskarten"
+                required
+                value="${currentEvent?.eintrittskarten}"
+                @input=${() => this.updateSaveButtonState()}
+              />
+
+              <br />
+              <br />
+
+              <label for="eventKontaktdaten">Kontaktdaten:</label>
+              <input
+                type="text"
+                id="eventKontaktdaten"
+                required
+                value="${currentEvent?.kontaktdaten}"
+                @input=${() => this.updateSaveButtonState()}
+              />
+
+                <br />
+                <br />
+
+                <label for="eventImage">Bild hochladen:</label>
+                <input type="file" id="eventImage" @change=${this.previewImage.bind(this)} />
+
+                <br />
+                <br />
+
+                <img id="imagePreview" src="${currentEvent?.image || ''}" alt="Image Preview" style="display:none; max-width: 200px;" />
+
 
             <button
               type="button"
@@ -169,6 +226,24 @@ export class EventTableComponent extends HTMLElement {
       </div>
     `;
   }
+
+
+  previewImage(event) {
+    const input = event.target;
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = this.shadowRoot.getElementById('imagePreview');
+        if (img instanceof HTMLImageElement && typeof e.target.result === 'string') {
+          img.src = e.target.result;
+          img.style.display = 'block';
+        }
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  
   closeDialog() {
     console.log("close dialog");
     this.shadowRoot.getElementById("myModal").classList.remove("open");
@@ -176,18 +251,23 @@ export class EventTableComponent extends HTMLElement {
 
   updateSaveButtonState() {
     const saveButton = this.shadowRoot.getElementById("addEvent") as HTMLButtonElement | null;
-
+  
     if (saveButton) {
       const eventName = (this.shadowRoot.getElementById("eventName") as HTMLInputElement).value;
       const organizerName = (this.shadowRoot.getElementById("organizerName") as HTMLInputElement).value;
       const eventDate = (this.shadowRoot.getElementById("eventDate") as HTMLInputElement).value;
+      const eventAddress = (this.shadowRoot.getElementById("eventAddress") as HTMLInputElement).value;
       const eventLocation = (this.shadowRoot.getElementById("eventLocation") as HTMLInputElement).value;
-
-      saveButton.disabled = !(eventName && organizerName && eventDate && eventLocation);
+      const eventEinlassalter = (this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement).value;
+      const eventEintrittskarten = (this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement).value;
+      const eventKontaktdaten = (this.shadowRoot.getElementById("eventKontaktdaten") as HTMLInputElement).value;
+  
+      saveButton.disabled = !(eventName && organizerName && eventDate && eventLocation && eventAddress && eventEinlassalter && eventEintrittskarten && eventKontaktdaten);
     }  else {
       console.log("Button nicht gefunden.");
     }
   }
+  
 
   openDialog() {
     console.log("open dialog");
@@ -204,7 +284,12 @@ export class EventTableComponent extends HTMLElement {
       name: "",
       organization: "",
       date: "",
+      address: "",
       location: "",
+      einlassalter: "",
+      eintrittskarten: "",
+      kontaktdaten: "",
+      image: ""
     };
     if (event) {
       clonedEvent = Object.assign({}, event);
@@ -234,13 +319,33 @@ export class EventTableComponent extends HTMLElement {
     let eventLocation: string = (
       this.shadowRoot.getElementById("eventLocation") as HTMLInputElement
     ).value;
+    let eventAddress: string = (
+      this.shadowRoot.getElementById("eventAddress") as HTMLInputElement
+    ).value;
+    let eventEinlassalter: string = (
+      this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement
+    ).value;
+    let eventEintrittskarten: string = (
+      this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement
+    ).value;
+    let eventKontaktdaten: string = (
+      this.shadowRoot.getElementById("eventKontaktdaten") as HTMLInputElement
+    ).value;
+    let eventImage: string = (
+      this.shadowRoot.getElementById("eventImage") as HTMLInputElement
+    ).value;
+    
     console.log("yes");
-
+    
     if (
       eventName != "" &&
       organizerName != "" &&
       eventDate != "" &&
-      eventLocation != ""
+      eventLocation != "" &&
+      eventAddress != "" &&
+      eventEinlassalter != "" &&
+      eventEintrittskarten != "" &&
+      eventKontaktdaten != ""
     ) {
       if (eventId != null) {
         const event: Event = {
@@ -249,7 +354,13 @@ export class EventTableComponent extends HTMLElement {
           organization: organizerName,
           date: eventDate,
           location: eventLocation,
+          address: eventAddress,
+          einlassalter: eventEinlassalter,
+          eintrittskarten: eventEintrittskarten,
+          kontaktdaten: eventKontaktdaten,
+          image: eventImage
         };
+    
         fetch("/api/events/updateEvent", {
           method: "POST",
           headers: {
@@ -276,7 +387,13 @@ export class EventTableComponent extends HTMLElement {
           organization: organizerName,
           date: eventDate,
           location: eventLocation,
+          address: eventAddress,
+          einlassalter: eventEinlassalter,
+          eintrittskarten: eventEintrittskarten,
+          kontaktdaten: eventKontaktdaten,
+          image: eventImage
         };
+        
         fetch("/api/events/addEvent", {
           method: "POST",
           headers: {

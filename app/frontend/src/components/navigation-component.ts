@@ -46,7 +46,6 @@ customElements.define("app-nav", AppNavigationComponent)
 
 
 import { html, render } from "lit-html";
-import "./addNewButton-component"; // Make sure the component is imported
 
 
 export class AppNavigationComponent extends HTMLElement {
@@ -82,7 +81,7 @@ export class AppNavigationComponent extends HTMLElement {
           <a href="#" id="entdecken">Entdecken</a>
           <a href="#" id="favoriten">Favoriten</a>
           <a href="#" id="profil">Profil</a>
-          <a href="#"><add-new-event></add-new-event></a>
+          <a href="#" id="hinzufuegen">Hinzufügen</a>
         </div>
         <a href="#" id="settings" class="settings-link">Einstellungen</a>
       </div>
@@ -133,6 +132,10 @@ export class AppNavigationComponent extends HTMLElement {
       const settingsComponent = document.createElement('event-settings');
       mainContent.appendChild(settingsComponent);
       window.history.pushState({ page: 'settings' }, 'Einloggen', '/settings');
+    }else if(pageId === 'hinzufuegen') {
+      const settingsComponent = document.createElement('event-hinzufuegen');
+      mainContent.appendChild(settingsComponent);
+      window.history.pushState({ page: 'hinzufuegen' }, 'Hinzufügen', '/hinzufügen');
     }
   }
   highlightCurrentPage() {

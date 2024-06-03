@@ -83,7 +83,9 @@
         dynamicContent.innerHTML = '<event-favoriten></event-favoriten>';
       } else if (lowercasePath === '/settings') {
         dynamicContent.innerHTML = '<settings></settings>';
-      } else {
+      } else if (lowercasePath === '/hinzufügen') {
+        dynamicContent.innerHTML = '<event-hinzufuegen></event-hinzufuegen>';
+      }else {
         dynamicContent.innerHTML = '<event-table></event-table>';
       }
     }
