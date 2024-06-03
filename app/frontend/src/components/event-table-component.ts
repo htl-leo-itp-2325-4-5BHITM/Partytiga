@@ -38,15 +38,15 @@ export class EventTableComponent extends HTMLElement {
 
   dateTemplate = (event: Event) => html`
     <div class="rowDate">
-      <p class="label">Datum:</p>
-      <p class="output">${event.date}</p>
+      <!--<p class="label">Datum:</p>
+      <p class="output">${event.date}</p>-->
     </div>
   `;
 
   locationTemplate = (event: Event) => html`
     <div class="rowLocation">
-      <p class="label">Adresse:</p>
-      <p class="output">${event.location}</p>
+      <!--<p class="label">Adresse:</p>
+      <p class="output">${event.location}</p>-->
     </div>
   `;
 
@@ -67,10 +67,11 @@ export class EventTableComponent extends HTMLElement {
             //alterEvent(event);
           }}
         >
+        <img src="https://www.gardasee.at/images/Feiernde-Leute.jpg" alt="festl">
           <p>${rowName}</p>
           <p>${rowOrganizer}</p>
-          <p>${rowDate}</p>
-          <p>${rowLocation}</p>
+          <!--<p>${rowDate}</p>
+          <p>${rowLocation}</p>-->
         </div>
       `;
     });
