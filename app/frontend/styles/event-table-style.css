@@ -268,3 +268,7 @@ form #eventDate {
       font-size: 2.5vh; /* Größere Schriftgröße für besser Lesbarkeit */
   }
 }
+
+img{
+  width: 100%;
+}

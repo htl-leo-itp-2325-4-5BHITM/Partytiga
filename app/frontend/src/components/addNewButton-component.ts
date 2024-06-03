@@ -54,7 +54,9 @@ export class AddNewEventComponent extends HTMLElement {
             <label for="eventLocation">Adresse:</label>
             <input type="text" id="eventLocation" required @input=${() => this.updateSaveButtonState()} />
 
-            <br /><br />
+            <br /><br/>
+
+            
 
             <button type="button" id="addEvent" @click=${() => this.saveEvent()} disabled>Speichern</button>
           </form>
