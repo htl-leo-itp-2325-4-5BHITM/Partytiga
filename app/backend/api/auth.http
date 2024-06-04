@@ -10,7 +10,7 @@ GET {{BASE}}/realms/party/.well-known/openid-configuration
 POST {{  TOKEN_ENDPOINT  }}
 Content-Type: application/x-www-form-urlencoded
 
-client_id=frontend&username=jkrenn&password=test1234&grant_type=password&client_secret=zVaYNWdxEZzLupw18hvosknkytDuEF0r
+client_id=frontend&username=organizer&password=test1234&grant_type=password&client_secret=zVaYNWdxEZzLupw18hvosknkytDuEF0r
 ###
 GET http://localhost:4200/api/events
 Authorization: Bearer {{ACCESS_TOKEN}}

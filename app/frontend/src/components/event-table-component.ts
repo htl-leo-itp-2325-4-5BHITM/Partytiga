@@ -164,7 +164,7 @@ export class EventTableComponent extends HTMLElement {
 
             <label for="eventEinlassalter">Einlassalter:</label>
             <input
-              type="text"
+              type="number"
               id="eventEinlassalter"
               required
               value="${currentEvent?.einlassalter}"
@@ -259,7 +259,7 @@ export class EventTableComponent extends HTMLElement {
       const eventDate = (this.shadowRoot.getElementById("eventDate") as HTMLInputElement).value;
       const eventAddress = (this.shadowRoot.getElementById("eventAddress") as HTMLInputElement).value;
       const eventLocation = (this.shadowRoot.getElementById("eventLocation") as HTMLInputElement).value;
-      const eventEinlassalter = (this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement).value;
+      const eventEinlassalter = Number((this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement).value);
       const eventEintrittskarten = (this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement).value;
       const eventKontaktdaten = (this.shadowRoot.getElementById("eventKontaktdaten") as HTMLInputElement).value;
   
@@ -287,7 +287,7 @@ export class EventTableComponent extends HTMLElement {
       date: "",
       address: "",
       location: "",
-      einlassalter: "",
+      einlassalter: null,
       eintrittskarten: "",
       kontaktdaten: "",
       image: ""
@@ -323,9 +323,9 @@ export class EventTableComponent extends HTMLElement {
     let eventAddress: string = (
       this.shadowRoot.getElementById("eventAddress") as HTMLInputElement
     ).value;
-    let eventEinlassalter: string = (
-      this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement
-    ).value;
+    let eventEinlassalter: Number = Number(
+      (this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement).value
+    );
     let eventEintrittskarten: string = (
       this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement
     ).value;
@@ -344,7 +344,7 @@ export class EventTableComponent extends HTMLElement {
       eventDate != "" &&
       eventLocation != "" &&
       eventAddress != "" &&
-      eventEinlassalter != "" &&
+      eventEinlassalter !== null &&
       eventEintrittskarten != "" &&
       eventKontaktdaten != ""
     ) {

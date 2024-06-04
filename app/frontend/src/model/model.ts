@@ -7,7 +7,7 @@ interface Event {
   readonly date: string;
   readonly address: string;
   readonly location: string;
-  readonly einlassalter: string;
+  readonly einlassalter: Number;
   readonly eintrittskarten: string;
   readonly kontaktdaten: string;
   readonly image: string;

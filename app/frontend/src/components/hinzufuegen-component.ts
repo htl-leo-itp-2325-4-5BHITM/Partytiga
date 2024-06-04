@@ -41,18 +41,18 @@ export class HinzufuegenComponent extends HTMLElement {
 
         <br /><br />
 
-        <label for="eventLocation">Adresse:</label>
+        <label for="eventAddress">Adresse:</label>
+        <input type="text" id="eventAddress" required @input=${this.updateSaveButtonState.bind(this)} />
+
+        <br /><br />
+
+        <label for="eventLocation">Ort:</label>
         <input type="text" id="eventLocation" required @input=${this.updateSaveButtonState.bind(this)} />
 
         <br /><br />
 
-        <label for="eventOrt">Ort:</label>
-        <input type="text" id="eventOrt" required @input=${this.updateSaveButtonState.bind(this)} />
-
-        <br /><br />
-
         <label for="eventEinlassalter">Einlassalter:</label>
-        <input type="text" id="eventEinlassalter" required @input=${this.updateSaveButtonState.bind(this)} />
+        <input type="number" id="eventEinlassalter" required @input=${this.updateSaveButtonState.bind(this)} />
 
         <br /><br />
 
@@ -102,12 +102,12 @@ export class HinzufuegenComponent extends HTMLElement {
       const organizerName = (this.shadowRoot.getElementById("organizerName") as HTMLInputElement).value;
       const eventDate = (this.shadowRoot.getElementById("eventDate") as HTMLInputElement).value;
       const eventLocation = (this.shadowRoot.getElementById("eventLocation") as HTMLInputElement).value;
-      const eventOrt = (this.shadowRoot.getElementById("eventOrt") as HTMLInputElement).value;
+      const eventAddress = (this.shadowRoot.getElementById("eventAddress") as HTMLInputElement).value;
       const eventEinlassalter = (this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement).value;
       const eventEintrittskarten = (this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement).value;
       const eventKontaktdaten = (this.shadowRoot.getElementById("eventKontaktdaten") as HTMLInputElement).value;
 
-      saveButton.disabled = !(eventName && organizerName && eventDate && eventLocation && eventOrt && eventEinlassalter && eventEintrittskarten && eventKontaktdaten);
+      saveButton.disabled = !(eventName && organizerName && eventDate && eventLocation && eventAddress && eventEinlassalter && eventEintrittskarten && eventKontaktdaten);
     } else {
       console.log("Button nicht gefunden.");
     }
@@ -118,25 +118,26 @@ export class HinzufuegenComponent extends HTMLElement {
     const organizerName = (this.shadowRoot.getElementById("organizerName") as HTMLInputElement).value;
     const eventDate = (this.shadowRoot.getElementById("eventDate") as HTMLInputElement).value;
     const eventLocation = (this.shadowRoot.getElementById("eventLocation") as HTMLInputElement).value;
-    const eventOrt = (this.shadowRoot.getElementById("eventOrt") as HTMLInputElement).value;
-    const eventEinlassalter = (this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement).value;
+    const eventAddress = (this.shadowRoot.getElementById("eventAddress") as HTMLInputElement).value;
+    const eventEinlassalter = Number((this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement).value);
     const eventEintrittskarten = (this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement).value;
     const eventKontaktdaten = (this.shadowRoot.getElementById("eventKontaktdaten") as HTMLInputElement).value;
     const eventImage = (this.shadowRoot.getElementById("imagePreview") as HTMLImageElement).src;
 
-    if (eventName && organizerName && eventDate && eventLocation && eventOrt && eventEinlassalter && eventEintrittskarten && eventKontaktdaten) {
+    if (eventName && organizerName && eventDate && eventLocation && eventAddress && eventEinlassalter && eventEintrittskarten && eventKontaktdaten) {
       const event: Event = {
         id: null,
         name: eventName,
         organization: organizerName,
         date: eventDate,
-        address: eventLocation,
-        location: eventOrt,
+        address: eventAddress,
+        location: eventLocation,
         einlassalter: eventEinlassalter,
         eintrittskarten: eventEintrittskarten,
         kontaktdaten: eventKontaktdaten,
         image: eventImage,
       };
+      console.log(event)
       fetch("/api/events/addEvent", {
         method: "POST",
         headers: {
@@ -155,7 +156,7 @@ export class HinzufuegenComponent extends HTMLElement {
           }
         })
         .catch((error) => {
-          console.error("Fehler beim Speichern der Daten:", error);
+          console.error("Fehler beim Speichern der Daten in ie Datenbank:", error);
         });
     }
   }

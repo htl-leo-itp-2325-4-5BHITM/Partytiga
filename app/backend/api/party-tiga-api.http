@@ -14,7 +14,11 @@ Content-Type: application/json
     "name": "HAK-Ball",
     "organization": "Bauer",
     "date": "2024-05-10",
-    "location": "Brucknerhaus"
+    "location": "Brucknerhaus",
+    "address": "f",
+  "einlassalter": 4,
+  "eintrittskarten": "i0",
+
  }
 
 ###
