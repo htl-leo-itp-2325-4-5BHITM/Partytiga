@@ -38,15 +38,15 @@ export class EventTableComponent extends HTMLElement {
 
   dateTemplate = (event: Event) => html`
     <div class="rowDate">
-      <!--<p class="label">Datum:</p>
-      <p class="output">${event.date}</p>-->
+      <p class="label">Datum:</p>
+      <p class="output">${event.date}</p>
     </div>
   `;
 
   locationTemplate = (event: Event) => html`
     <div class="rowLocation">
-      <!--<p class="label">Adresse:</p>
-      <p class="output">${event.location}</p>-->
+      <p class="label">Adresse:</p>
+      <p class="output">${event.location}</p>
     </div>
   `;
   imgTemplate = (event: Event) => html`
@@ -76,9 +76,9 @@ export class EventTableComponent extends HTMLElement {
         <img src="https://www.gardasee.at/images/Feiernde-Leute.jpg" alt="festl">
         <!--<p>${rowImg}</p>-->
           <p>${rowName}</p>
-          <p>${rowOrganizer}</p>
-          <!--<p>${rowDate}</p>
-          <p>${rowLocation}</p>-->
+          <!--<p>${rowOrganizer}</p>-->
+          <p>${rowDate}</p>
+          <!--<p>${rowLocation}</p>-->
         </div>
       `;
     });
@@ -150,7 +150,7 @@ export class EventTableComponent extends HTMLElement {
               type="text"
               id="eventAddress"
               required
-              value="${currentEvent?.location}"
+              value="${currentEvent?.address}"
               @input=${() => this.updateSaveButtonState()}
             />
 
@@ -162,7 +162,7 @@ export class EventTableComponent extends HTMLElement {
               type="text"
               id="eventOrt"
               required
-              value="${currentEvent?.address}"
+              value="${currentEvent?.location}"
               @input=${() => this.updateSaveButtonState()}
             />
 

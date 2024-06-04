@@ -19,7 +19,7 @@ public class Event {
     String date;
     String address;
     String location;
-    Integer age;
+    String age;
     String tickets;
     String contact;
     String img;
@@ -72,11 +72,11 @@ public class Event {
         this.location = location;
     }
 
-    public Integer getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(String age) {
         this.age = age;
     }
 

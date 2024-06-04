@@ -101,29 +101,52 @@ export class AddNewEventComponent extends HTMLElement {
     let eventLocation: string = (
       this.shadowRoot.getElementById("eventLocation") as HTMLInputElement
     ).value;
+    let eventOrt: string = (
+      this.shadowRoot.getElementById("eventOrt") as HTMLInputElement
+    ).value;
+    let eventEinlassalter: string = (
+      this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement
+    ).value;
+    let eventEintrittskarten: string = (
+      this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement
+    ).value;
+    let eventKontaktdaten: string = (
+      this.shadowRoot.getElementById("eventKontaktdaten") as HTMLInputElement
+    ).value;
+    let eventImage: string = (
+      this.shadowRoot.getElementById("imagePreview") as HTMLInputElement
+    ).value;
 
     if (
         eventName != "" &&
         organizerName != "" &&
         eventDate != "" &&
-        eventLocation != ""
+        eventLocation != "" &&
+        eventOrt != "" &&
+        eventEinlassalter != "" &&
+        eventEintrittskarten != "" &&
+        eventKontaktdaten != "" &&
+        eventImage != ""
       ) {
         const event: Event = {
           id: null,
           name: eventName,
           organization: organizerName,
           date: eventDate,
-          location: eventLocation,
-          address: "",
-          einlassalter: "",
-          eintrittskarten: "",
-          kontaktdaten: "",
-          image: ""
+          location: eventOrt,
+          address: eventLocation,
+          einlassalter: eventEinlassalter,
+          eintrittskarten: eventEintrittskarten,
+          kontaktdaten: eventKontaktdaten,
+          image: eventImage
         };
+        const token = localStorage.token
+        console.log('fetch', token)
           fetch("/api/events/addEvent", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "Authorization": `Bearer ${localStorage.token}`
             },
             body: JSON.stringify(event),
           })

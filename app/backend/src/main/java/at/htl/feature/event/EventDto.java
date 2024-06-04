@@ -6,7 +6,7 @@ public record EventDto(
         String date,
         String address,
         String location,
-        Integer age,
+        String age,
         String tickets,
         String contact,
         String img) {
