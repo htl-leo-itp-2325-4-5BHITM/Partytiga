@@ -2,6 +2,7 @@ import { loadEvents, loadEventsByList } from "../service/event-service";
 import { Event, store } from "../model/model";
 import { html, render } from "lit-html";
 import { produce } from "immer";
+import L from 'leaflet';
 
 import { EventTableComponent } from "./event-table-component";
 
@@ -71,13 +72,23 @@ export class HinzufuegenComponent extends HTMLElement {
 
         <br /><br />
 
+        <label for="eventXCoordinate">X-Koordinate:</label>
+        <input type="number" id="eventXCoordinate" required @input=${this.updateSaveButtonState.bind(this)} step="any" />
+
+        <br /><br />
+
+        <label for="eventYCoordinate">Y-Koordinate:</label>
+        <input type="number" id="eventYCoordinate" required @input=${this.updateSaveButtonState.bind(this)} step="any" />
+
+        <br /><br />
+
         <img id="imagePreview" src="" alt="Image Preview" style="display:none; max-width: 200px;" />
 
         <br /><br />
 
         <button type="button" id="addEvent" @click=${this.saveEvent.bind(this)} disabled>Speichern</button>
       </form>
-    `;
+     `;
   }
 
   previewImage(event) {
@@ -106,8 +117,10 @@ export class HinzufuegenComponent extends HTMLElement {
       const eventEinlassalter = (this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement).value;
       const eventEintrittskarten = (this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement).value;
       const eventKontaktdaten = (this.shadowRoot.getElementById("eventKontaktdaten") as HTMLInputElement).value;
+      const eventXCoordinate = Number((this.shadowRoot.getElementById("eventXCoordinate") as HTMLInputElement).value);
+      const eventYCoordinate = Number((this.shadowRoot.getElementById("eventYCoordinate") as HTMLInputElement).value);
 
-      saveButton.disabled = !(eventName && organizerName && eventDate && eventLocation && eventAddress && eventEinlassalter && eventEintrittskarten && eventKontaktdaten);
+      saveButton.disabled = !(eventName && organizerName && eventDate && eventLocation && eventAddress && eventEinlassalter && eventEintrittskarten && eventKontaktdaten && eventXCoordinate && eventYCoordinate);
     } else {
       console.log("Button nicht gefunden.");
     }
@@ -123,8 +136,10 @@ export class HinzufuegenComponent extends HTMLElement {
     const eventEintrittskarten = (this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement).value;
     const eventKontaktdaten = (this.shadowRoot.getElementById("eventKontaktdaten") as HTMLInputElement).value;
     const eventImage = (this.shadowRoot.getElementById("imagePreview") as HTMLImageElement).src;
+    const eventXCoordinate = Number((this.shadowRoot.getElementById("eventXCoordinate") as HTMLInputElement).value);
+    const eventYCoordinate = Number((this.shadowRoot.getElementById("eventYCoordinate") as HTMLInputElement).value);
 
-    if (eventName && organizerName && eventDate && eventLocation && eventAddress && eventEinlassalter && eventEintrittskarten && eventKontaktdaten) {
+    if (eventName && organizerName && eventDate && eventLocation && eventAddress && eventEinlassalter && eventEintrittskarten && eventKontaktdaten && eventXCoordinate && eventYCoordinate) {
       const event: Event = {
         id: null,
         name: eventName,
@@ -132,10 +147,12 @@ export class HinzufuegenComponent extends HTMLElement {
         date: eventDate,
         address: eventAddress,
         location: eventLocation,
-        einlassalter: eventEinlassalter,
-        eintrittskarten: eventEintrittskarten,
-        kontaktdaten: eventKontaktdaten,
-        image: eventImage,
+        age: eventEinlassalter,
+        tickets: eventEintrittskarten,
+        contact: eventKontaktdaten,
+        img: eventImage,
+        xkoordinate: eventXCoordinate,
+        ykoordinate: eventYCoordinate
       };
       console.log(event)
       fetch("/api/events/addEvent", {
@@ -167,10 +184,12 @@ export class HinzufuegenComponent extends HTMLElement {
     (this.shadowRoot.getElementById("organizerName") as HTMLInputElement).value = '';
     (this.shadowRoot.getElementById("eventDate") as HTMLInputElement).value = '';
     (this.shadowRoot.getElementById("eventLocation") as HTMLInputElement).value = '';
-    (this.shadowRoot.getElementById("eventOrt") as HTMLInputElement).value = '';
+    (this.shadowRoot.getElementById("eventAddress") as HTMLInputElement).value = '';
     (this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement).value = '';
     (this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement).value = '';
     (this.shadowRoot.getElementById("eventKontaktdaten") as HTMLInputElement).value = '';
+    (this.shadowRoot.getElementById("eventXCoordinate") as HTMLInputElement).value = '';
+    (this.shadowRoot.getElementById("eventYCoordinate") as HTMLInputElement).value = '';
     const imgPreview = this.shadowRoot.getElementById("imagePreview") as HTMLImageElement;
     if (imgPreview) {
       imgPreview.src = '';

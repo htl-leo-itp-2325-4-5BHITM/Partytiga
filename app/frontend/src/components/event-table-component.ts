@@ -2,8 +2,12 @@ import { loadEvents, loadEventsByList } from "../service/event-service";
 import { Event, store } from "../model/model";
 import { html, render } from "lit-html";
 import { produce } from "immer";
+import L from 'leaflet';
+
 
 export class EventTableComponent extends HTMLElement {
+  private map: L.Map | null = null;
+
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -51,7 +55,7 @@ export class EventTableComponent extends HTMLElement {
   `;
   imgTemplate = (event: Event) => html`
     <div class="rowImg">
-      <img src="${event.image}">
+      <img src="${event.img}">
     </div>
   `;
 
@@ -157,10 +161,10 @@ export class EventTableComponent extends HTMLElement {
             <br />
             <br />
 
-            <label for="eventOrt">Ort:</label>
+            <label for="eventLocation">Ort:</label>
             <input
               type="text"
-              id="eventOrt"
+              id="eventLocation"
               required
               value="${currentEvent?.location}"
               @input=${() => this.updateSaveButtonState()}
@@ -174,7 +178,7 @@ export class EventTableComponent extends HTMLElement {
               type="number"
               id="eventEinlassalter"
               required
-              value="${currentEvent?.einlassalter}"
+              value="${currentEvent?.age}"
               @input=${() => this.updateSaveButtonState()}
             />
 
@@ -186,7 +190,7 @@ export class EventTableComponent extends HTMLElement {
                 type="text"
                 id="eventEintrittskarten"
                 required
-                value="${currentEvent?.eintrittskarten}"
+                value="${currentEvent?.tickets}"
                 @input=${() => this.updateSaveButtonState()}
               />
 
@@ -198,9 +202,31 @@ export class EventTableComponent extends HTMLElement {
                 type="text"
                 id="eventKontaktdaten"
                 required
-                value="${currentEvent?.kontaktdaten}"
+                value="${currentEvent?.contact}"
                 @input=${() => this.updateSaveButtonState()}
               />
+
+              <label for="eventXKoordinate">X-Koordinate:</label>
+            <input
+                type="number"
+                id="eventXKoordinate"
+                required
+                value="${currentEvent?.xkoordinate}"
+                @input=${() => this.updateSaveButtonState()}
+            />
+
+            <br />
+            <br />
+
+            <label for="eventYKoordinate">Y-Koordinate:</label>
+            <input
+                type="number"
+                id="eventYKoordinate"
+                required
+                value="${currentEvent?.ykoordinate}"
+                @input=${() => this.updateSaveButtonState()}
+            />
+
 
                 <br />
                 <br />
@@ -211,7 +237,7 @@ export class EventTableComponent extends HTMLElement {
                 <br />
                 <br />
 
-                <img id="imagePreview" src="${currentEvent?.image || ''}" alt="Image Preview" style="display:none; max-width: 200px;" />
+                <img id="imagePreview" src="${currentEvent?.img || ''}" alt="Image Preview" style="display:none; max-width: 200px;" />
 
 
             <button
@@ -230,12 +256,70 @@ export class EventTableComponent extends HTMLElement {
               Löschen
             </button>
           </form>
-        </div>
+          <div id="map" style="width: 500px; height: 500px;"></div>        
       </div>
     `;
   }
 
+  
+  openDialog() {
+    console.log("open dialog");
+    const modal = this.shadowRoot?.getElementById("myModal");
+    const currentEvent = store.getValue().currentEvent;
 
+    if (modal) {
+      modal.classList.add("open");
+
+      if (currentEvent) {
+        this.initializeMap(currentEvent.xkoordinate, currentEvent.ykoordinate);
+      }
+    }
+  }
+
+  closeDialog() {
+    console.log("close dialog");
+    const modal = this.shadowRoot?.getElementById("myModal");
+
+    if (modal) {
+      modal.classList.remove("open");
+
+      // Entfernen der Karte, wenn sie vorhanden ist
+      if (this.map) {
+        this.map.remove();
+        this.map = null;
+        const mapContainer = this.shadowRoot?.getElementById('map') as HTMLElement;
+        if (mapContainer) {
+          mapContainer.innerHTML = ''; // Inhalt des Karten-Containers entfernen
+        }
+      }
+    }
+  }
+
+  initializeMap(xkoordinate: number, ykoordinate: number) {
+    const mapContainer = this.shadowRoot?.getElementById('map');
+    if (mapContainer) {
+      // Überprüfen, ob eine Karte bereits initialisiert wurde und entfernen Sie sie
+      if (this.map) {
+        this.map.remove();
+        this.map = null;
+      }
+
+      this.map = L.map(mapContainer, {
+        center: [xkoordinate, ykoordinate],
+        zoom: 12,
+        scrollWheelZoom: false
+      });
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(this.map);
+
+      const coords: [number, number] = [xkoordinate, ykoordinate];
+      L.marker(coords).addTo(this.map)
+        .openPopup();
+    }
+  }
+  
   previewImage(event) {
     const input = event.target;
     if (input.files && input.files[0]) {
@@ -251,11 +335,6 @@ export class EventTableComponent extends HTMLElement {
     }
   }
 
-  
-  closeDialog() {
-    console.log("close dialog");
-    this.shadowRoot.getElementById("myModal").classList.remove("open");
-  }
 
   updateSaveButtonState() {
     const saveButton = this.shadowRoot.getElementById("addEvent") as HTMLButtonElement | null;
@@ -269,83 +348,86 @@ export class EventTableComponent extends HTMLElement {
       const eventEinlassalter = Number((this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement).value);
       const eventEintrittskarten = (this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement).value;
       const eventKontaktdaten = (this.shadowRoot.getElementById("eventKontaktdaten") as HTMLInputElement).value;
+      const xKoordinate = Number((this.shadowRoot.getElementById("eventXKoordinate") as HTMLInputElement).value);
+      const yKoordinate = Number((this.shadowRoot.getElementById("eventYKoordinate") as HTMLInputElement).value);
   
-      saveButton.disabled = !(eventName && organizerName && eventDate && eventLocation && eventAddress && eventEinlassalter && eventEintrittskarten && eventKontaktdaten);
-    }  else {
+      saveButton.disabled = !(eventName && organizerName && eventDate && eventLocation && eventAddress && eventEinlassalter && eventEintrittskarten && eventKontaktdaten && xKoordinate && yKoordinate);
+    } else {
       console.log("Button nicht gefunden.");
     }
-  }
-  
-
-  openDialog() {
-    console.log("open dialog");
-    this.shadowRoot.getElementById("myModal").classList.add("open");
-    
   }
 
   eventClick(event?: Event) {
     const model = Object.assign({}, store.getValue());
-    console.log(model)
-    console.log("CurrentEvent", event)
+    console.log(model);
+    console.log("CurrentEvent", event);
     let clonedEvent: Event = {
-      id: undefined,
-      name: "",
-      organization: "",
-      date: "",
-      address: "",
-      location: "",
-      einlassalter: null,
-      eintrittskarten: "",
-      kontaktdaten: "",
-      image: ""
+        id: undefined,
+        name: "",
+        organization: "",
+        date: "",
+        address: "",
+        location: "",
+        age: null,
+        tickets: "",
+        contact: "",
+        img: "",
+        xkoordinate: 0, // Standardwert setzen
+        ykoordinate: 0 // Standardwert setzen
     };
     if (event) {
-      clonedEvent = Object.assign({}, event);
+        clonedEvent = { ...event }; // Mit den vorhandenen Koordinaten klonen
     }
     const nextState = produce(model, (draft) => {
-      model.currentEvent = clonedEvent;
+        draft.currentEvent = clonedEvent;
     });
-    console.log("currentevent model",model.currentEvent)
+    console.log("currentevent model", model.currentEvent);
     store.next(nextState);
     this.openDialog();
     (
-      this.shadowRoot.getElementById("eventName") as HTMLInputElement
-    ).focus()
-  }
+        this.shadowRoot.getElementById("eventName") as HTMLInputElement
+    ).focus();
+}
 
-  saveEvent(eventId?: Number) {
-    console.log("addEvent start");
-    let eventName: string = (
+saveEvent(eventId?: Number) {
+  console.log("addEvent start");
+  let eventName: string = (
       this.shadowRoot.getElementById("eventName") as HTMLInputElement
-    ).value;
-    let organizerName: string = (
+  ).value;
+  let organizerName: string = (
       this.shadowRoot.getElementById("organizerName") as HTMLInputElement
-    ).value;
-    let eventDate: string = (
+  ).value;
+  let eventDate: string = (
       this.shadowRoot.getElementById("eventDate") as HTMLInputElement
-    ).value;
-    let eventLocation: string = (
+  ).value;
+  let eventLocation: string = (
       this.shadowRoot.getElementById("eventLocation") as HTMLInputElement
-    ).value;
-    let eventAddress: string = (
+  ).value;
+  let eventAddress: string = (
       this.shadowRoot.getElementById("eventAddress") as HTMLInputElement
-    ).value;
-    let eventEinlassalter: Number = Number(
+  ).value;
+  let eventEinlassalter: Number = Number(
       (this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement).value
-    );
-    let eventEintrittskarten: string = (
+  );
+  let eventEintrittskarten: string = (
       this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement
-    ).value;
-    let eventKontaktdaten: string = (
+  ).value;
+  let eventKontaktdaten: string = (
       this.shadowRoot.getElementById("eventKontaktdaten") as HTMLInputElement
-    ).value;
-    let eventImage: string = (
+  ).value;
+  let eventImage: string = (
       this.shadowRoot.getElementById("eventImage") as HTMLInputElement
-    ).value;
-    
-    console.log("yes");
-    
-    if (
+  ).value;
+  let xKoordinate: number = (
+    this.shadowRoot.getElementById("eventXKoordinate") as HTMLInputElement
+  ).valueAsNumber;
+  let yKoordinate: number = (
+      this.shadowRoot.getElementById("eventYKoordinate") as HTMLInputElement
+  ).valueAsNumber;
+
+  console.log("yes");
+  
+  if (
       eventName != "" &&
       organizerName != "" &&
       eventDate != "" &&
@@ -353,22 +435,24 @@ export class EventTableComponent extends HTMLElement {
       eventAddress != "" &&
       eventEinlassalter !== null &&
       eventEintrittskarten != "" &&
-      eventKontaktdaten != ""
-    ) {
-      if (eventId != null) {
-        const event: Event = {
-          id: eventId,
+      eventKontaktdaten != "" &&
+      xKoordinate !== null &&
+      yKoordinate !== null
+  ) {
+      const event: Event = {
+          id: eventId ?? null,
           name: eventName,
           organization: organizerName,
           date: eventDate,
           location: eventLocation,
           address: eventAddress,
-          einlassalter: eventEinlassalter,
-          eintrittskarten: eventEintrittskarten,
-          kontaktdaten: eventKontaktdaten,
-          image: eventImage
-        };
-    
+          age: eventEinlassalter,
+          tickets: eventEintrittskarten,
+          contact: eventKontaktdaten,
+          img: eventImage,
+          xkoordinate: Number(xKoordinate),
+          ykoordinate: Number(yKoordinate)
+      };
         fetch("/api/events/updateEvent", {
           method: "POST",
           headers: {
@@ -390,43 +474,44 @@ export class EventTableComponent extends HTMLElement {
         this.closeDialog();
       } else {
         const event: Event = {
-          id: null,
-          name: eventName,
-          organization: organizerName,
-          date: eventDate,
-          location: eventLocation,
-          address: eventAddress,
-          einlassalter: eventEinlassalter,
-          eintrittskarten: eventEintrittskarten,
-          kontaktdaten: eventKontaktdaten,
-          image: eventImage
+            id: null,
+            name: eventName,
+            organization: organizerName,
+            date: eventDate,
+            location: eventLocation,
+            address: eventAddress,
+            age: eventEinlassalter,
+            tickets: eventEintrittskarten,
+            contact: eventKontaktdaten,
+            img: eventImage,
+            xkoordinate: 0, // Standardwert setzen
+            ykoordinate: 0 // Standardwert setzen
         };
         
         fetch("/api/events/addEvent", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(event),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(event),
         })
-          .then((response) => {
+        .then((response) => {
             console.log(response);
             if (response.ok) {
-              console.log("Erfolgreiche Datenübertragung ins backend!");
-              loadEvents();
+                console.log("Erfolgreiche Datenübertragung ins backend!");
+                loadEvents();
             } else {
-              console.error("Fehler beim Speichern der Daten.");
+                console.error("Fehler beim Speichern der Daten.");
             }
-          })
-          .catch((error) => {
+        })
+        .catch((error) => {
             console.error("Fehler beim Speichern der Daten:", error);
-          });
-      }
-    } else {
-      console.log("no");
+        });
     }
     this.closeDialog();
   }
+  
+  
   removeEvent(eventId: Number) {
     console.log(eventId);
     fetch(`/api/events/removeEvent/${eventId}`, {
@@ -465,6 +550,19 @@ export class EventTableComponent extends HTMLElement {
     linkElem.setAttribute("rel", "stylesheet");
     linkElem.setAttribute("href", "../../styles/event-table-style.css");
     this.shadowRoot.appendChild(linkElem);
+
+    const leafletCSSLink = document.createElement("link");
+    leafletCSSLink.setAttribute("rel", "stylesheet");
+    leafletCSSLink.setAttribute("href", "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
+    leafletCSSLink.setAttribute("integrity", "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=");
+    leafletCSSLink.setAttribute("crossorigin", "");
+    this.shadowRoot.appendChild(leafletCSSLink);
+  
+    const leafletScript = document.createElement("script");
+    leafletScript.setAttribute("src", "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js");
+    leafletScript.setAttribute("integrity", "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=");
+    leafletScript.setAttribute("crossorigin", "");
+    this.shadowRoot.appendChild(leafletScript);
   }
 
 }

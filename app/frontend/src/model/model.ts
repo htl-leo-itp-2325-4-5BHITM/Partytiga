@@ -7,11 +7,14 @@ interface Event {
   readonly date: string;
   readonly address: string;
   readonly location: string;
-  readonly einlassalter: Number;
-  readonly eintrittskarten: string;
-  readonly kontaktdaten: string;
-  readonly image: string;
+  readonly age: Number;
+  readonly tickets: string;
+  readonly contact: string;
+  readonly img: string;
+  readonly xkoordinate: number;
+  readonly ykoordinate: number;
 }
+
 
 interface EventsResponse {
   readonly data: Event[];

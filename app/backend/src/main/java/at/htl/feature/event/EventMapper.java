@@ -15,7 +15,9 @@ public class EventMapper {
                 event.age,
                 event.tickets,
                 event.contact,
-                event.img
+                event.img,
+                event.xKoordinate, // Neue Felder
+                event.yKoordinate  // Neue Felder
         );
     }
 }

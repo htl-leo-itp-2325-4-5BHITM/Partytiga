@@ -40,6 +40,8 @@ public class EventDao {
             findEvent.setTickets(event.tickets);
             findEvent.setContact(event.contact);
             findEvent.setImg(event.img);
+            findEvent.setXKoordinate(event.xKoordinate);
+            findEvent.setYKoordinate(event.yKoordinate);
         }
     }
 
@@ -59,6 +61,5 @@ public class EventDao {
         return entityManager
                 .createQuery(sqlString, Event.class)
                 .getResultList();
-
     }
 }

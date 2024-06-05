@@ -7,11 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Table(name="tb_event")
+@Table(name = "tb_event")
 @Entity
 public class Event {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     String name;
@@ -23,6 +23,31 @@ public class Event {
     String tickets;
     String contact;
     String img;
+
+    // Neu hinzugefügte Variablen
+    @Column(name = "x_koordinate")
+    Double xKoordinate;
+
+    @Column(name = "y_koordinate")
+    Double yKoordinate;
+
+    // Getter und Setter für xKoordinate
+    public Double getXKoordinate() {
+        return xKoordinate;
+    }
+
+    public void setXKoordinate(Double xKoordinate) {
+        this.xKoordinate = xKoordinate;
+    }
+
+    // Getter und Setter für yKoordinate
+    public Double getYKoordinate() {
+        return yKoordinate;
+    }
+
+    public void setYKoordinate(Double yKoordinate) {
+        this.yKoordinate = yKoordinate;
+    }
 
     public Long getId() {
         return id;

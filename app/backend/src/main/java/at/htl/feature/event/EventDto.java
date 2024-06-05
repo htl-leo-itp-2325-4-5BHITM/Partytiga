@@ -1,4 +1,5 @@
 package at.htl.feature.event;
+
 public record EventDto(
         Long id,
         String name,
@@ -9,6 +10,8 @@ public record EventDto(
         String age,
         String tickets,
         String contact,
-        String img) {
+        String img,
+        double xKoordinate, // Neue Felder
+        double yKoordinate  // Neue Felder
+) {
 }
-

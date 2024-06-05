@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href='https://unpkg.com/css.gg@2.0.0/icons/css/profile.css' rel='stylesheet'>
   <script src="https://kit.fontawesome.com/c77a38666b.js" crossorigin="anonymous"></script>
-  <title>Partytiga</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+ <title>Partytiga</title>
   <style>
     html, body {
       margin: 0;
@@ -83,7 +85,7 @@
         dynamicContent.innerHTML = '<event-favoriten></event-favoriten>';
       } else if (lowercasePath === '/settings') {
         dynamicContent.innerHTML = '<settings></settings>';
-      } else if (lowercasePath === '/hinzufügen') {
+      } else if (lowercasePath === '/hinzufuegen') {
         dynamicContent.innerHTML = '<event-hinzufuegen></event-hinzufuegen>';
       }else {
         dynamicContent.innerHTML = '<event-table></event-table>';
