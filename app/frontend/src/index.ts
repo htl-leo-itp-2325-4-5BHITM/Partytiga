@@ -23,22 +23,25 @@ async function login() {
         realm: 'party',
         clientId: 'frontend'
     });
+    
     try {
-        const authenticated = await keycloak.init({enableLogging:true});
+        const authenticated = await keycloak.init({enableLogging:true, checkLoginIframe: false});
         console.log(`User is ${authenticated ? 'authenticated' : 'not authenticated'}`);
         if (!authenticated) {
             try{
                 await keycloak.login()
                 console.log('token=', keycloak.token)
                 localStorage.token=keycloak.token
+                
             } catch (error) {
                 console.log('failed to Login', error)
             }
-        }
+                }
         else {
             console.log('keycloaktoken = ' + keycloak.token)
             localStorage.token=keycloak.token
         }
+        await loadEvents()
     } catch (error) {
         console.error('Failed to initialize adapter:', error);
     }
@@ -48,11 +51,8 @@ document.getElementById('profile').addEventListener("click", login)
 
 async function start() {
     await login()
-    await loadEvents()
 }
-
 start()
-
 
 /**
  * document.addEventListener('keydown', (event) => {
