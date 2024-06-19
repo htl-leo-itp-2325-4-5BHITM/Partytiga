@@ -14,7 +14,7 @@ INSERT INTO public.tb_event ("date", "location", "name", "organization", "addres
 VALUES('2024-05-01', 'Lichtenberg', 'Maifest', 'LJ', 'Lichtenbergstraße 9', '16', 'Abendkasse', 'kontakt@ljlichtenberg.at', 48.33845, 14.24879);
 
 INSERT INTO public.tb_event ("date", "location", "name", "organization", "address", "age", "tickets", "contact", "x_koordinate", "y_koordinate")
-VALUES('2024-08-24', 'Palais', 'Hornball 2', 'Tanzschule Horn', 'Palaisstraße 1', '16', 'Online', 'info@tanzschulehorn.at', 48.30694, 14.28642);
+
 
 INSERT INTO public.tb_event ("date", "location", "name", "organization", "address", "age", "tickets", "contact", "x_koordinate", "y_koordinate")
 VALUES('2024-05-05', 'Palais', 'Hornball 5', 'Tanzschule Horn', 'Palaisstraße 1', '16', 'Online', 'info@tanzschulehorn.at', 48.30694, 14.28642);

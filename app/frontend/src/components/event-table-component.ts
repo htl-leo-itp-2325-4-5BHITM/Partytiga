@@ -4,7 +4,6 @@ import { html, render } from "lit-html";
 import { produce } from "immer";
 import L from 'leaflet';
 
-
 export class EventTableComponent extends HTMLElement {
   private map: L.Map | null = null;
 
@@ -28,7 +27,7 @@ export class EventTableComponent extends HTMLElement {
 
   nameTemplate = (event: Event) => html`
     <div class="rowName">
-      <p class="label">Name:</p>
+      <!--<p class="label">Name:</p>-->
       <p class="output">${event.name}</p>
     </div>
   `;
@@ -42,7 +41,7 @@ export class EventTableComponent extends HTMLElement {
 
   dateTemplate = (event: Event) => html`
     <div class="rowDate">
-      <p class="label">Datum:</p>
+      <!--<p class="label">Datum:</p>-->
       <p class="output">${event.date}</p>
     </div>
   `;
@@ -53,6 +52,7 @@ export class EventTableComponent extends HTMLElement {
       <p class="output">${event.location}</p>
     </div>
   `;
+  
   imgTemplate = (event: Event) => html`
     <div class="rowImg">
       <img src="${event.img}">
@@ -74,33 +74,22 @@ export class EventTableComponent extends HTMLElement {
           id="eventBox"
           @click=${() => {
             this.eventClick(event);
-            //alterEvent(event);
           }}
         >
-        <img src="https://www.gardasee.at/images/Feiernde-Leute.jpg" alt="festl">
-        <!--<p>${rowImg}</p>-->
+          <img src="https://www.gardasee.at/images/Feiernde-Leute.jpg" alt="festl">
           <p>${rowName}</p>
-          <!--<p>${rowOrganizer}</p>-->
           <p>${rowDate}</p>
-          <!--<p>${rowLocation}</p>-->
+          <a @click=${(e) => this.toggleFavorite(e, event)}>
+                    ${this.isFavorite(event) 
+                      ? html`<img id="pfeil" src="../../img/fullheart.png" alt="Remove from Favorites">`
+                      : html`<img id="pfeil" src="../../img/heart.png" alt="Add to Favorites">`}
+                  </a>
         </div>
       `;
     });
+
     return html`
-    <!--<div id="addNewEvent" @click=${() => this.eventClick(null)}>
-      <i class="fa-solid"></i>
-      <h2>Event hinzufügen</h2>
-    </div>-->
-
-    <!--<input
-      type="text"
-      id="searchbar"
-      placeholder="Suchen.."
-      @keyup=${() => this.searchEvent(events)}
-    />-->
-
       <div id="events">${eventBoxes}</div>
-
       <div id="myModal" class="modal">
         <div class="modal-content">
         <div id="closeBox">
@@ -113,133 +102,51 @@ export class EventTableComponent extends HTMLElement {
             <p>Details</p>
           </div>
           <form id="eventForm">
-            <label for="eventName">Event:</label>
-            <input
-              type="text"
-              id="eventName"
-              required
-              value="${currentEvent?.name}"
-              @input=${() => this.updateSaveButtonState()}
-            />
-
-            <br />
-            <br />
-
-            <label for="organizerName">Veranstalter:</label>
-            <input
-              type="text"
-              id="organizerName"
-              required
-              value="${currentEvent?.organization}"
-              @input=${() => this.updateSaveButtonState()}
-            />
-
-            <br />
-            <br />
-
-            <label for="eventDate">Datum:</label>
-            <input
-              type="date"
-              id="eventDate"
-              required
-              value="${currentEvent?.date}"
-              @input=${() => this.updateSaveButtonState()}
-            />
-
-            <br />
-            <br />
-
-            <label for="eventAddress">Adresse:</label>
-            <input
-              type="text"
-              id="eventAddress"
-              required
-              value="${currentEvent?.address}"
-              @input=${() => this.updateSaveButtonState()}
-            />
-
-            <br />
-            <br />
-
-            <label for="eventLocation">Ort:</label>
-            <input
-              type="text"
-              id="eventLocation"
-              required
-              value="${currentEvent?.location}"
-              @input=${() => this.updateSaveButtonState()}
-            />
-
-            <br />
-            <br />
-
-            <label for="eventEinlassalter">Einlassalter:</label>
-            <input
-              type="number"
-              id="eventEinlassalter"
-              required
-              value="${currentEvent?.age}"
-              @input=${() => this.updateSaveButtonState()}
-            />
-
-              <br />
-              <br />
-
-              <label for="eventEintrittskarten">Eintrittskarten:</label>
-              <input
-                type="text"
-                id="eventEintrittskarten"
-                required
-                value="${currentEvent?.tickets}"
-                @input=${() => this.updateSaveButtonState()}
-              />
-
-              <br />
-              <br />
-
-              <label for="eventKontaktdaten">Kontaktdaten:</label>
-              <input
-                type="text"
-                id="eventKontaktdaten"
-                required
-                value="${currentEvent?.contact}"
-                @input=${() => this.updateSaveButtonState()}
-              />
-
-              <label for="eventXKoordinate">X-Koordinate:</label>
-            <input
-                type="number"
-                id="eventXKoordinate"
-                required
-                value="${currentEvent?.xkoordinate}"
-                @input=${() => this.updateSaveButtonState()}
-            />
-
-            <br />
-            <br />
-
-            <label for="eventYKoordinate">Y-Koordinate:</label>
-            <input
-                type="number"
-                id="eventYKoordinate"
-                required
-                value="${currentEvent?.ykoordinate}"
-                @input=${() => this.updateSaveButtonState()}
-            />
-
-
-                <br />
-                <br />
-
-                <label for="eventImage">Bild hochladen:</label>
-                <input type="file" id="eventImage" @change=${this.previewImage.bind(this)} />
-
-                <br />
-                <br />
-
-                <img id="imagePreview" src="${currentEvent?.img || ''}" alt="Image Preview" style="display:none; max-width: 200px;" />
-
-
+            <div>
+              <label for="eventName">Event Name:</label>
+              <input type="text" id="eventName" name="eventName" .value=${currentEvent?.name || ''}>
+            </div>
+            <div>
+              <label for="organizerName">Organizer:</label>
+              <input type="text" id="organizerName" name="organizerName" .value=${currentEvent?.organization || ''}>
+            </div>
+            <div>
+              <label for="eventDate">Date:</label>
+              <input type="text" id="eventDate" name="eventDate" .value=${currentEvent?.date || ''}>
+            </div>
+            <div>
+              <label for="eventAddress">Address:</label>
+              <input type="text" id="eventAddress" name="eventAddress" .value=${currentEvent?.address || ''}>
+            </div>
+            <div>
+              <label for="eventLocation">Location:</label>
+              <input type="text" id="eventLocation" name="eventLocation" .value=${currentEvent?.location || ''}>
+            </div>
+            <div>
+              <label for="eventAge">Age:</label>
+              <input type="number" id="eventAge" name="eventAge" .value=${currentEvent?.age || ''}>
+            </div>
+            <div>
+              <label for="ticketURL">Tickets:</label>
+              <input type="text" id="ticketURL" name="ticketURL" .value=${currentEvent?.tickets || ''}>
+            </div>
+            <div>
+              <label for="contactInfo">Contact:</label>
+              <input type="text" id="contactInfo" name="contactInfo" .value=${currentEvent?.contact || ''}>
+            </div>
+            <div>
+              <label for="xCoord">X Coordinate:</label>
+              <input type="number" step="any" id="xCoord" name="xCoord" .value=${currentEvent?.xkoordinate || ''}>
+            </div>
+            <div>
+              <label for="yCoord">Y Coordinate:</label>
+              <input type="number" step="any" id="yCoord" name="yCoord" .value=${currentEvent?.ykoordinate || ''}>
+            </div>
+            <div>
+              <label for="imageUpload">Upload Image:</label>
+              <input type="file" id="imageUpload" name="imageUpload" @change=${this.previewImage}>
+              <img id="imagePreview" src=${currentEvent?.img || ''} alt="Event Image Preview" style="display: ${currentEvent?.img ? 'block' : 'none'};">
+            </div>
             <button
               type="button"
               id="addEvent"
@@ -248,7 +155,6 @@ export class EventTableComponent extends HTMLElement {
             >
               Speichern
             </button>
-
             <button
               type="button"
               @click=${() => this.removeEvent(currentEvent?.id)}
@@ -256,12 +162,30 @@ export class EventTableComponent extends HTMLElement {
               Löschen
             </button>
           </form>
-          <div id="map" style="width: 500px; height: 500px;"></div>        
+          <div id="map" style="width: 500px; height: 500px;"></div>
+        </div>
       </div>
     `;
   }
 
-  
+  toggleFavorite(e, event) {
+    e.stopPropagation();
+    const model = store.getValue();
+    const nextState = produce(model, (draft) => {
+      if (this.isFavorite(event)) {
+        draft.favorites = draft.favorites.filter(fav => fav.id !== event.id);
+      } else {
+        draft.favorites.push(event);
+      }
+    });
+    store.next(nextState);
+  }
+
+  isFavorite(event) {
+    const model = store.getValue();
+    return model.favorites.some(fav => fav.id === event.id);
+  }
+
   openDialog() {
     console.log("open dialog");
     const modal = this.shadowRoot?.getElementById("myModal");
@@ -319,231 +243,104 @@ export class EventTableComponent extends HTMLElement {
         .openPopup();
     }
   }
-  
+
   previewImage(event) {
     const input = event.target;
     if (input.files && input.files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const img = this.shadowRoot.getElementById('imagePreview');
-        if (img instanceof HTMLImageElement && typeof e.target.result === 'string') {
-          img.src = e.target.result;
-          img.style.display = 'block';
-        }
+        const preview = this.shadowRoot?.getElementById('imagePreview') as HTMLImageElement;
+        preview.src = e.target.result as string;
+        preview.style.display = 'block';
       };
       reader.readAsDataURL(input.files[0]);
     }
   }
 
-
-  updateSaveButtonState() {
-    const saveButton = this.shadowRoot.getElementById("addEvent") as HTMLButtonElement | null;
-  
+  checkInput() {
+    const saveButton = this.shadowRoot?.getElementById("addEvent") as HTMLButtonElement;
     if (saveButton) {
-      const eventName = (this.shadowRoot.getElementById("eventName") as HTMLInputElement).value;
-      const organizerName = (this.shadowRoot.getElementById("organizerName") as HTMLInputElement).value;
-      const eventDate = (this.shadowRoot.getElementById("eventDate") as HTMLInputElement).value;
-      const eventAddress = (this.shadowRoot.getElementById("eventAddress") as HTMLInputElement).value;
-      const eventLocation = (this.shadowRoot.getElementById("eventLocation") as HTMLInputElement).value;
-      const eventEinlassalter = Number((this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement).value);
-      const eventEintrittskarten = (this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement).value;
-      const eventKontaktdaten = (this.shadowRoot.getElementById("eventKontaktdaten") as HTMLInputElement).value;
-      const xKoordinate = Number((this.shadowRoot.getElementById("eventXKoordinate") as HTMLInputElement).value);
-      const yKoordinate = Number((this.shadowRoot.getElementById("eventYKoordinate") as HTMLInputElement).value);
+      const eventName = (this.shadowRoot?.getElementById("eventName") as HTMLInputElement).value;
+      const organizerName = (this.shadowRoot?.getElementById("organizerName") as HTMLInputElement).value;
+      const eventDate = (this.shadowRoot?.getElementById("eventDate") as HTMLInputElement).value;
+      const eventAddress = (this.shadowRoot?.getElementById("eventAddress") as HTMLInputElement).value;
+      const eventLocation = (this.shadowRoot?.getElementById("eventLocation") as HTMLInputElement).value;
+      const eventAge = (this.shadowRoot?.getElementById("eventAge") as HTMLInputElement).value;
+      const ticketURL = (this.shadowRoot?.getElementById("ticketURL") as HTMLInputElement).value;
+      const contactInfo = (this.shadowRoot?.getElementById("contactInfo") as HTMLInputElement).value;
   
-      saveButton.disabled = !(eventName && organizerName && eventDate && eventLocation && eventAddress && eventEinlassalter && eventEintrittskarten && eventKontaktdaten && xKoordinate && yKoordinate);
-    } else {
-      console.log("Button nicht gefunden.");
+      saveButton.disabled = !(
+        eventName.trim() &&
+        organizerName.trim() &&
+        eventDate.trim() &&
+        eventAddress.trim() &&
+        eventLocation.trim() &&
+        eventAge.trim() &&
+        ticketURL.trim() &&
+        contactInfo.trim()
+      );
     }
   }
 
-  eventClick(event?: Event) {
-    const model = Object.assign({}, store.getValue());
-    console.log(model);
-    console.log("CurrentEvent", event);
-    let clonedEvent: Event = {
-        id: undefined,
-        name: "",
-        organization: "",
-        date: "",
-        address: "",
-        location: "",
-        age: null,
-        tickets: "",
-        contact: "",
-        img: "",
-        xkoordinate: 0, // Standardwert setzen
-        ykoordinate: 0 // Standardwert setzen
-    };
-    if (event) {
-        clonedEvent = { ...event }; // Mit den vorhandenen Koordinaten klonen
-    }
-    const nextState = produce(model, (draft) => {
-        draft.currentEvent = clonedEvent;
+  eventClick(event: Event) {
+    console.log("Event clicked: ", event);
+    const nextState = produce(store.getValue(), (draft) => {
+      draft.currentEvent = event;
     });
-    console.log("currentevent model", model.currentEvent);
     store.next(nextState);
     this.openDialog();
-    (
-        this.shadowRoot.getElementById("eventName") as HTMLInputElement
-    ).focus();
-}
+  }
 
-saveEvent(eventId?: Number) {
-  console.log("addEvent start");
-  let eventName: string = (
-      this.shadowRoot.getElementById("eventName") as HTMLInputElement
-  ).value;
-  let organizerName: string = (
-      this.shadowRoot.getElementById("organizerName") as HTMLInputElement
-  ).value;
-  let eventDate: string = (
-      this.shadowRoot.getElementById("eventDate") as HTMLInputElement
-  ).value;
-  let eventLocation: string = (
-      this.shadowRoot.getElementById("eventLocation") as HTMLInputElement
-  ).value;
-  let eventAddress: string = (
-      this.shadowRoot.getElementById("eventAddress") as HTMLInputElement
-  ).value;
-  let eventEinlassalter: Number = Number(
-      (this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement).value
-  );
-  let eventEintrittskarten: string = (
-      this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement
-  ).value;
-  let eventKontaktdaten: string = (
-      this.shadowRoot.getElementById("eventKontaktdaten") as HTMLInputElement
-  ).value;
-  let eventImage: string = (
-      this.shadowRoot.getElementById("eventImage") as HTMLInputElement
-  ).value;
-  let xKoordinate: number = (
-    this.shadowRoot.getElementById("eventXKoordinate") as HTMLInputElement
-  ).valueAsNumber;
-  let yKoordinate: number = (
-      this.shadowRoot.getElementById("eventYKoordinate") as HTMLInputElement
-  ).valueAsNumber;
-
-  console.log("yes");
+  async saveEvent(id?: number) {
+    console.log("save event clicked");
+    const eventName = (this.shadowRoot?.getElementById("eventName") as HTMLInputElement)?.value;
+    const organizerName = (this.shadowRoot?.getElementById("organizerName") as HTMLInputElement)?.value;
+    const eventDate = (this.shadowRoot?.getElementById("eventDate") as HTMLInputElement)?.value;
+    const eventAddress = (this.shadowRoot?.getElementById("eventAddress") as HTMLInputElement)?.value;
+    const eventLocation = (this.shadowRoot?.getElementById("eventLocation") as HTMLInputElement)?.value;
+    const eventAge = (this.shadowRoot?.getElementById("eventAge") as HTMLInputElement)?.value;
+    const ticketURL = (this.shadowRoot?.getElementById("ticketURL") as HTMLInputElement)?.value;
+    const contactInfo = (this.shadowRoot?.getElementById("contactInfo") as HTMLInputElement)?.value;
+    const imgPreview = (this.shadowRoot?.getElementById('imagePreview') as HTMLImageElement)?.src;
+    const xCoord = parseFloat((this.shadowRoot?.getElementById("xCoord") as HTMLInputElement)?.value);
+    const yCoord = parseFloat((this.shadowRoot?.getElementById("yCoord") as HTMLInputElement)?.value);
   
-  if (
-      eventName != "" &&
-      organizerName != "" &&
-      eventDate != "" &&
-      eventLocation != "" &&
-      eventAddress != "" &&
-      eventEinlassalter !== null &&
-      eventEintrittskarten != "" &&
-      eventKontaktdaten != "" &&
-      xKoordinate !== null &&
-      yKoordinate !== null
-  ) {
-      const event: Event = {
-          id: eventId ?? null,
-          name: eventName,
-          organization: organizerName,
-          date: eventDate,
-          location: eventLocation,
-          address: eventAddress,
-          age: eventEinlassalter,
-          tickets: eventEintrittskarten,
-          contact: eventKontaktdaten,
-          img: eventImage,
-          xkoordinate: Number(xKoordinate),
-          ykoordinate: Number(yKoordinate)
-      };
-        fetch("/api/events/updateEvent", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(event),
-        })
-          .then((response) => {
-            if (response.ok) {
-              console.log("Erfolgreiche Datenübertragung ins backend!");
-              loadEvents();
-            } else {
-              console.error("Fehler beim Updaten der Daten.");
-            }
-          })
-          .catch((error) => {
-            console.error("Fehler beim Updaten der Daten:", error);
-          });
-        this.closeDialog();
+    const newEvent: Event = {
+      id: id ?? Date.now(),
+      name: eventName,
+      organization: organizerName,
+      date: eventDate,
+      address: eventAddress,
+      location: eventLocation,
+      age: parseInt(eventAge),
+      tickets: ticketURL,
+      contact: contactInfo,
+      img: imgPreview,
+      xkoordinate: xCoord,
+      ykoordinate: yCoord
+    };
+  
+    const nextState = produce(store.getValue(), (draft) => {
+      const eventIndex = draft.events.findIndex((event) => event.id === newEvent.id);
+  
+      if (eventIndex !== -1) {
+        draft.events[eventIndex] = newEvent;
       } else {
-        const event: Event = {
-            id: null,
-            name: eventName,
-            organization: organizerName,
-            date: eventDate,
-            location: eventLocation,
-            address: eventAddress,
-            age: eventEinlassalter,
-            tickets: eventEintrittskarten,
-            contact: eventKontaktdaten,
-            img: eventImage,
-            xkoordinate: 0, // Standardwert setzen
-            ykoordinate: 0 // Standardwert setzen
-        };
-        
-        fetch("/api/events/addEvent", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(event),
-        })
-        .then((response) => {
-            console.log(response);
-            if (response.ok) {
-                console.log("Erfolgreiche Datenübertragung ins backend!");
-                loadEvents();
-            } else {
-                console.error("Fehler beim Speichern der Daten.");
-            }
-        })
-        .catch((error) => {
-            console.error("Fehler beim Speichern der Daten:", error);
-        });
-    }
+        draft.events.push(newEvent);
+      }
+    });
+    store.next(nextState);
     this.closeDialog();
   }
   
-  
-  removeEvent(eventId: Number) {
-    console.log(eventId);
-    fetch(`/api/events/removeEvent/${eventId}`, {
-      method: "POST",
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log("Event wurde erfolgreich gelöscht.");
-          loadEvents();
-        } else {
-          console.error("Fehler beim Löschen des Events.");
-        }
-      })
-      .catch((error) => {
-        console.error("Fehler beim Löschen des Events.", error);
-      });
+  removeEvent(id?: number) {
+    console.log("remove event clicked");
+    const nextState = produce(store.getValue(), (draft) => {
+      draft.events = draft.events.filter((event) => event.id !== id);
+    });
+    store.next(nextState);
     this.closeDialog();
   }
-
-  searchEvent(events: Event[]) {
-    const searchString = (
-      this.shadowRoot.getElementById("searchbar") as HTMLInputElement
-    ).value.toLowerCase();
-    console.log("search " + searchString);
-    if (searchString !== "") {
-      let loadedEvents = loadEventsByList(searchString, events);
-      console.log(loadedEvents);
-    } else {
-      loadEvents();
-    }
-  }
-
 
   addStyles() {
     const linkElem = document.createElement("link");
@@ -557,14 +354,13 @@ saveEvent(eventId?: Number) {
     leafletCSSLink.setAttribute("integrity", "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=");
     leafletCSSLink.setAttribute("crossorigin", "");
     this.shadowRoot.appendChild(leafletCSSLink);
-  
+
     const leafletScript = document.createElement("script");
     leafletScript.setAttribute("src", "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js");
     leafletScript.setAttribute("integrity", "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=");
     leafletScript.setAttribute("crossorigin", "");
     this.shadowRoot.appendChild(leafletScript);
   }
-
 }
 
 customElements.define("event-table", EventTableComponent);
