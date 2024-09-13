@@ -1,11 +1,12 @@
 package at.htl.feature.event;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import io.vertx.codegen.doc.Text;
+import jakarta.persistence.*;
+import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.core.MediaType;
+import org.jboss.resteasy.annotations.providers.multipart.PartType;
+
+import java.io.InputStream;
 
 @Table(name = "tb_event")
 @Entity
@@ -15,23 +16,24 @@ public class Event {
     Long id;
 
     String name;
-    String organization;
+    /*String organization;
     String date;
     String address;
     String location;
     String age;
     String tickets;
     String contact;
-    String img;
 
-    // Neu hinzugefügte Variablen
+    @FormParam("file")
+    @PartType(MediaType.APPLICATION_OCTET_STREAM)
+    public InputStream file;
+
     @Column(name = "x_koordinate")
     Double xKoordinate;
 
     @Column(name = "y_koordinate")
     Double yKoordinate;
 
-    // Getter und Setter für xKoordinate
     public Double getXKoordinate() {
         return xKoordinate;
     }
@@ -40,14 +42,13 @@ public class Event {
         this.xKoordinate = xKoordinate;
     }
 
-    // Getter und Setter für yKoordinate
     public Double getYKoordinate() {
         return yKoordinate;
     }
 
     public void setYKoordinate(Double yKoordinate) {
         this.yKoordinate = yKoordinate;
-    }
+    }*/
 
     public Long getId() {
         return id;
@@ -65,7 +66,7 @@ public class Event {
         this.name = name;
     }
 
-    public String getOrganization() {
+    /*public String getOrganization() {
         return organization;
     }
 
@@ -121,11 +122,11 @@ public class Event {
         this.contact = contact;
     }
 
-    public String getImg() {
+    public byte[] getImg() {
         return img;
     }
 
-    public void setImg(String img) {
+    public void setImg(byte[] img) {
         this.img = img;
-    }
+    }*/
 }

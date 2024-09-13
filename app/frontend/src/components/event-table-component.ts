@@ -17,15 +17,15 @@ export class EventTableComponent extends HTMLElement {
     store.subscribe((model) => {
       this.render(model.events, model.currentEvent);
     });
-    this.addStyles();
+    //this.addStyles();
   }
 
   render(events: Event[], currentEvent?: Event) {
     console.log("table component loaded");
-    render(this.template(events, currentEvent), this.shadowRoot);
+    //render(this.template(events, currentEvent), this.shadowRoot);
   }
 
-  nameTemplate = (event: Event) => html`
+  /*nameTemplate = (event: Event) => html`
     <div class="rowName">
       <!--<p class="label">Name:</p>-->
       <p class="output">${event.name}</p>
@@ -361,6 +361,7 @@ export class EventTableComponent extends HTMLElement {
     leafletScript.setAttribute("crossorigin", "");
     this.shadowRoot.appendChild(leafletScript);
   }
+}*/
 }
 
 customElements.define("event-table", EventTableComponent);

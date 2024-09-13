@@ -12,6 +12,7 @@ import jakarta.ws.rs.core.SecurityContext;
 import org.eclipse.microprofile.jwt.Claims;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.logging.Logger;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.keycloak.authorization.client.AuthzClient;
 
 import java.util.List;
@@ -51,9 +52,9 @@ public class EventResource {
     @POST
     @Path("/addEvent")
     @Transactional
-    @Produces(MediaType.APPLICATION_JSON)
-    public void addEvent(Event event){
-        eventDao.addEvent(event);
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public void addEvent(@MultipartForm Event data){
+        eventDao.addEvent(data);
     }
 
     @POST
