@@ -9,5 +9,9 @@
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="openjdk-19" project-jdk-type="JavaSDK" />
+=======
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_20" default="true" project-jdk-name="openjdk-19" project-jdk-type="JavaSDK" />
+>>>>>>> 610fbfa3ab95be27a91b947c2fe4caa0699a79bc
 </project>
