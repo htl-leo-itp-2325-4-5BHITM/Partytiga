@@ -50,6 +50,8 @@ public class Event {
         this.yKoordinate = yKoordinate;
     }*/
 
+
+
     public Long getId() {
         return id;
     }

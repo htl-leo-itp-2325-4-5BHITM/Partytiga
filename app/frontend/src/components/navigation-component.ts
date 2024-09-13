@@ -81,6 +81,10 @@ export class AppNavigationComponent extends HTMLElement {
           <a href="#" id="entdecken">Entdecken</a>
           <a href="#" id="favoriten">Favoriten</a>
           <a href="#" id="profil">Profil</a>
+<<<<<<< Updated upstream
+=======
+          <!--<a href="#"><add-new-event></add-new-event></a>-->
+>>>>>>> Stashed changes
           <a href="#" id="hinzufuegen">Hinzufügen</a>
         </div>
         <a href="#" id="settings" class="settings-link">Einstellungen</a>
