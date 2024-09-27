@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#clean all docker stuff
 
 docker compose down
 docker container prune -f
