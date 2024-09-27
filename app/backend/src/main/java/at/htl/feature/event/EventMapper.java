@@ -7,8 +7,8 @@ public class EventMapper {
     public EventDto toResource(Event event) {
         return new EventDto(
                 event.id,
-                event.name,
-                event.organization,
+                event.name
+                /*event.organization,
                 event.date,
                 event.address,
                 event.location,
@@ -17,7 +17,7 @@ public class EventMapper {
                 event.contact,
                 event.img,
                 event.xKoordinate, // Neue Felder
-                event.yKoordinate  // Neue Felder
+                event.yKoordinate  // Neue Felder*/
         );
     }
 }

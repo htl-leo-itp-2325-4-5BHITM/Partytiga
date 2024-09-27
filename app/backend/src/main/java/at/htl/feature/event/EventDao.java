@@ -32,16 +32,16 @@ public class EventDao {
         System.out.println(findEvent);
         if (findEvent != null) {
             findEvent.setName(event.name);
-            findEvent.setDate(event.date);
+            /*findEvent.setDate(event.date);
             findEvent.setOrganization(event.organization);
             findEvent.setAddress(event.address);
             findEvent.setLocation(event.location);
             findEvent.setAge(event.age);
             findEvent.setTickets(event.tickets);
             findEvent.setContact(event.contact);
-            findEvent.setImg(event.img);
+            //findEvent.setImg(event.img);
             findEvent.setXKoordinate(event.xKoordinate);
-            findEvent.setYKoordinate(event.yKoordinate);
+            findEvent.setYKoordinate(event.yKoordinate);*/
         }
     }
 
