@@ -1,4 +1,5 @@
 import { html,render } from "lit-html"
+import { login } from "../";
 
 export class settingsComponent extends HTMLElement {
 
@@ -16,6 +17,7 @@ export class settingsComponent extends HTMLElement {
     console.log("setting component loaded");
   }
   displayContent() {
+    login();
     return html`
       <h1>Anmeldedaten</h1>
       <p>Vorname</p>
@@ -27,3 +29,4 @@ export class settingsComponent extends HTMLElement {
 }
 
 customElements.define("event-settings", settingsComponent)
+

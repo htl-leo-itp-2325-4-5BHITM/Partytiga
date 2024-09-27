@@ -16,7 +16,7 @@ import Keycloak from 'keycloak-js';
    .then(json => console.log(JSON.stringify(json)));
 */
 
-async function login() {
+export async function login() {
     console.log("ich bin im index.ts")
     const keycloak = new Keycloak({
         url: 'https://partytiga.hopto.org',
@@ -41,7 +41,7 @@ async function login() {
             console.log('keycloaktoken = ' + keycloak.token)
             localStorage.token=keycloak.token
         }
-        await loadEvents()
+        
     } catch (error) {
         console.error('Failed to initialize adapter:', error);
     }
@@ -50,7 +50,7 @@ async function login() {
 document.getElementById('profile').addEventListener("click", login)
 
 async function start() {
-    await login()
+    await loadEvents()
 }
 start()
 
