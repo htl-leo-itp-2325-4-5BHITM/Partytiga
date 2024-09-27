@@ -20,7 +20,7 @@ spec:
         imagePullPolicy: Always
         #command: ["/opt/keycloak/bin/kc.sh", "start-dev", "--proxy", "edge", "--features=declarative-user-profile", "--spi-x509cert-lookup-haproxy-trust-proxy-verification=true"]
         # kubectl port-forward key... 8000:8080 for admin - ui
-        command: ["/opt/keycloak/bin/kc.sh", "start-dev", "--proxy", "edge", "--features=declarative-user-profile", "--spi-x509cert-lookup-haproxy-trust-proxy-verification=true", "--hostname-admin-url=http://localhost:8000", "--log-level=INFO" ]
+        command: ["/opt/keycloak/bin/kc.sh", "start-dev", "--proxy", "edge", "--spi-x509cert-lookup-haproxy-trust-proxy-verification=true", "--hostname-admin-url=http://localhost:8000", "--log-level=INFO" ]
        
         ports:
         - containerPort: 8080
