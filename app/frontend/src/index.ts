@@ -16,7 +16,7 @@ import Keycloak from 'keycloak-js';
    .then(json => console.log(JSON.stringify(json)));
 */
 
-async function login() {
+/*async function login() {
     console.log("ich bin im index.ts")
     const keycloak = new Keycloak({
         url: 'https://partytiga.hopto.org',
@@ -52,7 +52,7 @@ document.getElementById('profile').addEventListener("click", login)
 async function start() {
     await login()
 }
-start()
+start()*/
 
 /**
  * document.addEventListener('keydown', (event) => {

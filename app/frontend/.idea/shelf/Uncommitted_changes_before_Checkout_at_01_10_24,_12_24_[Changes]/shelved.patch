@@ -1,0 +1,101 @@
+Index: src/index.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import \"./components/event-table-component\";\nimport \"./components/header-component\"\nimport \"./components/navigation-component\"\nimport \"./components/entdecken-component\"\nimport \"./components/favoriten-component\"\nimport \"./components/settings-component\"\nimport \"./components/hinzufuegen-component\"\nimport { loadEvents, loadEventsByList } from \"./service/event-service\";\n\nimport Keycloak from 'keycloak-js';\n\n/*fetch('https://reqbin.com/echo/get/json', {\n  headers: {Authorization: 'Bearer {eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjUDhVMTlET0tXM1hOTlVFZnpiR0NyNUZEaVVhTVJWT2cwSy0ydHdmWmRnIn0.eyJleHAiOjE3MTI5MDQ2NzMsImlhdCI6MTcxMjkwNDM3MywiYXV0aF90aW1lIjoxNzEyOTAzNzE2LCJqdGkiOiI5NjlkY2IzMi1lZmFjLTRjY2YtOWRhZS0yMjdhOTNiNTc5OTgiLCJpc3MiOiJodHRwczovL3BhcnR5dGlnYS5ob3B0by5vcmcvcmVhbG1zL3BhcnR5IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImNmZTYwNWU4LTBiNWQtNGMwYy1hMTg4LTAwMTAwMDc2NTBmYiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImZyb250ZW5kIiwibm9uY2UiOiJhYzg3NDNhZS0wZGQwLTQ3YmItYjBkZS0yNGIwMjE5YTYxM2UiLCJzZXNzaW9uX3N0YXRlIjoiNjM2MWUwMWItZTRkZS00NjM5LWI4MzAtYzU1Nzk2MzA5MjFmIiwiYWNyIjoiMCIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjQyMDAiLCJodHRwczovL3BhcnR5dGlnYS5ob3B0by5vcmciXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJkZWZhdWx0LXJvbGVzLXBhcnR5Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInNpZCI6IjYzNjFlMDFiLWU0ZGUtNDYzOS1iODMwLWM1NTc5NjMwOTIxZiIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkphbmEgS3Jlbm4iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJqa3Jlbm4iLCJnaXZlbl9uYW1lIjoiSmFuYSIsImZhbWlseV9uYW1lIjoiS3Jlbm4iLCJlbWFpbCI6Imoua3Jlbm4xQHN0dWRlbnRzLmh0bC1sZW9uZGluZy5hYy5hdCJ9.nyfggjfwD1qV-G-1prx4T-Krc4Aoy7OtRm3_i87UVKz2p98zyMKwPJZN0l6wylVQ_rxVuXE0NB03WNRXf2z1eXSf-hjra95XCW9Ui6xTeP70feHOQLWuKuNS1AT4vS5a2yzb3aP90b0LHcVwlewAcAtc8Mjg1f6ZlVVYU8BY26NpvqwqbwJD-cJ3CcUOtND-a6ApCSvSbLOfQPR0KaQFqGngdmmPY2XOY8vWsO4rV3teQIhcdfKUPgta1edSbhCIWrOcEwfN3k029kn8ptyZ83MBNGYSz97-4cNmZw8ToUhk-oXvN8LDhuk7hNxQq08eUZ8mASpyNjyTiKgz1AgW_Q}'}\n})\n   .then(resp => resp.json())\n   .then(json => console.log(JSON.stringify(json)));\n*/\n\nasync function login() {\n    console.log(\"ich bin im index.ts\")\n    const keycloak = new Keycloak({\n        url: 'https://partytiga.hopto.org',\n        realm: 'party',\n        clientId: 'frontend'\n    });\n    \n    try {\n        const authenticated = await keycloak.init({enableLogging:true, checkLoginIframe: false});\n        console.log(`User is ${authenticated ? 'authenticated' : 'not authenticated'}`);\n        if (!authenticated) {\n            try{\n                await keycloak.login()\n                console.log('token=', keycloak.token)\n                localStorage.token=keycloak.token\n                \n            } catch (error) {\n                console.log('failed to Login', error)\n            }\n                }\n        else {\n            console.log('keycloaktoken = ' + keycloak.token)\n            localStorage.token=keycloak.token\n        }\n        await loadEvents()\n    } catch (error) {\n        console.error('Failed to initialize adapter:', error);\n    }\n}\n\ndocument.getElementById('profile').addEventListener(\"click\", login)\n\nasync function start() {\n    await login()\n}\nstart()\n\n/**\n * document.addEventListener('keydown', (event) => {\n  if (event.key === 'Escape') {\n      closeModal();\n  }\n});\n */
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/index.ts b/src/index.ts
+--- a/src/index.ts	(revision e7216b15a63df6d37c73f98ff422eddfbdf37ce5)
++++ b/src/index.ts	(date 1727778243602)
+@@ -16,7 +16,7 @@
+    .then(json => console.log(JSON.stringify(json)));
+ */
+ 
+-async function login() {
++/*async function login() {
+     console.log("ich bin im index.ts")
+     const keycloak = new Keycloak({
+         url: 'https://partytiga.hopto.org',
+@@ -52,7 +52,7 @@
+ async function start() {
+     await login()
+ }
+-start()
++start()*/
+ 
+ /**
+  * document.addEventListener('keydown', (event) => {
+Index: src/components/navigation-component.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/*import { html,render } from \"lit-html\"\n\nexport class AppNavigationComponent extends HTMLElement {\n\n  constructor() {\n    super();\n    this.attachShadow({ mode: \"open\" });\n  }\n\n  connectedCallback(): void {\n    this.render();\n    this.addStyles();\n  }\n\n  render() {\n    render(this.displayNavigation(), this.shadowRoot)\n    console.log(\"navigation component loaded\");\n    \n  }\n  displayNavigation() {\n    return html`\n    <div class=\"nav-box\">\n      <div class=\"logo-box\">\n        <img id=\"logo\" src=\"img/logo.png\">\n        <h1 id=\"name\">Partytiga</h1>\n      </div>\n      <div class=\"nav-unterseiten\">\n        <a href=\"#\">Startseite</a>\n        <a href=\"#\">Entdecken</a>\n        <a href=\"#\">Favouriten</a>\n      </div>\n      <a href=\"#\" class=\"settings-link\">Einstellungen</a>\n    </div>`;\n  }\n\n  addStyles() {\n    const linkElem = document.createElement(\"link\");\n    linkElem.setAttribute(\"rel\", \"stylesheet\");\n    linkElem.setAttribute(\"href\", \"../../styles/navigation-style.css\");\n    this.shadowRoot.appendChild(linkElem);\n  }\n}\n\ncustomElements.define(\"app-nav\", AppNavigationComponent)\n*/\n\n\nimport { html, render } from \"lit-html\";\n\n\nexport class AppNavigationComponent extends HTMLElement {\n\n  currentPage: string;\n\n  constructor() {\n    super();\n    this.currentPage = window.location.pathname; // Setze die aktuelle Seite beim Initialisieren\n    this.attachShadow({ mode: \"open\" });\n  }\n\n  connectedCallback(): void {\n    this.render();\n    this.addStyles();\n    this.setupNavigation();\n    this.highlightCurrentPage();\n  }\n\n  render() {\n    render(this.displayNavigation(), this.shadowRoot);\n  }\n\n  displayNavigation() {\n    return html`\n      <div class=\"nav-box\">\n        <div class=\"logo-box\">\n          <img id=\"logo\" src=\"img/logo.png\">\n          <h1 id=\"name\">Partytiga</h1>\n        </div>\n        <div class=\"nav-unterseiten\">\n          <a href=\"#\" id=\"startseite\">Startseite</a>\n          <a href=\"#\" id=\"entdecken\">Entdecken</a>\n          <a href=\"#\" id=\"favoriten\">Favoriten</a>\n          <a href=\"#\" id=\"profil\">Profil</a>\n<<<<<<< Updated upstream\n=======\n          <!--<a href=\"#\"><add-new-event></add-new-event></a>-->\n>>>>>>> Stashed changes\n          <a href=\"#\" id=\"hinzufuegen\">Hinzufügen</a>\n        </div>\n        <a href=\"#\" id=\"settings\" class=\"settings-link\">Einstellungen</a>\n      </div>\n    `;\n  }\n\n  addStyles() {\n    const linkElem = document.createElement(\"link\");\n    linkElem.setAttribute(\"rel\", \"stylesheet\");\n    linkElem.setAttribute(\"href\", \"../../styles/navigation-style.css\");\n    this.shadowRoot.appendChild(linkElem);\n  }\n\n  setupNavigation() {\n    const links = this.shadowRoot.querySelectorAll('.nav-box a');\n    links.forEach(link => {\n      link.addEventListener('click', event => {\n        event.preventDefault();\n        const pageId = link.getAttribute('id');\n        if (pageId) {\n          this.loadPage(pageId);\n          this.currentPage = window.location.pathname; // Aktualisiere die aktuelle Seite nach dem Klicken auf den Link\n          this.highlightCurrentPage(); // Aktualisiere die Hervorhebung des aktuellen Links\n        }\n      });\n    });\n  }\n\n  loadPage(pageId: string) {\n    console.log(\"load\");\n    const mainContent = document.getElementById('content');\n    mainContent.innerHTML = ''; // Leeren Sie den Inhalt des main-Bereichs\n    if(pageId == 'startseite'){\n      const eventTableComponent = document.createElement('event-table');\n      mainContent.appendChild(eventTableComponent);\n      window.history.pushState({ page: 'startseite' }, 'Startseite', '/startseite');\n    } else if (pageId === 'entdecken') {\n      console.log(\"entdecken page\")\n      const entdeckenComponent = document.createElement('event-entdecken');\n      mainContent.appendChild(entdeckenComponent);\n      window.history.pushState({ page: 'entdecken' }, 'Entdecken', '/entdecken');\n    } else if(pageId === 'favoriten') {\n      console.log(\"favoriten page\")\n      const favoritenComponent = document.createElement('event-favoriten');\n      mainContent.appendChild(favoritenComponent);\n      window.history.pushState({ page: 'favoriten' }, 'Favoriten', '/favoriten');\n    }else if(pageId === 'settings') {\n      const settingsComponent = document.createElement('event-settings');\n      mainContent.appendChild(settingsComponent);\n      window.history.pushState({ page: 'settings' }, 'Einloggen', '/settings');\n    }else if(pageId === 'hinzufuegen') {\n      const settingsComponent = document.createElement('event-hinzufuegen');\n      mainContent.appendChild(settingsComponent);\n      window.history.pushState({ page: 'hinzufuegen' }, 'Hinzufügen', '/hinzufügen');\n    }\n  }\n  highlightCurrentPage() {\n    const links = this.shadowRoot.querySelectorAll('.nav-box a');\n    links.forEach(link => {\n      if (link.getAttribute('id') === this.currentPage.substring(1)) { // Entferne das führende '/'\n        link.classList.add('current-page');\n      } else {\n        link.classList.remove('current-page');\n      }\n    });\n  }\n}\n\ncustomElements.define(\"app-nav\", AppNavigationComponent);\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/navigation-component.ts b/src/components/navigation-component.ts
+--- a/src/components/navigation-component.ts	(revision e7216b15a63df6d37c73f98ff422eddfbdf37ce5)
++++ b/src/components/navigation-component.ts	(date 1727778243607)
+@@ -81,10 +81,6 @@
+           <a href="#" id="entdecken">Entdecken</a>
+           <a href="#" id="favoriten">Favoriten</a>
+           <a href="#" id="profil">Profil</a>
+-<<<<<<< Updated upstream
+-=======
+-          <!--<a href="#"><add-new-event></add-new-event></a>-->
+->>>>>>> Stashed changes
+           <a href="#" id="hinzufuegen">Hinzufügen</a>
+         </div>
+         <a href="#" id="settings" class="settings-link">Einstellungen</a>
+Index: ../backend/src/main/java/at/htl/feature/event/EventResource.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package at.htl.feature.event;\n\nimport jakarta.annotation.security.PermitAll;\nimport jakarta.annotation.security.RolesAllowed;\nimport jakarta.inject.Inject;\nimport jakarta.transaction.Transactional;\nimport jakarta.ws.rs.*;\nimport jakarta.ws.rs.core.Context;\nimport jakarta.ws.rs.core.MediaType;\nimport jakarta.ws.rs.core.Response;\nimport jakarta.ws.rs.core.SecurityContext;\nimport org.eclipse.microprofile.jwt.Claims;\nimport org.eclipse.microprofile.jwt.JsonWebToken;\nimport org.jboss.logging.Logger;\nimport org.jboss.resteasy.annotations.providers.multipart.MultipartForm;\nimport org.keycloak.authorization.client.AuthzClient;\n\nimport java.util.List;\n\n\n@Path(\"/events\")\npublic class EventResource {\n\n    @Inject\n    Logger log;\n    \n    @Inject\n    JsonWebToken jwt;\n\n    @Inject\n    EventDao eventDao;\n\n    @PermitAll\n    @GET\n //   @RolesAllowed(\"partytiga\")\n    public Response all(@Context SecurityContext ctx) {\n        var user = ctx.getUserPrincipal();\n        log.infof(\"user is : %s\", user);\n        var events = eventDao.all();\n        return Response.ok(events).build();\n        //jwt.claim(Claims.groups);\n    }\n\n    @POST\n    @Transactional\n    @Path(\"/removeEvent/{id}\")\n    public void removeEvent (@PathParam(\"id\") String id){\n        int eventId = Integer.parseInt(id);\n        eventDao.removeEvents(eventId);\n    }\n\n    @POST\n    @Path(\"/addEvent\")\n    @Transactional\n    @Consumes(MediaType.MULTIPART_FORM_DATA)\n    public void addEvent(@MultipartForm Event data){\n        eventDao.addEvent(data);\n    }\n\n    @POST\n    @Path(\"/updateEvent\")\n    @Consumes(MediaType.APPLICATION_JSON)\n    @Transactional\n    public void updateEvent(Event event){\n        eventDao.updateEvent(event);\n    }\n\n    @GET\n    @Path(\"/searchEvents/{searchString}\")\n    public List<Event> searchEvents(@PathParam(\"searchString\") String searchString){\n        return eventDao.getSearchedEvents(searchString);\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../backend/src/main/java/at/htl/feature/event/EventResource.java b/../backend/src/main/java/at/htl/feature/event/EventResource.java
+--- a/../backend/src/main/java/at/htl/feature/event/EventResource.java	(revision e7216b15a63df6d37c73f98ff422eddfbdf37ce5)
++++ b/../backend/src/main/java/at/htl/feature/event/EventResource.java	(date 1727778243610)
+@@ -30,7 +30,7 @@
+     @Inject
+     EventDao eventDao;
+ 
+-    @PermitAll
++  /*  @PermitAll
+     @GET
+  //   @RolesAllowed("partytiga")
+     public Response all(@Context SecurityContext ctx) {
+@@ -39,7 +39,7 @@
+         var events = eventDao.all();
+         return Response.ok(events).build();
+         //jwt.claim(Claims.groups);
+-    }
++    }*/
+ 
+     @POST
+     @Transactional
+Index: ../backend/.idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\n  <component name=\"MavenProjectsManager\">\n    <option name=\"originalFiles\">\n      <list>\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\n      </list>\n    </option>\n    <option name=\"workspaceImportForciblyTurnedOn\" value=\"true\" />\n  </component>\n<<<<<<< HEAD\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_17\" default=\"true\" project-jdk-name=\"openjdk-19\" project-jdk-type=\"JavaSDK\" />\n=======\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_20\" default=\"true\" project-jdk-name=\"openjdk-19\" project-jdk-type=\"JavaSDK\" />\n>>>>>>> 610fbfa3ab95be27a91b947c2fe4caa0699a79bc\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../backend/.idea/misc.xml b/../backend/.idea/misc.xml
+--- a/../backend/.idea/misc.xml	(revision e7216b15a63df6d37c73f98ff422eddfbdf37ce5)
++++ b/../backend/.idea/misc.xml	(date 1727778243612)
+@@ -7,11 +7,6 @@
+         <option value="$PROJECT_DIR$/pom.xml" />
+       </list>
+     </option>
+-    <option name="workspaceImportForciblyTurnedOn" value="true" />
+   </component>
+-<<<<<<< HEAD
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="openjdk-19" project-jdk-type="JavaSDK" />
+-=======
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_20" default="true" project-jdk-name="openjdk-19" project-jdk-type="JavaSDK" />
+->>>>>>> 610fbfa3ab95be27a91b947c2fe4caa0699a79bc
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" default="true" project-jdk-name="openjdk-19" project-jdk-type="JavaSDK" />
+ </project>
+\ No newline at end of file

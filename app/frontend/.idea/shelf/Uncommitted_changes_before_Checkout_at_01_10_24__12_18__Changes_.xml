@@ -1,0 +1,9 @@
+<changelist name="Uncommitted_changes_before_Checkout_at_01_10_24,_12_18_[Changes]" date="1727777936798" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_10_24,_12_18_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 01.10.24, 12:18 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="../backend/target/quarkus/bootstrap/dev-app-model.dat" />
+    <option name="AFTER_PATH" value="../backend/target/quarkus/bootstrap/dev-app-model.dat" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_10_24,_12_18_[Changes]/dev-app-model.dat" />
+  </binary>
+</changelist>

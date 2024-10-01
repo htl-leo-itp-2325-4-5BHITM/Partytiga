@@ -30,7 +30,7 @@ public class EventResource {
     @Inject
     EventDao eventDao;
 
-    @PermitAll
+  /*  @PermitAll
     @GET
  //   @RolesAllowed("partytiga")
     public Response all(@Context SecurityContext ctx) {
@@ -39,7 +39,7 @@ public class EventResource {
         var events = eventDao.all();
         return Response.ok(events).build();
         //jwt.claim(Claims.groups);
-    }
+    }*/
 
     @POST
     @Transactional

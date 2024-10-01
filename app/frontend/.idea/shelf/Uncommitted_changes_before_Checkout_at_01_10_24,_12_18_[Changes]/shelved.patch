@@ -1,0 +1,452 @@
+Index: src/components/hinzufuegen-component.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><<<<<<< Updated upstream\nimport { Event, store } from \"../model/model\";\nimport { html, render } from \"lit-html\";\nimport { produce } from \"immer\";\nimport L from 'leaflet';\n\nimport { EventTableComponent } from \"./event-table-component\";\nimport { loadEvents, loadEventsByList } from \"../service/event-service\";\n=======\nimport { loadEvents, loadEventsByList } from \"../service/event-service\";\nimport { Event, store } from \"../model/model\";\nimport { html, render } from \"lit-html\";\nimport { produce } from \"immer\";\n\nimport { EventTableComponent } from \"./event-table-component\";\n\n>>>>>>> Stashed changes\nexport class HinzufuegenComponent extends HTMLElement {\n  constructor() {\n    super();\n    this.attachShadow({ mode: \"open\" });\n  }\n<<<<<<< Updated upstream\n=======\n\n>>>>>>> Stashed changes\n  connectedCallback(): void {\n    console.log(\"hinzufuegen connected\");\n    this.render();\n  }\n<<<<<<< Updated upstream\n=======\n\n>>>>>>> Stashed changes\n  render() {\n    console.log(\"hinzufuegen component loaded\");\n    render(this.displayContent(), this.shadowRoot);\n  }\n<<<<<<< Updated upstream\n  displayContent() {\n    return html`\n      <h2>Event hinzufügen</h2>\n      <form id=\"eventForm\">\n        <label for=\"eventName\">Name des Events:</label>\n        <input type=\"text\" id=\"eventName\" required @input=${this.updateSaveButtonState.bind(this)} />\n        <br /><br />\n        <label for=\"organizerName\">Veranstalter:</label>\n        <input type=\"text\" id=\"organizerName\" required @input=${this.updateSaveButtonState.bind(this)} />\n        <br /><br />\n        <label for=\"eventDate\">Datum:</label>\n        <input type=\"date\" id=\"eventDate\" required @input=${this.updateSaveButtonState.bind(this)} />\n        <br /><br />\n        <label for=\"eventAddress\">Adresse:</label>\n        <input type=\"text\" id=\"eventAddress\" required @input=${this.updateSaveButtonState.bind(this)} />\n        <br /><br />\n        <label for=\"eventLocation\">Ort:</label>\n        <input type=\"text\" id=\"eventLocation\" required @input=${this.updateSaveButtonState.bind(this)} />\n        <br /><br />\n        <label for=\"eventEinlassalter\">Einlassalter:</label>\n        <input type=\"number\" id=\"eventEinlassalter\" required @input=${this.updateSaveButtonState.bind(this)} />\n        <br /><br />\n        <label for=\"eventEintrittskarten\">Eintrittskarten:</label>\n        <input type=\"text\" id=\"eventEintrittskarten\" required @input=${this.updateSaveButtonState.bind(this)} />\n        <br /><br />\n        <label for=\"eventKontaktdaten\">Kontaktdaten:</label>\n        <input type=\"text\" id=\"eventKontaktdaten\" required @input=${this.updateSaveButtonState.bind(this)} />\n        <br /><br />\n        <label for=\"eventImage\">Bild hochladen:</label>\n        <input type=\"file\" id=\"eventImage\" @change=${this.previewImage.bind(this)} />\n        <br /><br />\n        <label for=\"eventXCoordinate\">X-Koordinate:</label>\n        <input type=\"number\" id=\"eventXCoordinate\" required @input=${this.updateSaveButtonState.bind(this)} step=\"any\" />\n        <br /><br />\n        <label for=\"eventYCoordinate\">Y-Koordinate:</label>\n        <input type=\"number\" id=\"eventYCoordinate\" required @input=${this.updateSaveButtonState.bind(this)} step=\"any\" />\n        <br /><br />\n        <img id=\"imagePreview\" src=\"\" alt=\"Image Preview\" style=\"display:none; max-width: 200px;\" />\n        <br /><br />\n        <button type=\"button\" id=\"addEvent\" @click=${this.saveEvent.bind(this)}>Speichern</button>\n=======\n\n  displayContent() {\n    return html`\n      <h2>Event hinzufügen</h2>\n\n      <form id=\"eventForm\">\n        <label for=\"eventName\">Name des Events:</label>\n        <input type=\"text\" id=\"eventName\" required @input=${this.updateSaveButtonState.bind(this)} />\n\n        <br /><br />\n\n        <label for=\"organizerName\">Veranstalter:</label>\n        <input type=\"text\" id=\"organizerName\" required @input=${this.updateSaveButtonState.bind(this)} />\n\n        <br /><br />\n\n        <label for=\"eventDate\">Datum:</label>\n        <input type=\"date\" id=\"eventDate\" required @input=${this.updateSaveButtonState.bind(this)} />\n\n        <br /><br />\n\n        <label for=\"eventLocation\">Adresse:</label>\n        <input type=\"text\" id=\"eventLocation\" required @input=${this.updateSaveButtonState.bind(this)} />\n\n        <br /><br />\n\n        <label for=\"eventOrt\">Ort:</label>\n        <input type=\"text\" id=\"eventOrt\" required @input=${this.updateSaveButtonState.bind(this)} />\n\n        <br /><br />\n\n        <label for=\"eventEinlassalter\">Einlassalter:</label>\n        <input type=\"text\" id=\"eventEinlassalter\" required @input=${this.updateSaveButtonState.bind(this)} />\n\n        <br /><br />\n\n        <label for=\"eventEintrittskarten\">Eintrittskarten:</label>\n        <input type=\"text\" id=\"eventEintrittskarten\" required @input=${this.updateSaveButtonState.bind(this)} />\n\n        <br /><br />\n\n        <label for=\"eventKontaktdaten\">Kontaktdaten:</label>\n        <input type=\"text\" id=\"eventKontaktdaten\" required @input=${this.updateSaveButtonState.bind(this)} />\n\n        <br /><br />\n\n        <label for=\"eventImage\">Bild hochladen:</label>\n        <input type=\"file\" id=\"eventImage\" @change=${this.previewImage.bind(this)} />\n\n        <br /><br />\n\n        <img id=\"imagePreview\" src=\"\" alt=\"Image Preview\" style=\"display:none; max-width: 200px;\" />\n\n        <br /><br />\n\n        <button type=\"button\" id=\"addEvent\" @click=${this.saveEvent.bind(this)} disabled>Speichern</button>\n>>>>>>> Stashed changes\n      </form>\n    `;\n  }\n\n  previewImage(event) {\n    const input = event.target;\n    if (input.files && input.files[0]) {\n      const reader = new FileReader();\n      reader.onload = (e) => {\n        const img = this.shadowRoot.getElementById('imagePreview');\n        if (img instanceof HTMLImageElement && typeof e.target.result === 'string') {\n          img.src = e.target.result;\n<<<<<<< Updated upstream\n          console.log(img.src)\n=======\n>>>>>>> Stashed changes\n          img.style.display = 'block';\n        }\n      };\n      reader.readAsDataURL(input.files[0]);\n    }\n  }\n\n  updateSaveButtonState() {\n<<<<<<< Updated upstream\n    /*const saveButton = this.shadowRoot.getElementById(\"addEvent\") as HTMLButtonElement | null;\n=======\n    const saveButton = this.shadowRoot.getElementById(\"addEvent\");\n\n>>>>>>> Stashed changes\n    if (saveButton) {\n      const eventName = (this.shadowRoot.getElementById(\"eventName\") as HTMLInputElement).value;\n      const organizerName = (this.shadowRoot.getElementById(\"organizerName\") as HTMLInputElement).value;\n      const eventDate = (this.shadowRoot.getElementById(\"eventDate\") as HTMLInputElement).value;\n      const eventLocation = (this.shadowRoot.getElementById(\"eventLocation\") as HTMLInputElement).value;\n<<<<<<< Updated upstream\n      const eventAddress = (this.shadowRoot.getElementById(\"eventAddress\") as HTMLInputElement).value;\n      const eventEinlassalter = (this.shadowRoot.getElementById(\"eventEinlassalter\") as HTMLInputElement).value;\n      const eventEintrittskarten = (this.shadowRoot.getElementById(\"eventEintrittskarten\") as HTMLInputElement).value;\n      const eventKontaktdaten = (this.shadowRoot.getElementById(\"eventKontaktdaten\") as HTMLInputElement).value;\n      const eventXCoordinate = Number((this.shadowRoot.getElementById(\"eventXCoordinate\") as HTMLInputElement).value);\n      const eventYCoordinate = Number((this.shadowRoot.getElementById(\"eventYCoordinate\") as HTMLInputElement).value);\n\n      saveButton.disabled = !(eventName && organizerName && eventDate && eventLocation && eventAddress && eventEinlassalter && eventEintrittskarten && eventKontaktdaten);\n      saveButton.disabled = !(eventName && organizerName && eventDate && eventLocation && eventAddress && eventEinlassalter && eventEintrittskarten && eventKontaktdaten && eventXCoordinate && eventYCoordinate);\n    } else {\n      console.log(\"Button nicht gefunden.\");\n    }*/\n  }\n\n  saveEvent() {\n    const formData = new FormData();\n\n    const eventName = (this.shadowRoot.getElementById(\"eventName\") as HTMLInputElement).value;\n    formData.append(\"eventName\", eventName);\n    console.log(eventName);\n  \n      fetch(\"/api/events/addEvent\", {\n        method: \"POST\",\n        body: formData\n      })\n      .then(response => response.json())\n            .then(data => console.log(data))\n            .catch(error => console.error('Error:', error));\n    }\n  \n=======\n      const eventOrt = (this.shadowRoot.getElementById(\"eventOrt\") as HTMLInputElement).value;\n      const eventEinlassalter = (this.shadowRoot.getElementById(\"eventEinlassalter\") as HTMLInputElement).value;\n      const eventEintrittskarten = (this.shadowRoot.getElementById(\"eventEintrittskarten\") as HTMLInputElement).value;\n      const eventKontaktdaten = (this.shadowRoot.getElementById(\"eventKontaktdaten\") as HTMLInputElement).value;\n\n      saveButton.disabled = !(eventName && organizerName && eventDate && eventLocation && eventOrt && eventEinlassalter && eventEintrittskarten && eventKontaktdaten);\n    } else {\n      console.log(\"Button nicht gefunden.\");\n    }\n  }\n\n  saveEvent() {\n    const eventName = (this.shadowRoot.getElementById(\"eventName\") as HTMLInputElement).value;\n    const organizerName = (this.shadowRoot.getElementById(\"organizerName\") as HTMLInputElement).value;\n    const eventDate = (this.shadowRoot.getElementById(\"eventDate\") as HTMLInputElement).value;\n    const eventLocation = (this.shadowRoot.getElementById(\"eventLocation\") as HTMLInputElement).value;\n    const eventOrt = (this.shadowRoot.getElementById(\"eventOrt\") as HTMLInputElement).value;\n    const eventEinlassalter = (this.shadowRoot.getElementById(\"eventEinlassalter\") as HTMLInputElement).value;\n    const eventEintrittskarten = (this.shadowRoot.getElementById(\"eventEintrittskarten\") as HTMLInputElement).value;\n    const eventKontaktdaten = (this.shadowRoot.getElementById(\"eventKontaktdaten\") as HTMLInputElement).value;\n    const eventImage = (this.shadowRoot.getElementById(\"imagePreview\") as HTMLImageElement).src;\n\n    if (eventName && organizerName && eventDate && eventLocation && eventOrt && eventEinlassalter && eventEintrittskarten && eventKontaktdaten) {\n      const event: Event = {\n        id: null,\n        name: eventName,\n        organization: organizerName,\n        date: eventDate,\n        location: eventLocation,\n        ort: eventOrt,\n        einlassalter: eventEinlassalter,\n        eintrittskarten: eventEintrittskarten,\n        kontaktdaten: eventKontaktdaten,\n        image: eventImage,\n      };\n      fetch(\"/api/events/addEvent\", {\n        method: \"POST\",\n        headers: {\n          \"Content-Type\": \"application/json\",\n        },\n        body: JSON.stringify(event),\n      })\n        .then((response) => {\n          console.log(response);\n          if (response.ok) {\n            console.log(\"Erfolgreiche Datenübertragung ins Backend!\");\n            loadEvents();\n            this.clearForm();\n          } else {\n            console.error(\"Fehler beim Speichern der Daten.\");\n          }\n        })\n        .catch((error) => {\n          console.error(\"Fehler beim Speichern der Daten:\", error);\n        });\n    }\n  }\n>>>>>>> Stashed changes\n\n  clearForm() {\n    (this.shadowRoot.getElementById(\"eventName\") as HTMLInputElement).value = '';\n    (this.shadowRoot.getElementById(\"organizerName\") as HTMLInputElement).value = '';\n    (this.shadowRoot.getElementById(\"eventDate\") as HTMLInputElement).value = '';\n    (this.shadowRoot.getElementById(\"eventLocation\") as HTMLInputElement).value = '';\n<<<<<<< Updated upstream\n    (this.shadowRoot.getElementById(\"eventAddress\") as HTMLInputElement).value = '';\n    (this.shadowRoot.getElementById(\"eventEinlassalter\") as HTMLInputElement).value = '';\n    (this.shadowRoot.getElementById(\"eventEintrittskarten\") as HTMLInputElement).value = '';\n    (this.shadowRoot.getElementById(\"eventKontaktdaten\") as HTMLInputElement).value = '';\n    (this.shadowRoot.getElementById(\"eventXCoordinate\") as HTMLInputElement).value = '';\n    (this.shadowRoot.getElementById(\"eventYCoordinate\") as HTMLInputElement).value = '';\n=======\n    (this.shadowRoot.getElementById(\"eventOrt\") as HTMLInputElement).value = '';\n    (this.shadowRoot.getElementById(\"eventEinlassalter\") as HTMLInputElement).value = '';\n    (this.shadowRoot.getElementById(\"eventEintrittskarten\") as HTMLInputElement).value = '';\n    (this.shadowRoot.getElementById(\"eventKontaktdaten\") as HTMLInputElement).value = '';\n>>>>>>> Stashed changes\n    const imgPreview = this.shadowRoot.getElementById(\"imagePreview\") as HTMLImageElement;\n    if (imgPreview) {\n      imgPreview.src = '';\n      imgPreview.style.display = 'none';\n    }\n<<<<<<< Updated upstream\n=======\n\n>>>>>>> Stashed changes\n    this.updateSaveButtonState();\n  }\n}\n\n<<<<<<< Updated upstream\ncustomElements.define(\"event-hinzufuegen\", HinzufuegenComponent);\n=======\ncustomElements.define(\"event-hinzufuegen\", HinzufuegenComponent);\n>>>>>>> Stashed changes\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/hinzufuegen-component.ts b/src/components/hinzufuegen-component.ts
+--- a/src/components/hinzufuegen-component.ts	(revision c60c02876c871e434acf1cd3b7b30385e9754490)
++++ b/src/components/hinzufuegen-component.ts	(date 1727777560301)
+@@ -1,12 +1,3 @@
+-<<<<<<< Updated upstream
+-import { Event, store } from "../model/model";
+-import { html, render } from "lit-html";
+-import { produce } from "immer";
+-import L from 'leaflet';
+-
+-import { EventTableComponent } from "./event-table-component";
+-import { loadEvents, loadEventsByList } from "../service/event-service";
+-=======
+ import { loadEvents, loadEventsByList } from "../service/event-service";
+ import { Event, store } from "../model/model";
+ import { html, render } from "lit-html";
+@@ -14,132 +5,66 @@
+ 
+ import { EventTableComponent } from "./event-table-component";
+ 
+->>>>>>> Stashed changes
+ export class HinzufuegenComponent extends HTMLElement {
+   constructor() {
+     super();
+     this.attachShadow({ mode: "open" });
+   }
+-<<<<<<< Updated upstream
+-=======
+ 
+->>>>>>> Stashed changes
+   connectedCallback(): void {
+     console.log("hinzufuegen connected");
+     this.render();
+   }
+-<<<<<<< Updated upstream
+-=======
+ 
+->>>>>>> Stashed changes
+   render() {
+     console.log("hinzufuegen component loaded");
+     render(this.displayContent(), this.shadowRoot);
+   }
+-<<<<<<< Updated upstream
++
+   displayContent() {
+     return html`
+       <h2>Event hinzufügen</h2>
+       <form id="eventForm">
+         <label for="eventName">Name des Events:</label>
+-        <input type="text" id="eventName" required @input=${this.updateSaveButtonState.bind(this)} />
+-        <br /><br />
++        <input type="text" id="eventName" required @input=${this.updateSaveButtonState.bind(this)}/>
++        <br/><br/>
+         <label for="organizerName">Veranstalter:</label>
+-        <input type="text" id="organizerName" required @input=${this.updateSaveButtonState.bind(this)} />
+-        <br /><br />
++        <input type="text" id="organizerName" required @input=${this.updateSaveButtonState.bind(this)}/>
++        <br/><br/>
+         <label for="eventDate">Datum:</label>
+-        <input type="date" id="eventDate" required @input=${this.updateSaveButtonState.bind(this)} />
+-        <br /><br />
++        <input type="date" id="eventDate" required @input=${this.updateSaveButtonState.bind(this)}/>
++        <br/><br/>
+         <label for="eventAddress">Adresse:</label>
+-        <input type="text" id="eventAddress" required @input=${this.updateSaveButtonState.bind(this)} />
+-        <br /><br />
++        <input type="text" id="eventAddress" required @input=${this.updateSaveButtonState.bind(this)}/>
++        <br/><br/>
+         <label for="eventLocation">Ort:</label>
+-        <input type="text" id="eventLocation" required @input=${this.updateSaveButtonState.bind(this)} />
+-        <br /><br />
++        <input type="text" id="eventLocation" required @input=${this.updateSaveButtonState.bind(this)}/>
++        <br/><br/>
+         <label for="eventEinlassalter">Einlassalter:</label>
+-        <input type="number" id="eventEinlassalter" required @input=${this.updateSaveButtonState.bind(this)} />
+-        <br /><br />
++        <input type="number" id="eventEinlassalter" required @input=${this.updateSaveButtonState.bind(this)}/>
++        <br/><br/>
+         <label for="eventEintrittskarten">Eintrittskarten:</label>
+-        <input type="text" id="eventEintrittskarten" required @input=${this.updateSaveButtonState.bind(this)} />
+-        <br /><br />
++        <input type="text" id="eventEintrittskarten" required @input=${this.updateSaveButtonState.bind(this)}/>
++        <br/><br/>
+         <label for="eventKontaktdaten">Kontaktdaten:</label>
+-        <input type="text" id="eventKontaktdaten" required @input=${this.updateSaveButtonState.bind(this)} />
+-        <br /><br />
++        <input type="text" id="eventKontaktdaten" required @input=${this.updateSaveButtonState.bind(this)}/>
++        <br/><br/>
+         <label for="eventImage">Bild hochladen:</label>
+-        <input type="file" id="eventImage" @change=${this.previewImage.bind(this)} />
+-        <br /><br />
++        <input type="file" id="eventImage" /> <!--@change={this.previewImage.bind(this)}-->
++        <br/><br/>
+         <label for="eventXCoordinate">X-Koordinate:</label>
+-        <input type="number" id="eventXCoordinate" required @input=${this.updateSaveButtonState.bind(this)} step="any" />
+-        <br /><br />
++        <input type="number" id="eventXCoordinate" required @input=${this.updateSaveButtonState.bind(this)} step="any"/>
++        <br/><br/>
+         <label for="eventYCoordinate">Y-Koordinate:</label>
+-        <input type="number" id="eventYCoordinate" required @input=${this.updateSaveButtonState.bind(this)} step="any" />
+-        <br /><br />
+-        <img id="imagePreview" src="" alt="Image Preview" style="display:none; max-width: 200px;" />
+-        <br /><br />
+-        <button type="button" id="addEvent" @click=${this.saveEvent.bind(this)}>Speichern</button>
+-=======
+-
+-  displayContent() {
+-    return html`
+-      <h2>Event hinzufügen</h2>
+-
+-      <form id="eventForm">
+-        <label for="eventName">Name des Events:</label>
+-        <input type="text" id="eventName" required @input=${this.updateSaveButtonState.bind(this)} />
+-
+-        <br /><br />
+-
+-        <label for="organizerName">Veranstalter:</label>
+-        <input type="text" id="organizerName" required @input=${this.updateSaveButtonState.bind(this)} />
+-
+-        <br /><br />
+-
+-        <label for="eventDate">Datum:</label>
+-        <input type="date" id="eventDate" required @input=${this.updateSaveButtonState.bind(this)} />
+-
+-        <br /><br />
+-
+-        <label for="eventLocation">Adresse:</label>
+-        <input type="text" id="eventLocation" required @input=${this.updateSaveButtonState.bind(this)} />
+-
+-        <br /><br />
+-
+-        <label for="eventOrt">Ort:</label>
+-        <input type="text" id="eventOrt" required @input=${this.updateSaveButtonState.bind(this)} />
+-
+-        <br /><br />
+-
+-        <label for="eventEinlassalter">Einlassalter:</label>
+-        <input type="text" id="eventEinlassalter" required @input=${this.updateSaveButtonState.bind(this)} />
+-
+-        <br /><br />
+-
+-        <label for="eventEintrittskarten">Eintrittskarten:</label>
+-        <input type="text" id="eventEintrittskarten" required @input=${this.updateSaveButtonState.bind(this)} />
+-
+-        <br /><br />
+-
+-        <label for="eventKontaktdaten">Kontaktdaten:</label>
+-        <input type="text" id="eventKontaktdaten" required @input=${this.updateSaveButtonState.bind(this)} />
+-
+-        <br /><br />
+-
+-        <label for="eventImage">Bild hochladen:</label>
+-        <input type="file" id="eventImage" @change=${this.previewImage.bind(this)} />
+-
+-        <br /><br />
+-
+-        <img id="imagePreview" src="" alt="Image Preview" style="display:none; max-width: 200px;" />
+-
+-        <br /><br />
+-
+-        <button type="button" id="addEvent" @click=${this.saveEvent.bind(this)} disabled>Speichern</button>
+->>>>>>> Stashed changes
+-      </form>
+-    `;
++        <input type="number" id="eventYCoordinate" required @input=${this.updateSaveButtonState.bind(this)} step="any"/>
++        <br/><br/>
++        <img id="imagePreview" src="" alt="Image Preview" style="display:none; max-width: 200px;"/>
++        <br/><br/>
++      </form>`;
+   }
++//<button type="button" id="addEvent" @click=${this.saveEvent.bind(this)}>Speichern</button>
+ 
+-  previewImage(event) {
++ /* previewImage(event) {
+     const input = event.target;
+     if (input.files && input.files[0]) {
+       const reader = new FileReader();
+@@ -147,30 +72,21 @@
+         const img = this.shadowRoot.getElementById('imagePreview');
+         if (img instanceof HTMLImageElement && typeof e.target.result === 'string') {
+           img.src = e.target.result;
+-<<<<<<< Updated upstream
+           console.log(img.src)
+-=======
+->>>>>>> Stashed changes
+-          img.style.display = 'block';
+         }
+       };
+       reader.readAsDataURL(input.files[0]);
+     }
+-  }
++  }*/
+ 
+   updateSaveButtonState() {
+-<<<<<<< Updated upstream
+-    /*const saveButton = this.shadowRoot.getElementById("addEvent") as HTMLButtonElement | null;
+-=======
+-    const saveButton = this.shadowRoot.getElementById("addEvent");
++    const saveButton = this.shadowRoot.getElementById("addEvent") as HTMLButtonElement | null;
+ 
+->>>>>>> Stashed changes
+     if (saveButton) {
+       const eventName = (this.shadowRoot.getElementById("eventName") as HTMLInputElement).value;
+       const organizerName = (this.shadowRoot.getElementById("organizerName") as HTMLInputElement).value;
+       const eventDate = (this.shadowRoot.getElementById("eventDate") as HTMLInputElement).value;
+       const eventLocation = (this.shadowRoot.getElementById("eventLocation") as HTMLInputElement).value;
+-<<<<<<< Updated upstream
+       const eventAddress = (this.shadowRoot.getElementById("eventAddress") as HTMLInputElement).value;
+       const eventEinlassalter = (this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement).value;
+       const eventEintrittskarten = (this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement).value;
+@@ -182,10 +98,10 @@
+       saveButton.disabled = !(eventName && organizerName && eventDate && eventLocation && eventAddress && eventEinlassalter && eventEintrittskarten && eventKontaktdaten && eventXCoordinate && eventYCoordinate);
+     } else {
+       console.log("Button nicht gefunden.");
+-    }*/
++    }
+   }
+ 
+-  saveEvent() {
++  /*saveEvent() {
+     const formData = new FormData();
+ 
+     const eventName = (this.shadowRoot.getElementById("eventName") as HTMLInputElement).value;
+@@ -199,21 +115,10 @@
+       .then(response => response.json())
+             .then(data => console.log(data))
+             .catch(error => console.error('Error:', error));
+-    }
+-  
+-=======
+-      const eventOrt = (this.shadowRoot.getElementById("eventOrt") as HTMLInputElement).value;
+-      const eventEinlassalter = (this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement).value;
+-      const eventEintrittskarten = (this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement).value;
+-      const eventKontaktdaten = (this.shadowRoot.getElementById("eventKontaktdaten") as HTMLInputElement).value;
++    }*/
+ 
+-      saveButton.disabled = !(eventName && organizerName && eventDate && eventLocation && eventOrt && eventEinlassalter && eventEintrittskarten && eventKontaktdaten);
+-    } else {
+-      console.log("Button nicht gefunden.");
+-    }
+-  }
+ 
+-  saveEvent() {
++  /*saveEvent() {
+     const eventName = (this.shadowRoot.getElementById("eventName") as HTMLInputElement).value;
+     const organizerName = (this.shadowRoot.getElementById("organizerName") as HTMLInputElement).value;
+     const eventDate = (this.shadowRoot.getElementById("eventDate") as HTMLInputElement).value;
+@@ -231,8 +136,8 @@
+         organization: organizerName,
+         date: eventDate,
+         location: eventLocation,
+-        ort: eventOrt,
+-        einlassalter: eventEinlassalter,
++        address: eventOrt,
++        age: eventEinlassalter,
+         eintrittskarten: eventEintrittskarten,
+         kontaktdaten: eventKontaktdaten,
+         image: eventImage,
+@@ -258,42 +163,29 @@
+           console.error("Fehler beim Speichern der Daten:", error);
+         });
+     }
+-  }
+->>>>>>> Stashed changes
++  }*/
+ 
+   clearForm() {
+     (this.shadowRoot.getElementById("eventName") as HTMLInputElement).value = '';
+     (this.shadowRoot.getElementById("organizerName") as HTMLInputElement).value = '';
+     (this.shadowRoot.getElementById("eventDate") as HTMLInputElement).value = '';
+     (this.shadowRoot.getElementById("eventLocation") as HTMLInputElement).value = '';
+-<<<<<<< Updated upstream
+     (this.shadowRoot.getElementById("eventAddress") as HTMLInputElement).value = '';
+     (this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement).value = '';
+     (this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement).value = '';
+     (this.shadowRoot.getElementById("eventKontaktdaten") as HTMLInputElement).value = '';
+     (this.shadowRoot.getElementById("eventXCoordinate") as HTMLInputElement).value = '';
+     (this.shadowRoot.getElementById("eventYCoordinate") as HTMLInputElement).value = '';
+-=======
+     (this.shadowRoot.getElementById("eventOrt") as HTMLInputElement).value = '';
+-    (this.shadowRoot.getElementById("eventEinlassalter") as HTMLInputElement).value = '';
+-    (this.shadowRoot.getElementById("eventEintrittskarten") as HTMLInputElement).value = '';
+-    (this.shadowRoot.getElementById("eventKontaktdaten") as HTMLInputElement).value = '';
+->>>>>>> Stashed changes
+     const imgPreview = this.shadowRoot.getElementById("imagePreview") as HTMLImageElement;
+     if (imgPreview) {
+       imgPreview.src = '';
+       imgPreview.style.display = 'none';
+     }
+-<<<<<<< Updated upstream
+-=======
+ 
+->>>>>>> Stashed changes
+     this.updateSaveButtonState();
+   }
+ }
+ 
+-<<<<<<< Updated upstream
+ customElements.define("event-hinzufuegen", HinzufuegenComponent);
+-=======
+-customElements.define("event-hinzufuegen", HinzufuegenComponent);
+->>>>>>> Stashed changes
++
+Index: src/components/navigation-component.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/*import { html,render } from \"lit-html\"\n\nexport class AppNavigationComponent extends HTMLElement {\n\n  constructor() {\n    super();\n    this.attachShadow({ mode: \"open\" });\n  }\n\n  connectedCallback(): void {\n    this.render();\n    this.addStyles();\n  }\n\n  render() {\n    render(this.displayNavigation(), this.shadowRoot)\n    console.log(\"navigation component loaded\");\n    \n  }\n  displayNavigation() {\n    return html`\n    <div class=\"nav-box\">\n      <div class=\"logo-box\">\n        <img id=\"logo\" src=\"img/logo.png\">\n        <h1 id=\"name\">Partytiga</h1>\n      </div>\n      <div class=\"nav-unterseiten\">\n        <a href=\"#\">Startseite</a>\n        <a href=\"#\">Entdecken</a>\n        <a href=\"#\">Favouriten</a>\n      </div>\n      <a href=\"#\" class=\"settings-link\">Einstellungen</a>\n    </div>`;\n  }\n\n  addStyles() {\n    const linkElem = document.createElement(\"link\");\n    linkElem.setAttribute(\"rel\", \"stylesheet\");\n    linkElem.setAttribute(\"href\", \"../../styles/navigation-style.css\");\n    this.shadowRoot.appendChild(linkElem);\n  }\n}\n\ncustomElements.define(\"app-nav\", AppNavigationComponent)\n*/\n\n\nimport { html, render } from \"lit-html\";\n\n\nexport class AppNavigationComponent extends HTMLElement {\n\n  currentPage: string;\n\n  constructor() {\n    super();\n    this.currentPage = window.location.pathname; // Setze die aktuelle Seite beim Initialisieren\n    this.attachShadow({ mode: \"open\" });\n  }\n\n  connectedCallback(): void {\n    this.render();\n    this.addStyles();\n    this.setupNavigation();\n    this.highlightCurrentPage();\n  }\n\n  render() {\n    render(this.displayNavigation(), this.shadowRoot);\n  }\n\n  displayNavigation() {\n    return html`\n      <div class=\"nav-box\">\n        <div class=\"logo-box\">\n          <img id=\"logo\" src=\"img/logo.png\">\n          <h1 id=\"name\">Partytiga</h1>\n        </div>\n        <div class=\"nav-unterseiten\">\n          <a href=\"#\" id=\"startseite\">Startseite</a>\n          <a href=\"#\" id=\"entdecken\">Entdecken</a>\n          <a href=\"#\" id=\"favoriten\">Favoriten</a>\n          <a href=\"#\" id=\"profil\">Profil</a>\n<<<<<<< Updated upstream\n=======\n          <!--<a href=\"#\"><add-new-event></add-new-event></a>-->\n>>>>>>> Stashed changes\n          <a href=\"#\" id=\"hinzufuegen\">Hinzufügen</a>\n        </div>\n        <a href=\"#\" id=\"settings\" class=\"settings-link\">Einstellungen</a>\n      </div>\n    `;\n  }\n\n  addStyles() {\n    const linkElem = document.createElement(\"link\");\n    linkElem.setAttribute(\"rel\", \"stylesheet\");\n    linkElem.setAttribute(\"href\", \"../../styles/navigation-style.css\");\n    this.shadowRoot.appendChild(linkElem);\n  }\n\n  setupNavigation() {\n    const links = this.shadowRoot.querySelectorAll('.nav-box a');\n    links.forEach(link => {\n      link.addEventListener('click', event => {\n        event.preventDefault();\n        const pageId = link.getAttribute('id');\n        if (pageId) {\n          this.loadPage(pageId);\n          this.currentPage = window.location.pathname; // Aktualisiere die aktuelle Seite nach dem Klicken auf den Link\n          this.highlightCurrentPage(); // Aktualisiere die Hervorhebung des aktuellen Links\n        }\n      });\n    });\n  }\n\n  loadPage(pageId: string) {\n    console.log(\"load\");\n    const mainContent = document.getElementById('content');\n    mainContent.innerHTML = ''; // Leeren Sie den Inhalt des main-Bereichs\n    if(pageId == 'startseite'){\n      const eventTableComponent = document.createElement('event-table');\n      mainContent.appendChild(eventTableComponent);\n      window.history.pushState({ page: 'startseite' }, 'Startseite', '/startseite');\n    } else if (pageId === 'entdecken') {\n      console.log(\"entdecken page\")\n      const entdeckenComponent = document.createElement('event-entdecken');\n      mainContent.appendChild(entdeckenComponent);\n      window.history.pushState({ page: 'entdecken' }, 'Entdecken', '/entdecken');\n    } else if(pageId === 'favoriten') {\n      console.log(\"favoriten page\")\n      const favoritenComponent = document.createElement('event-favoriten');\n      mainContent.appendChild(favoritenComponent);\n      window.history.pushState({ page: 'favoriten' }, 'Favoriten', '/favoriten');\n    }else if(pageId === 'settings') {\n      const settingsComponent = document.createElement('event-settings');\n      mainContent.appendChild(settingsComponent);\n      window.history.pushState({ page: 'settings' }, 'Einloggen', '/settings');\n    }else if(pageId === 'hinzufuegen') {\n      const settingsComponent = document.createElement('event-hinzufuegen');\n      mainContent.appendChild(settingsComponent);\n      window.history.pushState({ page: 'hinzufuegen' }, 'Hinzufügen', '/hinzufügen');\n    }\n  }\n  highlightCurrentPage() {\n    const links = this.shadowRoot.querySelectorAll('.nav-box a');\n    links.forEach(link => {\n      if (link.getAttribute('id') === this.currentPage.substring(1)) { // Entferne das führende '/'\n        link.classList.add('current-page');\n      } else {\n        link.classList.remove('current-page');\n      }\n    });\n  }\n}\n\ncustomElements.define(\"app-nav\", AppNavigationComponent);\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/navigation-component.ts b/src/components/navigation-component.ts
+--- a/src/components/navigation-component.ts	(revision c60c02876c871e434acf1cd3b7b30385e9754490)
++++ b/src/components/navigation-component.ts	(date 1727777664248)
+@@ -80,11 +80,7 @@
+           <a href="#" id="startseite">Startseite</a>
+           <a href="#" id="entdecken">Entdecken</a>
+           <a href="#" id="favoriten">Favoriten</a>
+-          <a href="#" id="profil">Profil</a>
+-<<<<<<< Updated upstream
+-=======
+-          <!--<a href="#"><add-new-event></add-new-event></a>-->
+->>>>>>> Stashed changes
++          <a href="#" id="profil">Profil</a
+           <a href="#" id="hinzufuegen">Hinzufügen</a>
+         </div>
+         <a href="#" id="settings" class="settings-link">Einstellungen</a>
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+new file mode 100644
+--- /dev/null	(date 1727773592755)
++++ b/.idea/modules.xml	(date 1727773592755)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/frontend.iml" filepath="$PROJECT_DIR$/.idea/frontend.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: ../backend/.idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\n  <component name=\"MavenProjectsManager\">\n    <option name=\"originalFiles\">\n      <list>\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\n      </list>\n    </option>\n    <option name=\"workspaceImportForciblyTurnedOn\" value=\"true\" />\n  </component>\n<<<<<<< HEAD\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_17\" default=\"true\" project-jdk-name=\"openjdk-19\" project-jdk-type=\"JavaSDK\" />\n=======\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_20\" default=\"true\" project-jdk-name=\"openjdk-19\" project-jdk-type=\"JavaSDK\" />\n>>>>>>> 610fbfa3ab95be27a91b947c2fe4caa0699a79bc\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../backend/.idea/misc.xml b/../backend/.idea/misc.xml
+--- a/../backend/.idea/misc.xml	(revision c60c02876c871e434acf1cd3b7b30385e9754490)
++++ b/../backend/.idea/misc.xml	(date 1727777591159)
+@@ -7,11 +7,6 @@
+         <option value="$PROJECT_DIR$/pom.xml" />
+       </list>
+     </option>
+-    <option name="workspaceImportForciblyTurnedOn" value="true" />
+   </component>
+-<<<<<<< HEAD
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="openjdk-19" project-jdk-type="JavaSDK" />
+-=======
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_20" default="true" project-jdk-name="openjdk-19" project-jdk-type="JavaSDK" />
+->>>>>>> 610fbfa3ab95be27a91b947c2fe4caa0699a79bc
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" default="true" project-jdk-name="openjdk-19" project-jdk-type="JavaSDK" />
+ </project>
+\ No newline at end of file
+Index: .idea/frontend.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/frontend.iml b/.idea/frontend.iml
+new file mode 100644
+--- /dev/null	(date 1727773592754)
++++ b/.idea/frontend.iml	(date 1727773592754)
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="WEB_MODULE" version="4">
++  <component name="NewModuleRootManager">
++    <content url="file://$MODULE_DIR$">
++      <excludeFolder url="file://$MODULE_DIR$/.tmp" />
++      <excludeFolder url="file://$MODULE_DIR$/temp" />
++      <excludeFolder url="file://$MODULE_DIR$/tmp" />
++    </content>
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: ../backend/target/maven-status/maven-compiler-plugin/compile/null/inputFiles.lst
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>C:\\Users\\seker\\OneDrive\\Dokumente\\GitHub\\Partytiga\\app\\backend\\src\\main\\java\\at\\htl\\feature\\event\\EventDao.java\nC:\\Users\\seker\\OneDrive\\Dokumente\\GitHub\\Partytiga\\app\\backend\\src\\main\\java\\at\\htl\\feature\\event\\EventResource.java\nC:\\Users\\seker\\OneDrive\\Dokumente\\GitHub\\Partytiga\\app\\backend\\src\\main\\java\\at\\htl\\feature\\event\\EventMapper.java\nC:\\Users\\seker\\OneDrive\\Dokumente\\GitHub\\Partytiga\\app\\backend\\src\\main\\java\\at\\htl\\feature\\event\\Event.java\nC:\\Users\\seker\\OneDrive\\Dokumente\\GitHub\\Partytiga\\app\\backend\\src\\main\\java\\at\\htl\\feature\\event\\EventDto.java\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../backend/target/maven-status/maven-compiler-plugin/compile/null/inputFiles.lst b/../backend/target/maven-status/maven-compiler-plugin/compile/null/inputFiles.lst
+--- a/../backend/target/maven-status/maven-compiler-plugin/compile/null/inputFiles.lst	(revision c60c02876c871e434acf1cd3b7b30385e9754490)
++++ b/../backend/target/maven-status/maven-compiler-plugin/compile/null/inputFiles.lst	(date 1727777604873)
+@@ -1,5 +1,5 @@
+-C:\Users\seker\OneDrive\Dokumente\GitHub\Partytiga\app\backend\src\main\java\at\htl\feature\event\EventDao.java
+-C:\Users\seker\OneDrive\Dokumente\GitHub\Partytiga\app\backend\src\main\java\at\htl\feature\event\EventResource.java
+-C:\Users\seker\OneDrive\Dokumente\GitHub\Partytiga\app\backend\src\main\java\at\htl\feature\event\EventMapper.java
+-C:\Users\seker\OneDrive\Dokumente\GitHub\Partytiga\app\backend\src\main\java\at\htl\feature\event\Event.java
+-C:\Users\seker\OneDrive\Dokumente\GitHub\Partytiga\app\backend\src\main\java\at\htl\feature\event\EventDto.java
++/Users/lana/Desktop/Schule/5BHITM/ITP/Partytiga/app/backend/src/main/java/at/htl/feature/event/Event.java
++/Users/lana/Desktop/Schule/5BHITM/ITP/Partytiga/app/backend/src/main/java/at/htl/feature/event/EventDto.java
++/Users/lana/Desktop/Schule/5BHITM/ITP/Partytiga/app/backend/src/main/java/at/htl/feature/event/EventResource.java
++/Users/lana/Desktop/Schule/5BHITM/ITP/Partytiga/app/backend/src/main/java/at/htl/feature/event/EventDao.java
++/Users/lana/Desktop/Schule/5BHITM/ITP/Partytiga/app/backend/src/main/java/at/htl/feature/event/EventMapper.java
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1727773592756)
++++ b/.idea/vcs.xml	(date 1727773592756)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$/../.." vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(date 1727773596612)
++++ b/.idea/.gitignore	(date 1727773596612)
+@@ -0,0 +1,5 @@
++# Default ignored files
++/shelf/
++/workspace.xml
++# Editor-based HTTP Client requests
++/httpRequests/
